@@ -1,25 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Navbar from "./components/Navbar";
+import Browse from "./components/Browse";
+import MyTips from "./components/MyTips";
 
-function App() {
+export default function App() {
+  const [activePage, setActivePage] = useState("browse")
+
+  console.log(activePage)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="mx-auto w-9/12">
+      <Navbar 
+        changePage={setActivePage} 
+      />
+      <main className="mt-5 h-3/4">
+      {activePage === "browse" ? <Browse /> : <MyTips />}
+      </main>
     </div>
   );
 }
-
-export default App;
