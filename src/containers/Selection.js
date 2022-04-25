@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Selection(props) {
+const Selection = (props) => {
     const {
         selectionName,
         selectionValues
@@ -8,10 +8,14 @@ export default function Selection(props) {
 
     return (
         <div>
-            <label htmlFor={selectionName}>Vyber tým:</label>
-            <select name={selectionName}>
-                {selectionValues.map((value, i) => <option key={i} value={value}>{value}</option>)}
-            </select>
+            <p>{selectionValues}</p>
+            {/* <label htmlFor={selectionName}>Vyber tým:</label>
+            <select name={selectionName.toLowerCase()}>
+                {selectionValues.map((value, i) => (
+                <option key={i} value={value.toLowerCase()}>{value}</option>)
+                )}
+            </select> */}
         </div>
     )
 }
+export default Selection 

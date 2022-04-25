@@ -14,7 +14,7 @@
 
 @layer components {
   .nav-link {
-    @apply px-4 py-2 border-4 border-blue-700 bg-blue-700 capitalize
-    hover:border-4 hover:border-white;
+    @apply px-7 py-2 outline rounded-xl bg-blue-700 capitalize cursor-pointer
+    hover:outline-white;
   }
 }

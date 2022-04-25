@@ -1,14 +1,14 @@
 import React from 'react'
-import ShootersSection from "../containers/ShootersSection"
-import MyTipsSection from "../containers/MyTipsSection"
+import ShootersSection from "../components/ShootersSection"
+import MyTipsSection from "../components/MyTipsSection"
 
 export default function MyTips() {
   return (
-    <div>
+    <main>
         <div className="grid grid-cols-2">
             <ShootersSection />
             <MyTipsSection />
         </div>
-    </div>
+    </main>
   )
 }

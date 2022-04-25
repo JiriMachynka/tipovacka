@@ -1,14 +1,14 @@
 import React from "react"
+import { 
+    Link,
+} from "react-router-dom"
 
-export default function Navbar(props) {
-    const {
-        changePage
-    } = props
-
+const Navbar = () => {
     return (
-        <div className="flex justify-center space-x-5 mt-1">
-            <div className="nav-link" onClick={() => changePage("browse")}>Prohlížet</div>
-            <div className="nav-link" onClick={() => changePage("myTips")}>Moje tipy</div>
-        </div>
+        <nav className="flex justify-center space-x-10 mt-1 bg-gray-500 rounded-xl py-2 drop-shadow-xl">
+            <Link to="browse">Prohlížet</Link>
+            <Link to="myTips">Moje tipy</Link>
+        </nav>
     )
 }
+export default Navbar

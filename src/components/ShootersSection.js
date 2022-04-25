@@ -1,9 +1,10 @@
 import React from 'react'
 
-export default function ShootersSection() {
+const ShootersSection = () => {
     return (
       <div className="bg-green-400">
         ShootersSection
       </div>
     )
 }
+export default ShootersSection
