@@ -6,8 +6,8 @@ import {
 const Navbar = () => {
     return (
         <nav className="flex justify-center space-x-10 mt-1 bg-gray-500 rounded-xl py-2 drop-shadow-xl">
-            <Link to="browse">Prohlížet</Link>
-            <Link to="myTips">Moje tipy</Link>
+            <Link className="nav-link" to="browse">Prohlížet</Link>
+            <Link className="nav-link" to="myTips">Moje tipy</Link>
         </nav>
     )
 }

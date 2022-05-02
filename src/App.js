@@ -15,7 +15,7 @@ const App = () => {
 			<Navbar />
 			<main className="mt-5 h-[700px] bg-red-50 rounded-xl p-2">
 				<Routes>
-					<Route path="browse" element={<Browse />} />
+					<Route path="" element={<Browse />} />
 					<Route path="myTips" element={<MyTips />} />
 					<Route path="*" element={<ErrorPage />} />
 				</Routes>
