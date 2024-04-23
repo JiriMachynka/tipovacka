@@ -5,6 +5,6 @@ export default defineConfig({
 	driver: "pg",
 	out: "./supabase/migrations",
 	dbCredentials: {
-		connectionString: import.meta.env.NUXT_PUBLIC_DATABASE_URL!,
+		connectionString: process.env.NUXT_PUBLIC_DATABASE_URL!,
 	}
 });

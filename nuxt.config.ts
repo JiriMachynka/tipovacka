@@ -7,18 +7,15 @@ export default defineNuxtConfig({
   modules: [
     "@nuxtjs/tailwindcss", 
     "shadcn-nuxt", 
-    "@nuxtjs/supabase"
+    "@nuxtjs/supabase",
+    '@nuxtjs/color-mode'
   ],
+  colorMode: {
+    classSuffix: ''
+  },
   shadcn: {
     prefix: '',
     componentDir: './components/ui'
-  },
-  typescript: {
-    tsConfig: {
-      compilerOptions: {
-        "types": ["node"],
-      },
-    },
   },
   nitro: {
     esbuild: {
@@ -32,12 +29,8 @@ export default defineNuxtConfig({
   },
   components: {
     dirs: [
-      {
-        path: '@/components',
-      },
-      {
-        path: '@/components/ui',
-      },
+      '@/components',
+      '@/components/ui',
     ]
   },
   runtimeConfig: {
