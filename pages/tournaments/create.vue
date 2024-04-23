@@ -46,7 +46,7 @@ const onSubmit = handleSubmit(async (values) => {
 		players: [user.value!.username, ...allPlayers],
 	});
 
-  navigateTo('/tournaments');
+	navigateTo('/tournaments');
 });
 </script>
 <template>
