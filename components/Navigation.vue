@@ -39,7 +39,7 @@ const logout = async () => {
       >
         <Button
           variant="ghost"
-          @click="navigateTo('/')"  
+          @click="navigateTo('/tournaments')"  
           class="w-full text-xl lg:text-lg py-3"
         >
           Zpět na tipovačky
