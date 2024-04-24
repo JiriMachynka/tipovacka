@@ -106,7 +106,6 @@ function dispatch(action: Action) {
 		case actionTypes.REMOVE_TOAST:
 			if (action.toastId === undefined) state.value.toasts = [];
 			else state.value.toasts = state.value.toasts.filter((t) => t.id !== action.toastId);
-
 			break;
 	}
 }

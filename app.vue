@@ -1,6 +1,4 @@
 <template>
   <!-- <Toaster /> -->
-  <NuxtLayout>
-    <NuxtPage />
-  </NuxtLayout>
+  <NuxtPage />
 </template>

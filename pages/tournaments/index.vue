@@ -21,7 +21,7 @@ const logout = async () => {
 };
 </script>
 <template>
-  <div class="flex flex-col justify-between items-center h-dvh">
+  <div class="flex flex-col justify-between items-center h-dvh container">
     <Button class="my-3" @click="logout">
       <LogOut class="size-8" />
     </Button>

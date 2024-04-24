@@ -6,10 +6,8 @@ const { data: tournament } = await $client.tournament.getData.useQuery({ tournam
 
 if (!tournament.value) {
 	// TODO: Show 404 page
-	// navigateTo('/');
+	navigateTo('/');
 }
-
-console.log(route.params.id);
 
 const numberOfMatches = tournament.value?.userMatches ? tournament.value?.userMatches.length / tournament.value?.data.length : 0;
 </script>

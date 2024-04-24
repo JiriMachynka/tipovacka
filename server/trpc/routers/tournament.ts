@@ -17,9 +17,9 @@ export const tournamentRouter = router({
 		}),
 	getData: privateProcedure
 		.input(
-			z.object({ 
-				tournamentId: z.number() 
-			})
+			z.object({
+				tournamentId: z.number(),
+			}),
 		)
 		.query(async ({ ctx, input }) => await getAllTournamentData(input.tournamentId)),
 });

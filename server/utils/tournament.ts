@@ -73,6 +73,7 @@ export const getAllTournamentData = async (tournamentId: number) => {
 		.select({
 			name: Tournaments.name,
 			username: sql<string>`${Users.username}`,
+			authorId: Tournaments.authorId,
 		})
 		.from(Tournaments)
 		.leftJoin(Players, eq(Players.tournamentId, Tournaments.id))
