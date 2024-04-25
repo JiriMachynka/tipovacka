@@ -1,27 +1,25 @@
 <script lang="ts" setup>
 import { X, ChevronDown, ChevronUp } from 'lucide-vue-next';
-import { buttonVariants } from './ui/button';
 
 const supabaseClient = useSupabaseClient();
 
 const route = useRoute();
 
-const tournamentId = route.params.id;
+const tournamentId = +route.params.id;
 const currentPageTitle = route.path.split('/').pop();
 
 const user = useSupabaseUser();
 
 const { $client } = useNuxtApp();
-const { data: tournament } = await $client.tournament.getData.useQuery({ tournamentId: +tournamentId });
+const { data: tournament } = await $client.tournament.getData.useQuery({ tournamentId });
 
 const mobileNav = ref(false);
-
-const adminMenuOpen = ref(false);
 
 const logout = async () => {
 	await supabaseClient.auth.signOut();
 	navigateTo('/');
 };
+// TODO: Make nav button a single component
 </script>
 <template>
   <div :class="cn('lg:relative lg:flex lg:flex-row items-center', {
@@ -39,7 +37,7 @@ const logout = async () => {
       >
         <Button
           variant="ghost"
-          class="w-full text-xl lg:text-lg py-3"
+          class="w-full text-xl lg:text-lg py-3 font-bold"
           as-child
         >
           <NuxtLink to="/tournaments">
@@ -53,7 +51,7 @@ const logout = async () => {
       >
         <Button
           variant="ghost"
-          class="w-full text-xl lg:text-lg py-3"
+          class="w-full text-xl lg:text-lg py-3 font-bold"
           as-child
         >
           <NuxtLink :to="`/tournaments/${tournamentId}/`">
@@ -67,7 +65,7 @@ const logout = async () => {
       >
         <Button
           variant="ghost"
-          class="w-full text-xl lg:text-lg py-3"
+          class="w-full text-xl lg:text-lg py-3 font-bold"
           as-child
         >
           <NuxtLink :to="`/tournaments/${tournamentId}/my-tips`">
@@ -81,7 +79,7 @@ const logout = async () => {
       >
         <Button
           variant="ghost"
-          class="w-full text-xl lg:text-lg py-3"
+          class="w-full text-xl lg:text-lg py-3 font-bold"
           as-child
         >
           <NuxtLink :to="`/tournaments/${tournamentId}/leaderboard`">
@@ -90,17 +88,22 @@ const logout = async () => {
         </Button>
       </li>
         <li v-if="tournament!.data[0].authorId === user?.id" class="hidden lg:inline-flex"> 
-          <DropdownMenu v-model:open="adminMenuOpen" closeOnItemClick> 
+          <DropdownMenu>
             <DropdownMenuTrigger
-              v-auto-animate 
-              :class="cn(buttonVariants({ variant: 'ghost' }), 
-                'w-full text-lg py-3 inline-flex items-center gap-2'
+              :class="cn(buttonVariants({ variant: 'ghost' }),
+                'w-full text-lg py-3 inline-flex items-center gap-2 group font-bold'
               )"
             >
               <span>Admin sekce</span>
               <!-- TODO: Make icons animated -->
-              <ChevronUp v-if="adminMenuOpen" :size="20" />
-              <ChevronDown v-else :size="20" />
+              <ChevronUp
+                :size="20"
+                class="group-data-[state=closed]:hidden group-data-[state=open]:block"
+              />
+              <ChevronDown
+                :size="20"
+                class="group-data-[state=closed]:block group-data-[state=open]:hidden"
+              />
             </DropdownMenuTrigger>
             <DropdownMenuContent class="flex flex-col max-w-52 w-full">
               <DropdownMenuItem :class="cn(buttonVariants({ variant: 'ghost' }),
@@ -142,7 +145,7 @@ const logout = async () => {
         >
           <Button
             variant="ghost"
-            class="w-full text-xl py-3"
+            class="w-full text-xl py-3 font-bold"
             as-child
           >
             <NuxtLink :to="`/tournaments/${tournamentId}/manage-matches`">
@@ -157,7 +160,7 @@ const logout = async () => {
         >
           <Button
             variant="ghost"
-            class="w-full text-xl py-3"
+            class="w-full text-xl py-3 font-bold"
             as-child
           >
             <NuxtLink :to="`/tournaments/${tournamentId}/manage-scorers`">
@@ -172,7 +175,7 @@ const logout = async () => {
         >
           <Button
             variant="ghost"
-            class="w-full text-xl py-3"
+            class="w-full text-xl py-3 font-bold"
             as-child
           >
             <NuxtLink :to="`/tournaments/${tournamentId}/manage-players`">
@@ -186,7 +189,7 @@ const logout = async () => {
       >
         <Button
           variant="ghost"
-          class="w-full text-xl lg:text-lg py-3"
+          class="w-full text-xl lg:text-lg py-3 font-bold"
           @click="logout"
         >
           Odhlásit se
