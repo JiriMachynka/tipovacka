@@ -27,11 +27,10 @@ export default defineNuxtConfig({
   supabase: {
     redirect: false, 
   },
-  components: {
+  imports: {
     dirs: [
-      '@/components',
-      '@/components/ui',
-    ]
+      './components/**'
+    ],
   },
   runtimeConfig: {
     public: {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useToast } from './use-toast';
+import { isVNode } from 'vue';
 
 const { toasts } = useToast();
 </script>
