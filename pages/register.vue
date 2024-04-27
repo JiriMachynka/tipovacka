@@ -2,7 +2,6 @@
 import { toTypedSchema } from '@vee-validate/zod';
 import { useForm } from 'vee-validate';
 import { z } from 'zod';
-import { toast } from '~/components/ui/toast';
 
 definePageMeta({
 	middleware: ['user'],
@@ -21,6 +20,7 @@ const validationSchema = toTypedSchema(
 		}),
 );
 
+const { toast } = useToast();
 const supabaseClient = useSupabaseClient();
 
 const { defineField, handleSubmit, isSubmitting, resetForm, errors } = useForm({ validationSchema });
