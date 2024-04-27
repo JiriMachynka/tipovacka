@@ -97,11 +97,11 @@ const onSubmit = handleSubmit(async (values) => {
           id="teams"
           v-model="teams"
           v-bind="teamsAttrs"
-          class="h-52"
+          class="h-40"
         />
       </div>
       <Button
-        class="text-xl py-7 lg:text-3xl lg:py-10"
+        class="text-xl py-3 lg:text-3xl"
         type="submit"
         :disabled="isSubmitting"
       >
