@@ -40,13 +40,13 @@ const onSubmit = handleSubmit(async (values) => {
 			.map((team) => team.trim()),
 	);
 
-	createTournament({
+	const tournamentId = createTournament({
 		tournamentName,
 		teams: allTeams,
 		players: [user.value!.username, ...allPlayers],
 	});
 
-	navigateTo('/tournaments');
+	navigateTo(`/tournaments/${tournamentId}`);
 });
 </script>
 <template>

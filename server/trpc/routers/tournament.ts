@@ -13,7 +13,7 @@ export const tournamentRouter = router({
 		)
 		.mutation(async ({ ctx, input }) => {
 			const { tournamentName, players, teams } = input;
-			await createTournament(ctx.userId, tournamentName, players, teams);
+			return await createTournament(ctx.userId, tournamentName, players, teams);
 		}),
 	getData: privateProcedure
 		.input(
