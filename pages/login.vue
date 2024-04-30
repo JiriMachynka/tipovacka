@@ -7,6 +7,7 @@ definePageMeta({
 	middleware: ['user'],
 });
 
+const { toast } = useToast();
 const supabaseClient = useSupabaseClient();
 
 const validationSchema = toTypedSchema(

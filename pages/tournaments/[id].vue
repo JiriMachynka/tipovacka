@@ -1,5 +1,5 @@
 <template>
-  <NuxtLayout>
+  <NuxtLayout name="tournament">
     <NuxtPage />
   </NuxtLayout>
 </template>

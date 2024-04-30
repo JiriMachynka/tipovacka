@@ -14,7 +14,7 @@
     "studio": "drizzle-kit studio",
     "lint": "biome check components layouts pages public server utils",
     "format": "biome format components layouts pages public server utils --write",
-    "clean": "rm -rf node_modules"
+    "clean": "rm -rf node_modules .nuxt"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.42.5",
@@ -36,7 +36,7 @@
     "vee-validate": "^4.12.6",
     "vue": "^3.4.24",
     "vue-router": "^4.3.0",
-    "zod": "^3.23.0"
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@biomejs/biome": "1.7.0",

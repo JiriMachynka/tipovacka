@@ -1,3 +1,34 @@
+<script lang="ts" setup>
+const { $client } = useNuxtApp();
+
+const route = useRoute();
+
+const tournamentId = +route.params.id;
+
+const { data: leaderboard } = await $client.tournament.getPoints.useQuery({ tournamentId });
+</script>
 <template>
-  <h2>Leaderboard</h2>
+  <Table v-if="!!leaderboard?.length" class="max-w-[600px] mx-auto">
+    <TableHeader>
+      <TableRow class="grid grid-cols-[100px_1fr_100px]">
+        <TableHead>Pořadí</TableHead>
+        <TableHead>Hráč</TableHead>
+        <TableHead>Body</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <Table.Row
+        v-for="(row, i) in leaderboard"
+        :key="row.username"
+        class="grid grid-cols-[100px_1fr_100px]"
+      >
+        <Table.Cell>{{ i + 1 }}</Table.Cell>
+        <Table.Cell>{{ row.username }}</Table.Cell>
+        <Table.Cell>{{ row.points }}</Table.Cell>
+      </Table.Row>
+    </TableBody>
+  </Table>
+  <div v-else class="flex justify-center items-center h-[250px]">
+    <p class="text-3xl font-bold text-center md:text-left">Ještě nebyly vyhodnoceny žádné zápasy</p>
+  </div>
 </template>

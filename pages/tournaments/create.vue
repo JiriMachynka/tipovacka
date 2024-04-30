@@ -33,7 +33,7 @@ const onSubmit = handleSubmit(async (values) => {
 	const { tournamentName, teams, players } = values;
 
 	const allPlayers = players?.split('\n').filter((player) => player.trim() !== '') || [];
-	const allTeams = teams.split('\r\n').map((team) =>
+	const allTeams = teams.split('\n').map((team) =>
 		team
 			.split(',')
 			.filter((team) => team.trim() !== '')

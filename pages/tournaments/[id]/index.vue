@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { Users, Swords } from 'lucide-vue-next';
+
 const { $client } = useNuxtApp();
 const route = useRoute();
 
