@@ -6,10 +6,16 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
     "@nuxtjs/tailwindcss", 
-    "shadcn-nuxt", 
     "@nuxtjs/supabase",
-    '@nuxtjs/color-mode'
+    '@nuxtjs/color-mode',
+    "shadcn-nuxt",
+    "dayjs-nuxt",
   ],
+  dayjs: {
+    locales: ['cs'],
+    plugins: ['relativeTime'],
+    defaultLocale: 'cs',
+  },
   colorMode: {
     classSuffix: ''
   },

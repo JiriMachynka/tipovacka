@@ -29,6 +29,7 @@
     "@vueuse/core": "^10.9.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "dayjs-nuxt": "^2.1.9",
     "drizzle-kit": "^0.20.17",
     "drizzle-orm": "^0.30.9",
     "jwt-decode": "^4.0.0",

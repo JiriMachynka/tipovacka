@@ -179,7 +179,11 @@ const onSubmit = handleSubmit(async (values) => {
     </TableHeader>
     <TableBody>
       <TableRow v-for="match in matches" :key="match.id">
-        <TableCell>{{ match.date }}</TableCell>
+        <TableCell class="text-center">
+          <span>{{ $dayjs(match.date).fromNow() }}</span>
+          <Separator class="my-0.5" />
+          <span>{{ $dayjs(match.date).format("DD.MM.YYYY HH:mm") }}</span>
+        </TableCell>
         <TableCell>{{ match.group }}</TableCell>
         <TableCell>{{ match.homeTeamName }}</TableCell>
         <TableCell>{{ match.awayTeamName }}</TableCell>
