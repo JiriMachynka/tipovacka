@@ -8,7 +8,7 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "cleanup": "nuxi cleanup && bun i",
+    "cleanup": "nuxi cleanup",
     "migrate": "drizzle-kit generate:pg --config=drizzle.config.ts",
     "migration:push": "drizzle-kit push:pg --config=drizzle.config.ts",
     "studio": "drizzle-kit studio",

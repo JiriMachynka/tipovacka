@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { AlertDialogTitleProps } from 'radix-vue';
-import type { HTMLAttributes } from 'vue';
+import { type HTMLAttributes } from 'vue';
+import { AlertDialogTitle, type AlertDialogTitleProps } from 'radix-vue';
 
 const props = defineProps<AlertDialogTitleProps & { class?: HTMLAttributes['class'] }>();
 

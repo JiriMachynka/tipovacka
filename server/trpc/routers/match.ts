@@ -17,4 +17,9 @@ export const matchRouter = router({
 
 			await createMatch(tournamentId, new Date(date), group, homeTeamId, awayTeamId);
 		}),
+	delete: privateProcedure.input(z.object({ matchId: z.number() })).mutation(async ({ input }) => {
+		const { matchId } = input;
+
+		await deleteMatch(matchId);
+	}),
 });

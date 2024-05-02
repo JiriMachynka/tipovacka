@@ -29,3 +29,9 @@ export const createMatch = async (tournamentId: number, date: Date, group: strin
 
 	return createdMatch.id;
 };
+
+export const deleteMatch = async (matchId: number) => {
+	await db.delete(UserMatchTips).where(eq(UserMatchTips.tournamentMatchTipId, matchId));
+
+	await db.delete(TournamentMatchTips).where(eq(TournamentMatchTips.id, matchId));
+};

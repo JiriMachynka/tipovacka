@@ -65,7 +65,7 @@ const onSubmit = handleSubmit(async (values) => {
 			title: 'Vytvořeno',
 			description: `Zápas byl úspěšně vytvořen`,
 		});
-		await refresh();
+		refresh();
 	} catch (e) {
 		toast({
 			title: 'Chyba',
@@ -179,7 +179,7 @@ const onSubmit = handleSubmit(async (values) => {
     </TableHeader>
     <TableBody>
       <TableRow v-for="match in matches" :key="match.id">
-        <TableCell class="text-center">
+        <TableCell>
           <span>{{ $dayjs(match.date).fromNow() }}</span>
           <Separator class="my-0.5" />
           <span>{{ $dayjs(match.date).format("DD.MM.YYYY HH:mm") }}</span>
@@ -187,8 +187,15 @@ const onSubmit = handleSubmit(async (values) => {
         <TableCell>{{ match.group }}</TableCell>
         <TableCell>{{ match.homeTeamName }}</TableCell>
         <TableCell>{{ match.awayTeamName }}</TableCell>
-        <TableCell>{{ match.homeScore }}</TableCell>
-        <TableCell>{{ match.awayScore }}</TableCell>
+        <TableCell>{{ match.homeScore }}:{{ match.awayScore }}</TableCell>
+        <TableCell>
+          <DeleteMatchDialog
+            :matchId="match.id"
+            :homeTeamName="match.homeTeamName"
+            :awayTeamName="match.awayTeamName"
+            @refresh="refresh"
+          />
+        </TableCell>
       </TableRow>
     </TableBody>
   </Table>
