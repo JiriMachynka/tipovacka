@@ -10,19 +10,23 @@ const route = useRoute();
 
 const tournamentId = +route.params.id;
 
+const createMatchSchema = toTypedSchema(
+	z.object({
+		date: z.string(),
+		group: z.string(),
+		homeTeamId: z.string(),
+		awayTeamId: z.string(),
+	}),
+);
+
 const { data: matches, refresh } = await $client.tournament.getMatches.useQuery({ tournamentId });
 const { data: teams } = await $client.tournament.getTeams.useQuery({ tournamentId });
 const { data: groups } = await $client.tournament.getGroups.useQuery({ tournamentId });
 
-const { handleSubmit, resetForm, values } = useForm({
-	validationSchema: toTypedSchema(
-		z.object({
-			date: z.date(),
-			group: z.string(),
-		}),
-	),
+const { handleSubmit, values } = useForm({
+	validationSchema: createMatchSchema,
 	initialValues: {
-		group: groups.value![0].name,
+		group: groups!.value[0].name,
 	},
 });
 
@@ -42,19 +46,119 @@ if (createMatchStatus.value === 'error') {
 		description: `Nepodařilo se vytvořit záps`,
 	});
 }
+
+// TODO: Reset teams when group changes
+// TODO: Reset away teams when homeTeamId changes
+const onSubmit = handleSubmit(async (values) => {
+	try {
+		const { date, group, homeTeamId, awayTeamId } = values;
+
+		await createMatch({
+			tournamentId,
+			date,
+			group,
+			homeTeamId: +homeTeamId,
+			awayTeamId: +awayTeamId,
+		});
+
+		toast({
+			title: 'Vytvořeno',
+			description: `Zápas byl úspěšně vytvořen`,
+		});
+		await refresh();
+	} catch (e) {
+		toast({
+			title: 'Chyba',
+			description: `Nepodařilo se vytvořit záps`,
+		});
+	}
+});
 </script>
 <template>
   <form
     class="w-full max-w-xl mx-auto flex flex-col gap-4"
-    @submit="handleSubmit"
+    @submit="onSubmit"
   >
-    <div class="flex flex-col gap-2">
-      <FormField v-slot="{ componentField }" name="date">
-        <FormItem>
-          <FormLabel>Datum a čas</FormLabel>
+    <FormField v-slot="{ componentField }" name="date">
+      <FormItem>
+        <FormLabel>Datum a čas</FormLabel>
+        <FormControl>
+          <Input type="datetime-local" v-bind="componentField" />
+        </FormControl>
+        <FormMessage />
+      </FormItem>
+    </FormField>
+    <FormField v-slot="{ componentField }" name="group">
+      <FormItem>
+        <FormLabel>Skupina</FormLabel>
+        <Select v-bind="componentField">
           <FormControl>
-            <Input type="datetime-local" v-bind="componentField" />
+            <SelectTrigger>
+              <SelectValue placeholder="Vyberte skupinu" />
+            </SelectTrigger>
           </FormControl>
+          <SelectContent>
+            <SelectGroup>
+              <SelectItem
+                v-for="group in groups"
+                :key="group.name"
+                :value="group.name"
+              >
+                {{ group.name }}
+              </SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        <FormMessage />
+      </FormItem>
+    </FormField>
+    <div class="grid grid-cols-2 gap-4">
+      <FormField v-slot="{ componentField }" name="homeTeamId">
+        <FormItem>
+          <FormLabel>Tým domácí</FormLabel>
+          <Select v-bind="componentField">
+            <FormControl>
+              <SelectTrigger>
+                <SelectValue placeholder="Vyberte tým" />
+              </SelectTrigger>
+            </FormControl>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem
+                  v-for="team in teams.filter((team) => team.groupName === values.group)"
+                  :key="team.id"
+                  :value="team.id.toString()"
+                >
+                  {{ team.name }}
+                </SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <FormMessage />
+        </FormItem>
+      </FormField>
+      <FormField v-slot="{ componentField }" name="awayTeamId">
+        <FormItem>
+          <FormLabel>Tým hosté</FormLabel>
+          <Select v-bind="componentField">
+            <FormControl>
+              <SelectTrigger>
+                <SelectValue placeholder="Vyberte tým" />
+              </SelectTrigger>
+            </FormControl>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem
+                  v-for="team in teams.filter((team) => team.groupName === values.group && team.id !== +values.homeTeamId)"
+                  :key="team.id"
+                  :value="team.id.toString()"
+                >
+                  {{ team.name }}
+                </SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <FormMessage />
         </FormItem>
       </FormField>
     </div>

@@ -16,36 +16,34 @@
     "format": "biome format components layouts pages public server utils --write",
     "clean": "rm -rf node_modules .nuxt"
   },
-  "dependencies": {
+  "devDependencies": {
+    "@biomejs/biome": "1.7.0",
+    "@nuxtjs/color-mode": "^3.4.0",
+    "@nuxtjs/supabase": "^1.2.1",
+    "@nuxtjs/tailwindcss": "^6.12.0",
     "@supabase/supabase-js": "^2.42.5",
     "@trpc/client": "^10.45.2",
     "@trpc/server": "^10.45.2",
+    "@types/pg": "^8.11.5",
     "@vee-validate/zod": "^4.12.6",
     "@vueuse/core": "^10.9.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "drizzle-kit": "^0.20.17",
     "drizzle-orm": "^0.30.9",
     "jwt-decode": "^4.0.0",
     "lucide-vue-next": "^0.372.0",
     "nuxt": "^3.11.2",
     "pg": "^8.11.5",
     "radix-vue": "^1.7.1",
+    "shadcn-nuxt": "^0.10.2",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "trpc-nuxt": "^0.10.21",
+    "typescript": "^5.4.5",
     "vee-validate": "^4.12.6",
     "vue": "^3.4.24",
     "vue-router": "^4.3.0",
-    "zod": "^3.22.4"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "1.7.0",
-    "@nuxtjs/color-mode": "^3.4.0",
-    "@nuxtjs/supabase": "^1.2.1",
-    "@nuxtjs/tailwindcss": "^6.12.0",
-    "@types/pg": "^8.11.5",
-    "drizzle-kit": "^0.20.17",
-    "shadcn-nuxt": "^0.10.2",
-    "typescript": "^5.4.5"
+    "zod": "^3.23.5"
   }
 }

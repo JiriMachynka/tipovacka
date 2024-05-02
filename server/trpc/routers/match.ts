@@ -6,7 +6,7 @@ export const matchRouter = router({
 		.input(
 			z.object({
 				tournamentId: z.number(),
-				date: z.date(),
+				date: z.string(),
 				group: z.string(),
 				homeTeamId: z.number(),
 				awayTeamId: z.number(),
