@@ -24,6 +24,7 @@ const { data: matches, refresh } = await $client.tournament.getMatches.useQuery(
 const { data: teams } = await $client.tournament.getTeams.useQuery({ tournamentId });
 const { data: groups } = await $client.tournament.getGroups.useQuery({ tournamentId });
 
+// TODO: Move create match to separate file
 const { handleSubmit, values } = useForm({
 	validationSchema: createMatchSchema,
 	initialValues: {
