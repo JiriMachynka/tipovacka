@@ -95,10 +95,7 @@ export const finishMatch = async (matchId: number, homeScore: number, awayScore:
 		const homeWin = matchTip.userHomeScore > matchTip.userAwayScore && homeScore > awayScore;
 		const awayWin = matchTip.userHomeScore < matchTip.userAwayScore && homeScore < awayScore;
 
-		const exactDraw =
-			matchTip.userHomeScore === homeScore &&
-			matchTip.userHomeScore === matchTip.userAwayScore &&
-			homeScore === awayScore;
+		const exactDraw = matchTip.userHomeScore === homeScore && matchTip.userHomeScore === matchTip.userAwayScore && homeScore === awayScore;
 
 		const exactHomeWin =
 			matchTip.userHomeScore === homeScore &&

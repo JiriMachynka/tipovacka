@@ -5,11 +5,11 @@ import { useForm } from 'vee-validate';
 import { z } from 'zod';
 
 interface FinishMatchDialogProps {
-  matchId: number;
-  homeTeamName: string;
-  homeScore: number;
-  awayTeamName: string;
-  awayScore: number;
+	matchId: number;
+	homeTeamName: string;
+	homeScore: number;
+	awayTeamName: string;
+	awayScore: number;
 }
 
 const emit = defineEmits(['refresh']);

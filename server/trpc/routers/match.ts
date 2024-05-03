@@ -38,21 +38,25 @@ export const matchRouter = router({
 			await editMatch(matchId, new Date(date), group, homeTeamId, awayTeamId);
 		}),
 	update: privateProcedure
-		.input(z.object({
-			matchId: z.number(),
-			locked: z.boolean()
-		}))
-		.mutation(async ({ input }) => {   
+		.input(
+			z.object({
+				matchId: z.number(),
+				locked: z.boolean(),
+			}),
+		)
+		.mutation(async ({ input }) => {
 			const { matchId, locked } = input;
 
 			await updateMatch(matchId, locked);
 		}),
 	finish: privateProcedure
-		.input(z.object({
-			matchId: z.number(),
-			homeScore: z.number(),
-			awayScore: z.number(),
-		}))
+		.input(
+			z.object({
+				matchId: z.number(),
+				homeScore: z.number(),
+				awayScore: z.number(),
+			}),
+		)
 		.mutation(async ({ input }) => {
 			const { matchId, homeScore, awayScore } = input;
 

@@ -2,8 +2,8 @@
 import { Unlock, Lock } from 'lucide-vue-next';
 
 interface UpdateMatchStatusProps {
-  matchId: number;
-  locked: boolean;
+	matchId: number;
+	locked: boolean;
 }
 
 const emit = defineEmits(['refresh']);
@@ -15,11 +15,11 @@ const { $client } = useNuxtApp();
 const { mutate: updateMatch, status } = $client.match.update.useMutation();
 
 const handleUpdate = async (matchId: number, locked: boolean) => {
-  await updateMatch({
-    matchId,
-    locked
-  });
-  await emit('refresh');
+	await updateMatch({
+		matchId,
+		locked,
+	});
+	await emit('refresh');
 };
 </script>
 <template>
