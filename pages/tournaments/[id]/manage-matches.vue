@@ -10,6 +10,7 @@ const route = useRoute();
 
 const tournamentId = +route.params.id;
 
+// TODO: Validation schema is same as with edit match dialog
 const createMatchSchema = toTypedSchema(
 	z.object({
 		date: z.string(),
@@ -180,15 +181,29 @@ const onSubmit = handleSubmit(async (values) => {
     <TableBody>
       <TableRow v-for="match in matches" :key="match.id">
         <TableCell>
-          <span>{{ $dayjs(match.date).fromNow() }}</span>
-          <Separator class="my-0.5" />
-          <span>{{ $dayjs(match.date).format("DD.MM.YYYY HH:mm") }}</span>
+          <span v-if="!match.played">
+            <span>{{ $dayjs(match.date).fromNow() }}</span>
+            <Separator class="my-0.5" />
+            <span>{{ $dayjs(match.date).format("DD.MM.YYYY HH:mm") }}</span>
+          </span>
+          <span v-else>Odehráno</span>
         </TableCell>
         <TableCell>{{ match.group }}</TableCell>
         <TableCell>{{ match.homeTeamName }}</TableCell>
         <TableCell>{{ match.awayTeamName }}</TableCell>
         <TableCell>{{ match.homeScore }}:{{ match.awayScore }}</TableCell>
-        <TableCell>
+        <TableCell class="space-x-2">
+          <EditMatchDialog
+            v-if="!match.played"
+            :matchId="match.id"
+            :date="match.date"
+            :teams="teams"
+            :groups="groups"
+            :group="match.group"
+            :homeTeamId="match.homeTeamId.toString()"
+            :awayTeamId="match.awayTeamId.toString()"
+            @refresh="refresh"
+          />
           <DeleteMatchDialog
             :matchId="match.id"
             :homeTeamName="match.homeTeamName"

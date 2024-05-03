@@ -22,4 +22,19 @@ export const matchRouter = router({
 
 		await deleteMatch(matchId);
 	}),
+	edit: privateProcedure
+		.input(
+			z.object({
+				matchId: z.number(),
+				date: z.string(),
+				group: z.string(),
+				homeTeamId: z.number(),
+				awayTeamId: z.number(),
+			}),
+		)
+		.mutation(async ({ input }) => {
+			const { matchId, date, group, homeTeamId, awayTeamId } = input;
+
+			await editMatch(matchId, new Date(date), group, homeTeamId, awayTeamId);
+		}),
 });

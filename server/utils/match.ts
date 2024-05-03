@@ -35,3 +35,15 @@ export const deleteMatch = async (matchId: number) => {
 
 	await db.delete(TournamentMatchTips).where(eq(TournamentMatchTips.id, matchId));
 };
+
+export const editMatch = async (matchId: number, date: Date, group: string, homeTeamId: number, awayTeamId: number) => {
+	await db
+		.update(TournamentMatchTips)
+		.set({
+			date,
+			group,
+			homeTeamId,
+			awayTeamId,
+		})
+		.where(eq(TournamentMatchTips.id, matchId));
+};
