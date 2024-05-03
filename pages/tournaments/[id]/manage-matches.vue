@@ -204,6 +204,15 @@ const onSubmit = handleSubmit(async (values) => {
             :awayTeamId="match.awayTeamId.toString()"
             @refresh="refresh"
           />
+          <FinishMatchDialog
+            v-if="match.locked"
+            :matchId="match.id"
+            :homeTeamName="match.homeTeamName"
+            :homeScore="match.homeScore"
+            :awayTeamName="match.awayTeamName"
+            :awayScore="match.awayScore"
+            @refresh="refresh"
+          />
           <DeleteMatchDialog
             :matchId="match.id"
             :homeTeamName="match.homeTeamName"

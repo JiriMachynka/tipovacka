@@ -47,4 +47,15 @@ export const matchRouter = router({
 
 			await updateMatch(matchId, locked);
 		}),
+	finish: privateProcedure
+		.input(z.object({
+			matchId: z.number(),
+			homeScore: z.number(),
+			awayScore: z.number(),
+		}))
+		.mutation(async ({ input }) => {
+			const { matchId, homeScore, awayScore } = input;
+
+			await finishMatch(matchId, homeScore, awayScore);
+		}),
 });

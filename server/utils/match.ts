@@ -70,3 +70,53 @@ export const updateMatch = async (matchId: number, locked: boolean) => {
 
 	await db.update(TournamentMatchTips).set({ locked }).where(eq(TournamentMatchTips.id, matchId));
 };
+
+export const finishMatch = async (matchId: number, homeScore: number, awayScore: number) => {
+	await db
+		.update(TournamentMatchTips)
+		.set({
+			homeScore,
+			awayScore,
+			played: true,
+		})
+		.where(eq(TournamentMatchTips.id, matchId));
+
+	const userMatches = await db
+		.select({
+			id: UserMatchTips.id,
+			userHomeScore: UserMatchTips.homeScore,
+			userAwayScore: UserMatchTips.awayScore,
+		})
+		.from(UserMatchTips)
+		.where(eq(UserMatchTips.tournamentMatchTipId, matchId));
+
+	userMatches.map(async (matchTip) => {
+		const draw = matchTip.userHomeScore === matchTip.userAwayScore && homeScore === awayScore;
+		const homeWin = matchTip.userHomeScore > matchTip.userAwayScore && homeScore > awayScore;
+		const awayWin = matchTip.userHomeScore < matchTip.userAwayScore && homeScore < awayScore;
+
+		const exactDraw =
+			matchTip.userHomeScore === homeScore &&
+			matchTip.userHomeScore === matchTip.userAwayScore &&
+			homeScore === awayScore;
+
+		const exactHomeWin =
+			matchTip.userHomeScore === homeScore &&
+			matchTip.userAwayScore === awayScore &&
+			matchTip.userHomeScore > matchTip.userAwayScore &&
+			homeScore > awayScore;
+
+		const exactAwayWin =
+			matchTip.userHomeScore === homeScore &&
+			matchTip.userAwayScore === awayScore &&
+			matchTip.userHomeScore < matchTip.userAwayScore &&
+			homeScore < awayScore;
+
+		await db
+			.update(UserMatchTips)
+			.set({
+				points: exactDraw || exactHomeWin || exactAwayWin ? 3 : draw || homeWin || awayWin ? 1 : 0,
+			})
+			.where(eq(UserMatchTips.id, matchTip.id));
+	});
+};
