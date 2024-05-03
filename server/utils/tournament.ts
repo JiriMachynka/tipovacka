@@ -26,7 +26,10 @@ export const createTournament = async (authorId: string, name: string, players: 
 	);
 
 	if (players.length === 0) {
-		const [tournamentOverallTip] = await db.insert(TournamentOverallTips).values({ tournamentId: createdTournament.id }).returning({ id: TournamentOverallTips.id });
+		const [tournamentOverallTip] = await db
+			.insert(TournamentOverallTips)
+			.values({ tournamentId: createdTournament.id })
+			.returning({ id: TournamentOverallTips.id });
 
 		await db.insert(Players).values({
 			userId: authorId,
@@ -35,7 +38,10 @@ export const createTournament = async (authorId: string, name: string, players: 
 		});
 	} else {
 		players.map(async (player) => {
-			const [tournamentOverallTip] = await db.insert(TournamentOverallTips).values({ tournamentId: createdTournament.id }).returning({ id: TournamentOverallTips.id });
+			const [tournamentOverallTip] = await db
+				.insert(TournamentOverallTips)
+				.values({ tournamentId: createdTournament.id })
+				.returning({ id: TournamentOverallTips.id });
 
 			const [playerRecord] = await db
 				.select({

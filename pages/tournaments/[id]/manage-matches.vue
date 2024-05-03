@@ -210,6 +210,11 @@ const onSubmit = handleSubmit(async (values) => {
             :awayTeamName="match.awayTeamName"
             @refresh="refresh"
           />
+          <UpdateLockStatus
+            :matchId="match.id"
+            :locked="match.locked"
+            @refresh="refresh"
+          />
         </TableCell>
       </TableRow>
     </TableBody>

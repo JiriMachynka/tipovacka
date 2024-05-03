@@ -1,0 +1,30 @@
+<script lang="ts" setup>
+import { Unlock, Lock } from 'lucide-vue-next';
+
+interface UpdateMatchStatusProps {
+  matchId: number;
+  locked: boolean;
+}
+
+const emit = defineEmits(['refresh']);
+
+defineProps<UpdateMatchStatusProps>();
+
+const { $client } = useNuxtApp();
+
+const { mutate: updateMatch, status } = $client.match.update.useMutation();
+
+const handleUpdate = async (matchId: number, locked: boolean) => {
+  await updateMatch({
+    matchId,
+    locked
+  });
+  await emit('refresh');
+};
+</script>
+<template>
+  <Button variant="ghost" class="px-2">
+    <Lock v-if="!locked" class="cursor-pointer" @click="handleUpdate(matchId, true)" />
+    <Unlock v-else class="cursor-pointer" @click="handleUpdate(matchId, false)" />
+  </Button>
+</template>

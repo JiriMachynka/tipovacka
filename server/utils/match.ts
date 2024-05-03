@@ -47,3 +47,26 @@ export const editMatch = async (matchId: number, date: Date, group: string, home
 		})
 		.where(eq(TournamentMatchTips.id, matchId));
 };
+
+export const updateMatch = async (matchId: number, locked: boolean) => {
+	if (!locked) {
+		await db
+			.update(TournamentMatchTips)
+			.set({
+				locked,
+				played: false,
+				homeScore: 0,
+				awayScore: 0,
+			})
+			.where(eq(TournamentMatchTips.id, matchId));
+
+		await db
+			.update(UserMatchTips)
+			.set({
+				points: 0,
+			})
+			.where(eq(UserMatchTips.tournamentMatchTipId, matchId));
+	}
+
+	await db.update(TournamentMatchTips).set({ locked }).where(eq(TournamentMatchTips.id, matchId));
+};
