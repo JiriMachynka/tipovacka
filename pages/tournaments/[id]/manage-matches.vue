@@ -194,7 +194,7 @@ const onSubmit = handleSubmit(async (values) => {
         <TableCell>{{ match.homeScore }}:{{ match.awayScore }}</TableCell>
         <TableCell class="space-x-2">
           <EditMatchDialog
-            v-if="!match.played"
+            v-if="!match.locked"
             :matchId="match.id"
             :date="match.date"
             :teams="teams"
