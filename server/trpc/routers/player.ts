@@ -22,6 +22,6 @@ export const playerRouter = router({
 			}),
 		)
 		.mutation(async ({ ctx, input }) => {
-			return await deletePlayer(input.playerId); 
+			return await deletePlayer(input.playerId);
 		}),
 });

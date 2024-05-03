@@ -21,7 +21,7 @@ export const addPlayer = async (tournamentId: number, username: string) => {
 		columns: { id: true },
 	});
 
-	if (!userExists) return 'Uživatel s tímto uživatelským jménem neexistuje.'; 
+	if (!userExists) return 'Uživatel s tímto uživatelským jménem neexistuje.';
 
 	const [playerReady] = await db
 		.select({ id: Players.id })
@@ -32,10 +32,7 @@ export const addPlayer = async (tournamentId: number, username: string) => {
 
 	if (playerReady?.id) return 'Hráč je již v tipovačce.';
 
-	const [tournamentOverallTip] = await db
-		.insert(TournamentOverallTips)
-		.values({ tournamentId })
-		.returning({ id: TournamentOverallTips.id });
+	const [tournamentOverallTip] = await db.insert(TournamentOverallTips).values({ tournamentId }).returning({ id: TournamentOverallTips.id });
 
 	const user = await db.query.Users.findFirst({
 		where: eq(Users.username, username),
