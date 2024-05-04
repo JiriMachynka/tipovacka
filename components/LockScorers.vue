@@ -2,7 +2,7 @@
 import { Unlock, Lock } from 'lucide-vue-next';
 
 interface UpdateMatchStatusProps {
-  tournamentId: number;
+	tournamentId: number;
 	lockScorers: boolean;
 }
 
@@ -16,12 +16,11 @@ const { mutate: updateLockScorers } = $client.scorer.updateLockScorers.useMutati
 
 const handleLock = async (lockScorers: boolean) => {
 	await updateLockScorers({
-    tournamentId: props.tournamentId,
+		tournamentId: props.tournamentId,
 		lockScorers,
 	});
-  await emit('refresh');
+	await emit('refresh');
 };
-
 </script>
 <template>
   <div class="flex items-center gap-4 max-w-4xl mx-auto">
