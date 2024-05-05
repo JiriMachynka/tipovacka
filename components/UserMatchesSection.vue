@@ -1,0 +1,52 @@
+<script lang="ts" setup>
+const route = useRoute();
+
+const tournamentId = +route.params.id;
+
+const { $client } = useNuxtApp();
+
+const { data: userMatches, refresh } = await $client.tournament.getUserMatches.useQuery({ tournamentId });
+</script>
+<template>
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Start</TableHead>
+        <TableHead>Skupina</TableHead>
+        <TableHead>Domácí</TableHead>
+        <TableHead>Skóre</TableHead>
+        <TableHead>Hosté</TableHead>
+        <TableHead>Akce</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow
+        v-for="match in userMatches"
+        :key="match.id"
+      >
+        <TableCell>{{ $dayjs(match.date).fromNow() }}</TableCell>
+        <TableCell>{{ match.group }}</TableCell>
+        <TableCell>{{ match.homeTeamName }}</TableCell>
+        <TableCell>{{ match.homeScore }}:{{ match.awayScore }}</TableCell> 
+        <TableCell>{{ match.awayTeamName }}</TableCell>
+        <TableCell>
+          <span v-if="match.locked && !match.played" class="text-lg font-bold">
+            Čeká se na<br />vyhodnocení zápasu
+          </span>
+          <span v-else-if="match.locked && match.played" class="text-lg font-bold">
+            Zápas vyhodnocen ({{ match.points }}b)
+          </span>
+          <UserTipDialog
+            v-else
+            :matchId="match.id"
+            :homeTeamName="match.homeTeamName"
+            :homeScore="match.homeScore"
+            :awayTeamName="match.awayTeamName"
+            :awayScore="match.awayScore"
+            @refresh="refresh"
+          />
+        </TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</template>

@@ -72,3 +72,16 @@ export const deletePlayer = async (playerId: number) => {
 
 	await db.delete(Players).where(eq(Players.id, playerId));
 };
+
+export const getPlayerId = async (tournamentId: number, userId: string) => {
+	const [player] = await db
+		.select({ id: Players.id })
+		.from(Players)
+		.where(and(
+			eq(Players.userId, userId),
+			eq(Players.tournamentId, tournamentId),
+		)) 
+		.limit(1);
+
+	return player.id;
+};

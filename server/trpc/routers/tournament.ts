@@ -50,4 +50,24 @@ export const tournamentRouter = router({
 			}),
 		)
 		.query(async ({ input }) => await getTournamentPoints(input.tournamentId)),
+	getUserMatches: privateProcedure
+		.input(
+			z.object({
+				tournamentId: z.number(),
+			}),
+		)
+		.query(async ({ ctx, input }) => await getUserMatches(input.tournamentId, ctx.userId)),
+	updateUserMatchTip: privateProcedure
+		.input(
+			z.object({
+				tournamentId: z.number(),
+				matchId: z.number(),
+				homeScore: z.number(),
+				awayScore: z.number(),
+			}),
+		)
+		.mutation(async ({ ctx, input }) => {
+			const { tournamentId, matchId, homeScore, awayScore } = input;
+			await updateUserMatchTip(tournamentId, ctx.userId, matchId, homeScore, awayScore);
+		}),
 });
