@@ -24,11 +24,20 @@ const handleUpdate = async (increment: boolean) => {
 };
 </script>
 <template>
-  <Button variant="outline" class="p-3">
-		<Minus
-			v-if="goals === 0"
-			@click="handleUpdate(false)"
-		/>
-    <Plus @click="handleUpdate(true)" />
+	<Button
+		v-if="goals > 0"
+		variant="outline"
+		class="p-2"
+		@click="handleUpdate(false)"
+	>
+		<Minus />
+	</Button>
+	<div v-else class="w-[42px]" />
+  <Button
+		variant="outline"
+		class="p-2"
+		@click="handleUpdate(true)"
+	>
+    <Plus  />
   </Button>
 </template>
