@@ -52,6 +52,7 @@ const onSubmit = handleSubmit(async (values) => {
 	}
 	resetForm();
 
+	// TODO: Add toast for user to check his email confirmation
 	toast({
 		title: 'Zaregistrován',
 		description: 'Účet byl úspěšně zaregistrován!',
