@@ -3,14 +3,13 @@ import { Unlock, Lock } from 'lucide-vue-next';
 
 interface UpdateMatchStatusProps {
 	tournamentId: number;
-	lockScorers: boolean;
 }
-
-const emit = defineEmits(['refresh']);
 
 const props = defineProps<UpdateMatchStatusProps>();
 
 const { $client } = useNuxtApp();
+
+const { data, refresh } = await $client.scorer.getLockScorers.useQuery({ tournamentId: props.tournamentId });
 
 const { mutate: updateLockScorers } = $client.scorer.updateLockScorers.useMutation();
 
@@ -19,23 +18,21 @@ const handleLock = async (lockScorers: boolean) => {
 		tournamentId: props.tournamentId,
 		lockScorers,
 	});
-	await emit('refresh');
+	await refresh();
 };
 </script>
 <template>
   <div class="flex items-center gap-4 max-w-4xl mx-auto">
-    <Button variant="ghost" class="px-2">
+    <Button variant="ghost" class="px-2" @click="handleLock(!data!.lockScorers)">
       <Lock
-        v-if="!lockScorers"
+        v-if="!data?.lockScorers"
         class="cursor-pointer"
-        @click="handleLock(true)"
       />
       <Unlock
         v-else
         class="cursor-pointer"
-        @click="handleLock(false)"
       />
     </Button>
-    <Label>{{ lockScorers ? 'Střelci uzamčeni' : 'Střelci odemčeni' }}</Label>
+    <Label>{{ data?.lockScorers ? 'Střelci uzamčeni' : 'Střelci odemčeni' }}</Label>
   </div>
 </template>

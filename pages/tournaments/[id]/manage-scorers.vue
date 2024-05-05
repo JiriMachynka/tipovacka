@@ -6,14 +6,9 @@ const tournamentId = +route.params.id;
 const { $client } = useNuxtApp();
 
 const { data: scorers, refresh } = await $client.scorer.getAll.useQuery({ tournamentId });
-const { data: lockScorers } = await $client.scorer.getLockScorers.useQuery({ tournamentId });
 </script>
 <template>
-  <LockScorers
-    :tournamentId="tournamentId"
-    :lockScorers="lockScorers!.lockScorers"
-    @refresh="refresh"
-  />
+  <LockScorers :tournamentId="tournamentId" />
   <Table
     v-if="!!scorers?.length"
     class="mx-auto max-w-4xl mt-5"
