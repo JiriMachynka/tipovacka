@@ -78,10 +78,10 @@ export const TournamentOverallTips = pgTable('tournament_overall_tips', {
 	tournamentId: integer('tournament_id')
 		.notNull()
 		.references(() => Tournaments.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
-	winnerId: integer('winner_id').references(() => Teams.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
-	finalistId: integer('finalist_id').references(() => Teams.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
-	semifinalistFirstId: integer('semifinalist_first_id').references(() => Teams.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
-	semifinalistSecondId: integer('semifinalist_second_id').references(() => Teams.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
+	winnerId: integer('winner_id').references(() => Teams.id, { onDelete: 'set null', onUpdate: 'cascade' }),
+	finalistId: integer('finalist_id').references(() => Teams.id, { onDelete: 'set null', onUpdate: 'cascade' }),
+	semifinalistFirstId: integer('semifinalist_first_id').references(() => Teams.id, { onDelete: 'set null', onUpdate: 'cascade' }),
+	semifinalistSecondId: integer('semifinalist_second_id').references(() => Teams.id, { onDelete: 'set null', onUpdate: 'cascade' }),
 });
 
 export const tournamentOverallTipsRelations = relations(TournamentOverallTips, ({ one }) => ({

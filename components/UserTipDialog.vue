@@ -41,7 +41,7 @@ const { handleSubmit } = useForm({
 
 const onSubmit = handleSubmit(async (values) => {
 	await updateTip({
-    tournamentId,
+		tournamentId,
 		matchId: props.matchId,
 		homeScore: values.homeScore,
 		awayScore: values.awayScore,

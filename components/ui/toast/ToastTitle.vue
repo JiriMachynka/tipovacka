@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { ToastTitleProps } from 'radix-vue';
-import type { HTMLAttributes } from 'vue';
+import { type HTMLAttributes } from 'vue';
+import { ToastTitle, type ToastTitleProps } from 'radix-vue';
 
 const props = defineProps<ToastTitleProps & { class?: HTMLAttributes['class'] }>();
 

@@ -1,6 +1,5 @@
-<script lang="ts" setup>
-</script>
 <template>
   <ScorersSection />
+  <TeamsSection />
   <UserMatchesSection />
 </template>

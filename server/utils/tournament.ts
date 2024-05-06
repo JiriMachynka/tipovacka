@@ -176,3 +176,24 @@ export const getTournamentMatches = async (tournamentId: number) => {
 		.where(eq(TournamentMatchTips.tournamentId, tournamentId))
 		.orderBy(asc(TournamentMatchTips.date));
 };
+
+export const updateOverallTip = async (
+	tournamentId: number,
+	userId: string,
+	winnerId: number,
+	finalistId: number,
+	semifinalistFirstId: number,
+	semifinalistSecondId: number,
+) => {
+	const overallTipId = await getPlayerOverallTipId(tournamentId, userId);
+
+	await db
+		.update(TournamentOverallTips)
+		.set({
+			winnerId,
+			finalistId,
+			semifinalistFirstId,
+			semifinalistSecondId,
+		})
+		.where(eq(TournamentOverallTips.id, overallTipId));
+};

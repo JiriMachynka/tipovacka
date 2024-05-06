@@ -87,9 +87,9 @@ function dispatch(action: Action) {
 			if (toastId) {
 				addToRemoveQueue(toastId);
 			} else {
-				for (const toast of state.value.toasts) {
+				state.value.toasts.forEach((toast) => {
 					addToRemoveQueue(toast.id);
-				}
+				});
 			}
 
 			state.value.toasts = state.value.toasts.map((t) =>
@@ -106,6 +106,7 @@ function dispatch(action: Action) {
 		case actionTypes.REMOVE_TOAST:
 			if (action.toastId === undefined) state.value.toasts = [];
 			else state.value.toasts = state.value.toasts.filter((t) => t.id !== action.toastId);
+
 			break;
 	}
 }

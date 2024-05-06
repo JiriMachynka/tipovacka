@@ -1,5 +1,5 @@
 import { and, eq, ne, sql } from 'drizzle-orm';
-import { db, Players, TournamentMatchTips, TournamentOverallTips, UserMatchTips, Users } from '../db';
+import { db, Players, Tournaments, TournamentMatchTips, TournamentOverallTips, UserMatchTips, Users } from '../db';
 
 export const getPlayers = async (tournamentId: number, authorId: string) => {
 	const players = await db
@@ -77,11 +77,38 @@ export const getPlayerId = async (tournamentId: number, userId: string) => {
 	const [player] = await db
 		.select({ id: Players.id })
 		.from(Players)
-		.where(and(
-			eq(Players.userId, userId),
-			eq(Players.tournamentId, tournamentId),
-		)) 
+		.where(and(eq(Players.userId, userId), eq(Players.tournamentId, tournamentId)))
 		.limit(1);
 
 	return player.id;
+};
+
+export const getPlayerOverallTips = async (tournamentId: number, userId: string) => {
+	const overallTipId = await getPlayerOverallTipId(tournamentId, userId);
+
+	const [overallTip] = await db
+		.select({
+			id: TournamentOverallTips.id,
+			winnerId: TournamentOverallTips.winnerId,
+			finalistId: TournamentOverallTips.finalistId,
+			semifinalistFirstId: TournamentOverallTips.semifinalistFirstId,
+			semifinalistSecondId: TournamentOverallTips.semifinalistSecondId,
+			lockScorers: Tournaments.lockScorers,
+		})
+		.from(TournamentOverallTips)
+		.leftJoin(Tournaments, eq(TournamentOverallTips.tournamentId, Tournaments.id))
+		.where(eq(TournamentOverallTips.id, overallTipId))
+		.limit(1);
+
+	return overallTip;
+};
+
+export const getPlayerOverallTipId = async (tournamentId: number, userId: string) => {
+	const [player] = await db
+		.select({ overallTipId: Players.id })
+		.from(Players)
+		.where(and(eq(Players.userId, userId), eq(Players.tournamentId, tournamentId)))
+		.limit(1);
+
+	return player.overallTipId;
 };

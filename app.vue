@@ -1,4 +1,4 @@
 <template>
-  <!-- <Toaster /> -->
+  <Toaster />
   <NuxtPage />
 </template>

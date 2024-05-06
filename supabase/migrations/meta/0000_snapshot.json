@@ -1,5 +1,5 @@
 {
-  "id": "a45b6763-b85c-458c-88f4-1bf7e1374f4b",
+  "id": "c2f3a56b-9d6c-4529-83cb-fcdbb01d5fed",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
@@ -406,7 +406,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "cascade",
+          "onDelete": "set null",
           "onUpdate": "cascade"
         },
         "tournament_overall_tips_finalist_id_teams_id_fk": {
@@ -419,7 +419,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "cascade",
+          "onDelete": "set null",
           "onUpdate": "cascade"
         },
         "tournament_overall_tips_semifinalist_first_id_teams_id_fk": {
@@ -432,7 +432,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "cascade",
+          "onDelete": "set null",
           "onUpdate": "cascade"
         },
         "tournament_overall_tips_semifinalist_second_id_teams_id_fk": {
@@ -445,7 +445,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "cascade",
+          "onDelete": "set null",
           "onUpdate": "cascade"
         }
       },

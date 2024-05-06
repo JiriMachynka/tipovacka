@@ -136,25 +136,25 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "tournament_overall_tips" ADD CONSTRAINT "tournament_overall_tips_winner_id_teams_id_fk" FOREIGN KEY ("winner_id") REFERENCES "teams"("id") ON DELETE cascade ON UPDATE cascade;
+ ALTER TABLE "tournament_overall_tips" ADD CONSTRAINT "tournament_overall_tips_winner_id_teams_id_fk" FOREIGN KEY ("winner_id") REFERENCES "teams"("id") ON DELETE set null ON UPDATE cascade;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "tournament_overall_tips" ADD CONSTRAINT "tournament_overall_tips_finalist_id_teams_id_fk" FOREIGN KEY ("finalist_id") REFERENCES "teams"("id") ON DELETE cascade ON UPDATE cascade;
+ ALTER TABLE "tournament_overall_tips" ADD CONSTRAINT "tournament_overall_tips_finalist_id_teams_id_fk" FOREIGN KEY ("finalist_id") REFERENCES "teams"("id") ON DELETE set null ON UPDATE cascade;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "tournament_overall_tips" ADD CONSTRAINT "tournament_overall_tips_semifinalist_first_id_teams_id_fk" FOREIGN KEY ("semifinalist_first_id") REFERENCES "teams"("id") ON DELETE cascade ON UPDATE cascade;
+ ALTER TABLE "tournament_overall_tips" ADD CONSTRAINT "tournament_overall_tips_semifinalist_first_id_teams_id_fk" FOREIGN KEY ("semifinalist_first_id") REFERENCES "teams"("id") ON DELETE set null ON UPDATE cascade;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "tournament_overall_tips" ADD CONSTRAINT "tournament_overall_tips_semifinalist_second_id_teams_id_fk" FOREIGN KEY ("semifinalist_second_id") REFERENCES "teams"("id") ON DELETE cascade ON UPDATE cascade;
+ ALTER TABLE "tournament_overall_tips" ADD CONSTRAINT "tournament_overall_tips_semifinalist_second_id_teams_id_fk" FOREIGN KEY ("semifinalist_second_id") REFERENCES "teams"("id") ON DELETE set null ON UPDATE cascade;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
