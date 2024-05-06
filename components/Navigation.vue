@@ -8,9 +8,12 @@ const route = useRoute();
 const tournamentId = +route.params.id;
 const currentPageTitle = route.path.split('/').pop();
 
+const colorMode = useColorMode();
+
 const user = useSupabaseUser();
 
 const { $client } = useNuxtApp();
+
 const { data: tournament } = await $client.tournament.getData.useQuery({ tournamentId });
 
 const mobileNav = ref(false);
@@ -230,8 +233,16 @@ const logout = async () => {
       :aria-expanded="mobileNav"
       @click="() => (mobileNav = !mobileNav)"
     >
-      <X v-if="mobileNav" :size="30" /> 
-      <Menu v-else :size="30" />
+      <X
+        v-if="mobileNav"
+        :size="30"
+        :stroke="colorMode.value === 'dark' ? 'white' : 'black'"
+      /> 
+      <Menu
+        v-else
+        :size="30"
+        :stroke="colorMode.value === 'dark' ? 'white' : 'black'"
+      />
     </button>
   </div>
 </template>
