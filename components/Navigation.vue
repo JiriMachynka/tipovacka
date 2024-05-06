@@ -6,7 +6,7 @@ const supabaseClient = useSupabaseClient();
 const route = useRoute();
 
 const tournamentId = +route.params.id;
-const currentPageTitle = route.path.split('/').pop();
+const currentPageTitle = computed(() => route.path.split('/').pop());
 
 const colorMode = useColorMode();
 
@@ -19,6 +19,7 @@ const { data: tournament } = await $client.tournament.getData.useQuery({ tournam
 const mobileNav = ref(false);
 
 const logout = async () => {
+  mobileNav.value = false;
 	await supabaseClient.auth.signOut();
 	navigateTo('/');
 };
@@ -43,7 +44,7 @@ const logout = async () => {
           class="w-full text-xl lg:text-lg py-3 font-bold"
           as-child
         >
-          <NuxtLink to="/tournaments">
+          <NuxtLink to="/tournaments" @click="() => (mobileNav = !mobileNav)">
             Zpět na tipovačky
           </NuxtLink>
         </Button>
@@ -57,7 +58,7 @@ const logout = async () => {
           class="w-full text-xl lg:text-lg py-3 font-bold"
           as-child
         >
-          <NuxtLink :to="`/tournaments/${tournamentId}/`">
+          <NuxtLink :to="`/tournaments/${tournamentId}/`" @click="() => (mobileNav = !mobileNav)">
             Tabulka
           </NuxtLink>
         </Button>
@@ -71,7 +72,7 @@ const logout = async () => {
           class="w-full text-xl lg:text-lg py-3 font-bold"
           as-child
         >
-          <NuxtLink :to="`/tournaments/${tournamentId}/my-tips`">
+          <NuxtLink :to="`/tournaments/${tournamentId}/my-tips`" @click="() => (mobileNav = !mobileNav)">
             Moje tipy
           </NuxtLink>
         </Button>
@@ -85,107 +86,107 @@ const logout = async () => {
           class="w-full text-xl lg:text-lg py-3 font-bold"
           as-child
         >
-          <NuxtLink :to="`/tournaments/${tournamentId}/leaderboard`">
+          <NuxtLink :to="`/tournaments/${tournamentId}/leaderboard`" @click="() => (mobileNav = !mobileNav)">
             Žebříček
           </NuxtLink>
         </Button>
       </li>
-        <li v-if="tournament!.data[0].authorId === user?.id" class="hidden lg:inline-flex"> 
-          <DropdownMenu>
-            <DropdownMenuTrigger
-              :class="cn(buttonVariants({ variant: 'ghost' }),
-                'w-full text-lg py-3 inline-flex items-center gap-2 group font-bold'
+      <li v-if="tournament!.data[0].authorId === user?.id" class="hidden lg:inline-flex"> 
+        <DropdownMenu>
+          <DropdownMenuTrigger
+            :class="cn(buttonVariants({ variant: 'ghost' }),
+              'w-full text-lg py-3 inline-flex items-center gap-2 group font-bold'
+            )"
+          >
+            <span>Admin sekce</span>
+            <!-- TODO: Make icons animated -->
+            <ChevronUp
+              :size="20"
+              class="group-data-[state=closed]:hidden group-data-[state=open]:block"
+            />
+            <ChevronDown
+              :size="20"
+              class="group-data-[state=closed]:block group-data-[state=open]:hidden"
+            />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent class="flex flex-col max-w-52 w-full">
+            <DropdownMenuItem :class="cn(buttonVariants({ variant: 'ghost' }),
+                'text-lg font-bold px-5 py-3 hover:cursor-pointer'
               )"
+              as-child
             >
-              <span>Admin sekce</span>
-              <!-- TODO: Make icons animated -->
-              <ChevronUp
-                :size="20"
-                class="group-data-[state=closed]:hidden group-data-[state=open]:block"
-              />
-              <ChevronDown
-                :size="20"
-                class="group-data-[state=closed]:block group-data-[state=open]:hidden"
-              />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent class="flex flex-col max-w-52 w-full">
-              <DropdownMenuItem :class="cn(buttonVariants({ variant: 'ghost' }),
-                  'text-lg font-bold px-5 py-3 hover:cursor-pointer'
-                )"
-                as-child
-              >
-                <NuxtLink :to="`/tournaments/${tournamentId}/manage-matches`">
-                  Spravovat zápasy
-                </NuxtLink>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem :class="cn(buttonVariants({ variant: 'ghost' }),
-                  'text-lg font-bold px-5 py-3 hover:cursor-pointer'
-                )"
-                as-child
-              >
-                <NuxtLink :to="`/tournaments/${tournamentId}/manage-scorers`">
-                  Spravovat střelce
-                </NuxtLink>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem :class="cn(buttonVariants({ variant: 'ghost' }),
-                  'text-lg font-bold px-5 py-3 hover:cursor-pointer'
-                )"
-                as-child
-              >
-                <NuxtLink :to="`/tournaments/${tournamentId}/manage-players`">
-                  Spravovat hráče
-                </NuxtLink>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </li>
-        <li v-if="tournament!.data[0].authorId === user?.id" :class="cn('lg:hidden', { 
-            'hidden': !mobileNav,
-            'block': mobileNav,
-          })"
+              <NuxtLink :to="`/tournaments/${tournamentId}/manage-matches`">
+                Spravovat zápasy
+              </NuxtLink>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem :class="cn(buttonVariants({ variant: 'ghost' }),
+                'text-lg font-bold px-5 py-3 hover:cursor-pointer'
+              )"
+              as-child
+            >
+              <NuxtLink :to="`/tournaments/${tournamentId}/manage-scorers`">
+                Spravovat střelce
+              </NuxtLink>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem :class="cn(buttonVariants({ variant: 'ghost' }),
+                'text-lg font-bold px-5 py-3 hover:cursor-pointer'
+              )"
+              as-child
+            >
+              <NuxtLink :to="`/tournaments/${tournamentId}/manage-players`">
+                Spravovat hráče
+              </NuxtLink>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </li>
+      <li v-if="tournament!.data[0].authorId === user?.id" :class="cn('lg:hidden', { 
+          'hidden': !mobileNav,
+          'block': mobileNav,
+        })"
+      >
+        <Button
+          variant="ghost"
+          class="w-full text-xl py-3 font-bold"
+          as-child
         >
-          <Button
-            variant="ghost"
-            class="w-full text-xl py-3 font-bold"
-            as-child
-          >
-            <NuxtLink :to="`/tournaments/${tournamentId}/manage-matches`">
-              Spravovat zápasy
-            </NuxtLink>
-          </Button>
-        </li>
-        <li v-if="tournament!.data[0].authorId === user?.id" :class="cn('lg:hidden', { 
-            'hidden': !mobileNav,
-            'block': mobileNav,
-          })"
+          <NuxtLink :to="`/tournaments/${tournamentId}/manage-matches`" @click="() => (mobileNav = !mobileNav)">
+            Spravovat zápasy
+          </NuxtLink>
+        </Button>
+      </li>
+      <li v-if="tournament!.data[0].authorId === user?.id" :class="cn('lg:hidden', { 
+          'hidden': !mobileNav,
+          'block': mobileNav,
+        })"
+      >
+        <Button
+          variant="ghost"
+          class="w-full text-xl py-3 font-bold"
+          as-child
         >
-          <Button
-            variant="ghost"
-            class="w-full text-xl py-3 font-bold"
-            as-child
-          >
-            <NuxtLink :to="`/tournaments/${tournamentId}/manage-scorers`">
-              Spravovat střelce
-            </NuxtLink>
-          </Button>
-        </li>
-        <li v-if="tournament!.data[0].authorId === user?.id" :class="cn('lg:hidden', { 
-            'hidden': !mobileNav,
-            'block': mobileNav,
-          })"
+          <NuxtLink :to="`/tournaments/${tournamentId}/manage-scorers`" @click="() => (mobileNav = !mobileNav)">
+            Spravovat střelce
+          </NuxtLink>
+        </Button>
+      </li>
+      <li v-if="tournament!.data[0].authorId === user?.id" :class="cn('lg:hidden', { 
+          'hidden': !mobileNav,
+          'block': mobileNav,
+        })"
+      >
+        <Button
+          variant="ghost"
+          class="w-full text-xl py-3 font-bold"
+          as-child
         >
-          <Button
-            variant="ghost"
-            class="w-full text-xl py-3 font-bold"
-            as-child
-          >
-            <NuxtLink :to="`/tournaments/${tournamentId}/manage-players`">
-              Spravovat hráče
-            </NuxtLink>
-          </Button>
-        </li>
+          <NuxtLink :to="`/tournaments/${tournamentId}/manage-players`" @click="() => (mobileNav = !mobileNav)">
+            Spravovat hráče
+          </NuxtLink>
+        </Button>
+      </li>
       <li :class="cn('lg:block', {
           'hidden': !mobileNav,
         })"
@@ -214,19 +215,19 @@ const logout = async () => {
     </nav>
   </div>
   <div :class="cn('items-center w-full', {
-      'grid grid-cols-[1fr_auto]': !mobileNav,
+      'grid grid-cols-[auto_1fr_auto]': !mobileNav,
       'flex': mobileNav,
     })"
   >
-    <h2 :class="cn('text-4xl text-center font-semibold uppercase my-3 lg:hidden lg:mt-0', {
-          'inline-flex ': mobileNav,
-        }
-      )"
+    <div class="size-12 inline-flex lg:hidden" />
+    <h2 :class="cn('text-2xl md:text-4xl text-center font-semibold uppercase my-3 lg:hidden lg:mt-0', {
+        'inline-flex ': mobileNav,
+      })"
     >
       {{ getPageName(currentPageTitle) }}
     </h2>
     <Button 
-      :class="cn('m-2 z-50 p-2 inline-flex w-fit lg:hidden', {
+      :class="cn('z-50 p-2 inline-flex w-fit lg:hidden', {
         'ml-auto': mobileNav,
       })"
       variant="outline"
