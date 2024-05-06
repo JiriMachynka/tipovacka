@@ -225,10 +225,11 @@ const logout = async () => {
     >
       {{ getPageName(currentPageTitle) }}
     </h2>
-    <button 
-      :class="cn('m-2 z-50 p-2 text-slate-50 rounded-lg lg:hidden hover:bg-slate-50 hover:text-slate-700 focus:outline-none focus:ring-2 focus:ring-gray-200', {
+    <Button 
+      :class="cn('m-2 z-50 p-2', {
         'ml-auto': mobileNav,
       })"
+      variant="ghost"
       aria-controls="mobile-menu"
       :aria-expanded="mobileNav"
       @click="() => (mobileNav = !mobileNav)"
@@ -243,6 +244,6 @@ const logout = async () => {
         :size="30"
         :stroke="colorMode.value === 'dark' ? 'white' : 'black'"
       />
-    </button>
+    </Button>
   </div>
 </template>
