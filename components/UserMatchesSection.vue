@@ -8,7 +8,7 @@ const { $client } = useNuxtApp();
 const { data: userMatches, refresh } = await $client.tournament.getUserMatches.useQuery({ tournamentId });
 </script>
 <template>
-  <Table>
+  <Table v-if="userMatches?.length" class="mt-5">
     <TableHeader>
       <TableRow>
         <TableHead>Start</TableHead>
@@ -49,4 +49,7 @@ const { data: userMatches, refresh } = await $client.tournament.getUserMatches.u
       </TableRow>
     </TableBody>
   </Table>
+  <div v-else class="flex justify-center items-center h-[250px]">
+    <p class="text-3xl font-bold">Žádné zápasy</p>
+  </div>
 </template>
