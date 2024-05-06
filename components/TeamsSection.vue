@@ -25,10 +25,10 @@ const { handleSubmit, values } = useForm({
 		}),
 	),
 	initialValues: {
-		winnerId: overallTips.value?.winnerId.toString() || '',
-		finalistId: overallTips.value?.finalistId.toString() || '',
-		semifinalistFirstId: overallTips.value?.semifinalistFirstId.toString() || '',
-		semifinalistSecondId: overallTips.value?.semifinalistSecondId.toString() || '',
+		winnerId: overallTips.value?.winnerId?.toString() || '',
+		finalistId: overallTips.value?.finalistId?.toString() || '',
+		semifinalistFirstId: overallTips.value?.semifinalistFirstId?.toString() || '',
+		semifinalistSecondId: overallTips.value?.semifinalistSecondId?.toString() || '',
 	},
 });
 
