@@ -20,10 +20,10 @@ const handleLock = async (lockScorers: boolean) => {
 		lockScorers,
 	});
 	await refresh();
-  toast({
-    title: `${lockScorers ? 'Uzamčeno' : 'Odemčeno'}`, 
-    description: `Střelci byli ${lockScorers ? 'uzamčeni' : 'odemčeni'}`,
-  });
+	toast({
+		title: `${lockScorers ? 'Uzamčeno' : 'Odemčeno'}`,
+		description: `Střelci byli ${lockScorers ? 'uzamčeni' : 'odemčeni'}`,
+	});
 };
 </script>
 <template>

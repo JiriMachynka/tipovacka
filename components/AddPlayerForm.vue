@@ -5,6 +5,7 @@ import { z } from 'zod';
 
 const emit = defineEmits(['refresh']);
 
+const { toast } = useToast();
 const { $client } = useNuxtApp();
 
 const props = defineProps<{ tournamentId: number }>();
@@ -25,6 +26,10 @@ const onSubmit = handleSubmit(async (values) => {
 		username: values.username,
 	});
 	await emit('refresh');
+	toast({
+		title: 'Přidání hráče',
+		description: 'Hráč byl úspěšně přidán',
+	});
 });
 </script>
 <template>

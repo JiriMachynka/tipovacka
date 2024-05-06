@@ -16,7 +16,7 @@ const { $client } = useNuxtApp();
 const { mutate: createTournament } = $client.tournament.create.useMutation();
 const { data: user } = await $client.user.me.useQuery();
 
-const { defineField, handleSubmit, isSubmitting } = useForm({
+const { handleSubmit, isSubmitting } = useForm({
 	validationSchema,
 	initialValues: {
 		tournamentName: '',
@@ -24,10 +24,6 @@ const { defineField, handleSubmit, isSubmitting } = useForm({
 		teams: '',
 	},
 });
-
-const [tournamentName, tournamentNameAttrs] = defineField('tournamentName');
-const [players, playersAttrs] = defineField('players');
-const [teams, teamsAttrs] = defineField('teams');
 
 const onSubmit = handleSubmit(async (values) => {
 	const { tournamentName, teams, players } = values;
@@ -53,53 +49,63 @@ const onSubmit = handleSubmit(async (values) => {
   <div class="flex flex-col h-dvh">
     <Button 
       class="w-fit mx-auto my-3"
-      @click="navigateTo('/')" 
+      @click="navigateTo('/tournaments')" 
     > 
       Zpět na tipovačky
     </Button>
     <form class="flex flex-col gap-5 mx-3 lg:w-full lg:max-w-screen-lg lg:mx-auto" @submit="onSubmit">
-      <div class="flex flex-col gap-3">
-        <Label for="tournamentName">Název tipovačky</Label>
-        <Input 
-          id="tournamentName" 
-          type="text"
-          v-model="tournamentName"
-          v-bind="tournamentNameAttrs"
-          class="w-full"
-          placeholder="Název tipovačky"
-        />
-      </div>
-      <div class="flex flex-col gap-3">
-        <div class="flex gap-3">
-          <Label for="players">Hráči</Label>
-          <InfoTooltip>
-            <p class="text-base">Hráči se zadávají ve formátu:</p>
-            <p class="text-base">Každý hráč na novém řádku</p>
-          </InfoTooltip>
-        </div>
-        <Textarea
-          id="players"
-          v-model="players"
-          v-bind="playersAttrs"
-          class="w-full h-52"
-        />
-      </div>
-      <div class="flex flex-col w-full gap-3">
-        <div class="flex gap-3">
-          <Label for="teams">Týmy</Label>
-          <InfoTooltip>
-            <p class="text-base">Týmy se zadávají ve formátu:</p>
-            <p class="text-base">Název týmu, Název týmu, Název týmu</p>
-            <p class="text-base">Každý skupina na novém řádku</p>
-          </InfoTooltip>
-        </div>
-        <Textarea
-          id="teams"
-          v-model="teams"
-          v-bind="teamsAttrs"
-          class="h-40"
-        />
-      </div>
+      <FormField v-slot="{ componentField }" name="tournamentName">
+        <FormItem>
+          <FormLabel>Název tipovačky</FormLabel>
+          <FormControl>
+            <Input
+              type="text"
+              v-bind="componentField"
+              placeholder="Název tipovačky"
+              class="w-full"
+            />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      </FormField>
+      <FormField v-slot="{ componentField }" name="players">
+        <FormItem>
+          <FormLabel class="inline-flex gap-2">
+            Hráči
+            <InfoTooltip class="*:text-base">
+              <p>Hráči se zadávají ve formátu:</p>
+              <p>Každý hráč na novém řádku</p>
+            </InfoTooltip>
+          </FormLabel>
+          <FormControl>
+            <Input
+              type="text"
+              v-bind="componentField"
+              class="w-full h-52"
+            />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      </FormField>
+      <FormField v-slot="{ componentField }" name="teams">
+        <FormItem>
+          <FormLabel class="inline-flex gap-2">
+            Týmy
+            <InfoTooltip class="*:text-base">
+              <p>Týmy se zadávají ve formátu:</p>
+              <p>Název týmu, Název týmu, Název týmu</p>
+              <p>Každý skupina na novém řádku</p>
+            </InfoTooltip>
+          </FormLabel>
+          <FormControl>
+            <Textarea
+              v-bind="componentField"
+              class="h-40"
+            />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      </FormField>
       <Button
         class="text-xl py-3 lg:text-3xl"
         type="submit"

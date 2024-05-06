@@ -26,6 +26,7 @@ const props = defineProps<{
 	awayTeamId: string;
 }>();
 
+const { toast } = useToast();
 const { $client, $dayjs } = useNuxtApp();
 
 const { mutate: editMatch } = $client.match.edit.useMutation();
@@ -56,7 +57,11 @@ const onSubmit = handleSubmit(async (values) => {
 		homeTeamId: +values.homeTeamId,
 		awayTeamId: +values.awayTeamId,
 	});
-	emit('refresh');
+	await emit('refresh');
+	toast({
+		title: 'Úprava zápasu',
+		description: 'Zápas byl úspěšně upraven',
+	});
 });
 </script>
 <template>

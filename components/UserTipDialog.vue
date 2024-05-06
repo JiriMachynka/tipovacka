@@ -21,8 +21,8 @@ const route = useRoute();
 
 const tournamentId = +route.params.id;
 
-const { $client } = useNuxtApp();
 const { toast } = useToast();
+const { $client } = useNuxtApp();
 
 const { mutate: updateTip } = $client.tournament.updateUserMatchTip.useMutation();
 
@@ -47,6 +47,11 @@ const onSubmit = handleSubmit(async (values) => {
 		awayScore: values.awayScore,
 	});
 	await emit('refresh');
+
+	toast({
+		title: 'Úspěšně upraven',
+		description: 'Výsledný stav byl úspěšně upraven',
+	});
 });
 </script>
 <template>

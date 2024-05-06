@@ -15,15 +15,15 @@ const { data: groups } = await $client.tournament.getGroups.useQuery({ tournamen
 const { mutate: createMatch, status: createMatchStatus } = $client.match.create.useMutation();
 
 const { handleSubmit, values } = useForm({
-  // TODO: Validation schema is same as with edit match dialog
-  validationSchema: toTypedSchema(
-    z.object({
-      date: z.string(),
-      group: z.string(),
-      homeTeamId: z.string(),
-      awayTeamId: z.string(),
-    }),
-  ),
+	// TODO: Validation schema is same as with edit match dialog
+	validationSchema: toTypedSchema(
+		z.object({
+			date: z.string(),
+			group: z.string(),
+			homeTeamId: z.string(),
+			awayTeamId: z.string(),
+		}),
+	),
 	initialValues: {
 		group: groups!.value[0].name,
 	},

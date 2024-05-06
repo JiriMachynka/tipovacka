@@ -42,12 +42,12 @@ const onSubmit = handleSubmit(async (values) => {
 		secondScorerLastName: values.secondScorerLastName,
 	});
 
+	await refresh();
+
 	toast({
 		title: 'Aktualizováno',
 		description: 'Střelci byli úspěšně aktualizováni!',
 	});
-
-	await refresh();
 });
 
 const firstScorerOpen = ref(false);

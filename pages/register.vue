@@ -23,12 +23,7 @@ const validationSchema = toTypedSchema(
 const { toast } = useToast();
 const supabaseClient = useSupabaseClient();
 
-const { defineField, handleSubmit, isSubmitting, resetForm, errors } = useForm({ validationSchema });
-
-const [username, usernameAttrs] = defineField('username');
-const [email, emailAttrs] = defineField('email');
-const [password, passwordAttrs] = defineField('password');
-const [passwordConfirm, passwordConfirmAttrs] = defineField('passwordConfirm');
+const { handleSubmit, isSubmitting, resetForm } = useForm({ validationSchema });
 
 const onSubmit = handleSubmit(async (values) => {
 	const { error } = await supabaseClient.auth.signUp({
@@ -52,40 +47,59 @@ const onSubmit = handleSubmit(async (values) => {
 	}
 	resetForm();
 
-	// TODO: Add toast for user to check his email confirmation
 	toast({
 		title: 'Zaregistrován',
 		description: 'Účet byl úspěšně zaregistrován!',
 	});
 
-	navigateTo('/');
+	navigateTo('/login');
 });
 </script>
 <template>
   <main class="containter flex flex-col justify-center items-center gap-4 h-[100dvh]">
     <form class="flex flex-col gap-2 max-w-3xl w-full" @submit="onSubmit">
       <h1 class="text-3xl font-bold text-center">Registrace</h1>
-      <div class="flex flex-col gap-4">
-        <Label html="username">Uživatelské jméno</Label>
-        <Input id="username" v-model="username" v-bind="usernameAttrs" />
-        <span v-if="errors.username">{{ errors.username }}</span>
-      </div>
-      <div class="flex flex-col gap-4">
-        <Label html="email">Email</Label>
-        <Input id="email" v-model="email" v-bind="emailAttrs" />
-        <span v-if="errors.email">{{ errors.email }}</span>
-      </div>
-      <div class="flex flex-col gap-4">
-        <Label html="password">Heslo</Label>
-        <Input id="password" type="password" v-model="password" v-bind="passwordAttrs" />
-        <span v-if="errors.password">{{ errors.password }}</span>
-      </div>
-      <div class="flex flex-col gap-4">
-        <Label html="passwordConfirm">Heslo znovu</Label>
-        <Input id="passwordConfirm" type="password" v-model="passwordConfirm" v-bind="passwordConfirmAttrs" />
-        <span v-if="errors.passwordConfirm">{{ errors.passwordConfirm }}</span>
-      </div>
-      <Button type="submit" :disabled="isSubmitting" class="w-full text-lg">
+      <FormField v-slot="{ componentField }" name="username">
+				<FormItem>
+					<FormLabel>Uživatelské jméno</FormLabel>
+					<FormControl>
+						<Input type="text" v-bind="componentField" />
+					</FormControl>
+					<FormMessage />
+				</FormItem>
+			</FormField>
+      <FormField v-slot="{ componentField }" name="email">
+				<FormItem>
+					<FormLabel>Email</FormLabel>
+					<FormControl>
+						<Input type="email" v-bind="componentField" />
+					</FormControl>
+					<FormMessage />
+				</FormItem>
+			</FormField>
+      <FormField v-slot="{ componentField }" name="password">
+				<FormItem>
+					<FormLabel>Heslo</FormLabel>
+					<FormControl>
+						<Input type="password" v-bind="componentField" />
+					</FormControl>
+					<FormMessage />
+				</FormItem>
+			</FormField>
+      <FormField v-slot="{ componentField }" name="passwordConfirm">
+				<FormItem>
+					<FormLabel>Heslo znovu</FormLabel>
+					<FormControl>
+						<Input type="password" v-bind="componentField" />
+					</FormControl>
+					<FormMessage />
+				</FormItem>
+			</FormField>
+      <Button
+				type="submit"
+				:disabled="isSubmitting"
+				class="w-full text-lg"
+			>
         Registrovat se
       </Button>
     </form>

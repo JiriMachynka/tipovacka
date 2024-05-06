@@ -16,6 +16,9 @@ const emit = defineEmits(['refresh']);
 
 const props = defineProps<FinishMatchDialogProps>();
 
+const { toast } = useToast();
+const { $client } = useNuxtApp();
+
 const { handleSubmit } = useForm({
 	validationSchema: toTypedSchema(
 		z.object({
@@ -29,8 +32,6 @@ const { handleSubmit } = useForm({
 	},
 });
 
-const { $client } = useNuxtApp();
-
 const { mutate: finishMatch } = $client.match.finish.useMutation();
 
 const onSubmit = handleSubmit(async (values) => {
@@ -40,6 +41,10 @@ const onSubmit = handleSubmit(async (values) => {
 		awayScore: values.awayScore,
 	});
 	await emit('refresh');
+	toast({
+		title: 'Výsledný stav',
+		description: 'Zápas byl úspěšně upraven',
+	});
 });
 </script>
 <template>
