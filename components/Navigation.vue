@@ -226,7 +226,7 @@ const logout = async () => {
       {{ getPageName(currentPageTitle) }}
     </h2>
     <Button 
-      :class="cn('m-2 z-50 p-2 inline-flex w-fit', {
+      :class="cn('m-2 z-50 p-2 inline-flex w-fit lg:hidden', {
         'ml-auto': mobileNav,
       })"
       variant="outline"
