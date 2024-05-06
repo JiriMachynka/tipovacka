@@ -27,7 +27,7 @@ const logout = async () => {
 <template>
   <div :class="cn('lg:relative lg:flex lg:flex-row items-center', {
       'hidden': !mobileNav,
-      'absolute left-0 top-0 pt-20 w-full flex flex-col bg-background': mobileNav,
+      'absolute left-0 top-0 pt-20 flex flex-col bg-background w-full h-dvh z-50': mobileNav,
     })"
   >
     <nav :class="cn('list-none lg:left-0 lg:top-0 flex justify-center lg:flex-row lg:gap-2 w-full my-3', {
@@ -226,10 +226,10 @@ const logout = async () => {
       {{ getPageName(currentPageTitle) }}
     </h2>
     <Button 
-      :class="cn('m-2 z-50 p-2', {
+      :class="cn('m-2 z-50 p-2 inline-flex w-fit', {
         'ml-auto': mobileNav,
       })"
-      variant="ghost"
+      variant="outline"
       aria-controls="mobile-menu"
       :aria-expanded="mobileNav"
       @click="() => (mobileNav = !mobileNav)"
