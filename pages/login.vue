@@ -3,10 +3,6 @@ import { toTypedSchema } from '@vee-validate/zod';
 import { useForm } from 'vee-validate';
 import { z } from 'zod';
 
-definePageMeta({
-	middleware: ['user'],
-});
-
 const { toast } = useToast();
 const supabaseClient = useSupabaseClient();
 
