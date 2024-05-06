@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { X, ChevronDown, ChevronUp } from 'lucide-vue-next';
+import { Menu,X, ChevronDown, ChevronUp } from 'lucide-vue-next';
 
 const supabaseClient = useSupabaseClient();
 
@@ -222,29 +222,16 @@ const logout = async () => {
     >
       {{ getPageName(currentPageTitle) }}
     </h2>
-    <button :class="cn('m-2 z-50 p-2 text-slate-50 rounded-lg lg:hidden hover:bg-slate-50 hover:text-slate-700 focus:outline-none focus:ring-2 focus:ring-gray-200', {
-          'ml-auto': mobileNav,
-        })"
+    <button 
+      :class="cn('m-2 z-50 p-2 text-slate-50 rounded-lg lg:hidden hover:bg-slate-50 hover:text-slate-700 focus:outline-none focus:ring-2 focus:ring-gray-200', {
+        'ml-auto': mobileNav,
+      })"
       aria-controls="mobile-menu"
-      aria-expanded="false"
+      :aria-expanded="mobileNav"
       @click="() => (mobileNav = !mobileNav)"
     >
       <X v-if="mobileNav" :size="30" /> 
-      <svg
-        v-else
-        width="30"
-        height="30"
-        aria-hidden="true"
-        fill="currentColor"
-        viewBox="0 0 20 20"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          fill-rule="evenodd"
-          d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-          clip-rule="evenodd"
-        ></path>
-      </svg>
+      <Menu v-else :size="30" />
     </button>
   </div>
 </template>
