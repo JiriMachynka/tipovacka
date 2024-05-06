@@ -2,14 +2,12 @@
 import { Users, Swords } from 'lucide-vue-next';
 
 const { $client } = useNuxtApp();
+
 const route = useRoute();
 
-const { data: tournament } = await $client.tournament.getData.useQuery({ tournamentId: +route.params.id });
+const tournamentId = +route.params.id;
 
-if (!tournament.value) {
-	// TODO: Show 404 page
-	// navigateTo('/');
-}
+const { data: tournament } = await $client.tournament.getData.useQuery({ tournamentId });
 
 const numberOfMatches = tournament.value?.userMatches ? tournament.value?.userMatches.length / tournament.value?.data.length : 0;
 </script>
