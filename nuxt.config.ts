@@ -27,6 +27,7 @@ export default defineNuxtConfig({
     defaultLocale: 'cs',
   },
   colorMode: {
+    preference: 'dark',
     classSuffix: ''
   },
   shadcn: {
