@@ -11,6 +11,16 @@ export default defineNuxtConfig({
     "shadcn-nuxt",
     "dayjs-nuxt",
   ],
+  app: {
+    head: {
+      title: 'Moje Tipovačka',
+      meta: [
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { charset: 'utf-8' },
+        { name: 'description', content: 'Moje Tipovačka' },
+      ]
+    }
+  },
   dayjs: {
     locales: ['cs'],
     plugins: ['relativeTime'],

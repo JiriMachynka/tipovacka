@@ -13,6 +13,10 @@ if (!tournament.value) {
     statusMessage: 'Tipovačka nebyla nalezena',
   })
 }
+
+useHead({
+  titleTemplate: (title) => `${title} | ${tournament.value?.data[0].name}`,
+});
 </script>
 <template>
   <NuxtLayout>
