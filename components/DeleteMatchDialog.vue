@@ -9,6 +9,7 @@ defineProps<{
 	awayTeamName: string;
 }>();
 
+const { toast } = useToast();
 const { $client } = useNuxtApp();
 
 const { mutate: deleteMatch } = $client.match.delete.useMutation();
@@ -16,6 +17,11 @@ const { mutate: deleteMatch } = $client.match.delete.useMutation();
 const handleDelete = async (matchId: number) => {
 	await deleteMatch({ matchId });
 	emits('refresh');
+
+  toast({
+    title: 'Zápas byl úspěšně smazán',
+    description: `Zápas byl úspěšně smazán`,
+  });
 };
 </script>
 <template>

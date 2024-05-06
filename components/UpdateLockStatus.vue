@@ -10,9 +10,10 @@ const emit = defineEmits(['refresh']);
 
 defineProps<UpdateMatchStatusProps>();
 
+const { toast } = useToast();
 const { $client } = useNuxtApp();
 
-const { mutate: updateMatch, status } = $client.match.update.useMutation();
+const { mutate: updateMatch } = $client.match.update.useMutation();
 
 const handleUpdate = async (matchId: number, locked: boolean) => {
 	await updateMatch({
@@ -20,6 +21,11 @@ const handleUpdate = async (matchId: number, locked: boolean) => {
 		locked,
 	});
 	await emit('refresh');
+
+	toast({
+		title: locked ? 'Odemčeno' : 'Zamčeno',
+		description: `Zápas byl úspěšně ${locked ? 'odemčen' : 'zamčen'}`,
+	});
 };
 </script>
 <template>
