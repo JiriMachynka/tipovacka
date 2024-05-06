@@ -15,7 +15,7 @@ const { data: overallTips } = await $client.tournament.getPlayerOverallTips.useQ
 
 const { mutate: updateOverallTip } = $client.tournament.updateOverallTip.useMutation();
 
-const { handleSubmit, values } = useForm({
+const { handleSubmit } = useForm({
 	validationSchema: toTypedSchema(
 		z.object({
 			winnerId: z.string({ required_error: 'Vyberte tým' }),
