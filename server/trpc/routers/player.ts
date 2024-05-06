@@ -2,8 +2,8 @@ import { z } from 'zod';
 import { privateProcedure, router } from '../trpc';
 
 export const playerRouter = router({
-	getAll: privateProcedure.input(z.object({ tournamentId: z.number() })).query(async ({ ctx, input }) => {
-		return await getPlayers(input.tournamentId, ctx.userId);
+	getTournament: privateProcedure.input(z.object({ tournamentId: z.number() })).query(async ({ ctx, input }) => {
+		return await getTournamentPlayers(input.tournamentId, ctx.userId);
 	}),
 	add: privateProcedure
 		.input(
@@ -12,9 +12,7 @@ export const playerRouter = router({
 				username: z.string(),
 			}),
 		)
-		.mutation(async ({ input }) => {
-			return await addPlayer(input.tournamentId, input.username);
-		}),
+		.mutation(async ({ input }) => await addPlayer(input.tournamentId, input.username)),
 	delete: privateProcedure
 		.input(
 			z.object({

@@ -85,7 +85,7 @@ export const getAllTournamentData = async (tournamentId: number) => {
 		.leftJoin(Players, eq(Players.tournamentId, Tournaments.id))
 		.leftJoin(Users, eq(Players.userId, Users.id))
 		.where(eq(Tournaments.id, tournamentId));
-	
+
 	if (!data.length) return null;
 
 	const homeTeam = alias(Teams, 'home_team');

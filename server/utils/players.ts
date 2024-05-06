@@ -1,7 +1,7 @@
 import { and, eq, ne, sql } from 'drizzle-orm';
 import { db, Players, Tournaments, TournamentMatchTips, TournamentOverallTips, UserMatchTips, Users } from '../db';
 
-export const getPlayers = async (tournamentId: number, authorId: string) => {
+export const getTournamentPlayers = async (tournamentId: number, authorId: string) => {
 	const players = await db
 		.select({
 			id: Players.id,

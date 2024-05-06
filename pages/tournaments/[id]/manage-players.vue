@@ -5,12 +5,12 @@ const tournamentId = +route.params.id;
 
 const { $client } = useNuxtApp();
 
-const { data: players, refresh } = await $client.player.getAll.useQuery({ tournamentId });
+const { data: players, refresh } = await $client.player.getTournament.useQuery({ tournamentId });
 </script>
 <template>
-  <AddPlayerForm
+  <AddPlayersForm
     :tournamentId="tournamentId"
-    @refresh="refresh"
+    @refresh-players="refresh" 
   />
   <Table
     v-if="!!players?.length"
