@@ -67,7 +67,7 @@ const sections = [
 </script>
 <template>
   <form
-    class="max-w-3xl w-full mx-auto grid grid-cols-4 gap-2"
+    class="max-w-3xl w-full mx-auto grid grid-cols-2 md:grid-cols-4 gap-2"
     @submit="onSubmit"
   >
     <FormField
@@ -100,7 +100,7 @@ const sections = [
       </FormItem>
     </FormField>
     <Button
-      class="w-full col-span-4 text-xl font-bold disabled:opacity-100"
+      class="w-full col-span-2 md:col-span-4 text-xl font-bold disabled:opacity-100"
       type="submit"
       :disabled="overallTips?.lockScorers"
     >

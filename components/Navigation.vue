@@ -44,7 +44,7 @@ const logout = async () => {
           class="w-full text-xl lg:text-lg py-3 font-bold"
           as-child
         >
-          <NuxtLink to="/tournaments" @click="() => (mobileNav = !mobileNav)">
+          <NuxtLink to="/tournaments" @click="() => (mobileNav = false)">
             Zpět na tipovačky
           </NuxtLink>
         </Button>
@@ -58,7 +58,7 @@ const logout = async () => {
           class="w-full text-xl lg:text-lg py-3 font-bold"
           as-child
         >
-          <NuxtLink :to="`/tournaments/${tournamentId}/`" @click="() => (mobileNav = !mobileNav)">
+          <NuxtLink :to="`/tournaments/${tournamentId}/`" @click="() => (mobileNav = false)">
             Tabulka
           </NuxtLink>
         </Button>
@@ -72,7 +72,7 @@ const logout = async () => {
           class="w-full text-xl lg:text-lg py-3 font-bold"
           as-child
         >
-          <NuxtLink :to="`/tournaments/${tournamentId}/my-tips`" @click="() => (mobileNav = !mobileNav)">
+          <NuxtLink :to="`/tournaments/${tournamentId}/my-tips`" @click="() => (mobileNav = false)">
             Moje tipy
           </NuxtLink>
         </Button>
@@ -86,7 +86,7 @@ const logout = async () => {
           class="w-full text-xl lg:text-lg py-3 font-bold"
           as-child
         >
-          <NuxtLink :to="`/tournaments/${tournamentId}/leaderboard`" @click="() => (mobileNav = !mobileNav)">
+          <NuxtLink :to="`/tournaments/${tournamentId}/leaderboard`" @click="() => (mobileNav = false)">
             Žebříček
           </NuxtLink>
         </Button>
@@ -152,7 +152,7 @@ const logout = async () => {
           class="w-full text-xl py-3 font-bold"
           as-child
         >
-          <NuxtLink :to="`/tournaments/${tournamentId}/manage-matches`" @click="() => (mobileNav = !mobileNav)">
+          <NuxtLink :to="`/tournaments/${tournamentId}/manage-matches`" @click="() => (mobileNav = false)">
             Spravovat zápasy
           </NuxtLink>
         </Button>
@@ -167,7 +167,7 @@ const logout = async () => {
           class="w-full text-xl py-3 font-bold"
           as-child
         >
-          <NuxtLink :to="`/tournaments/${tournamentId}/manage-scorers`" @click="() => (mobileNav = !mobileNav)">
+          <NuxtLink :to="`/tournaments/${tournamentId}/manage-scorers`" @click="() => (mobileNav = false)">
             Spravovat střelce
           </NuxtLink>
         </Button>
@@ -182,7 +182,7 @@ const logout = async () => {
           class="w-full text-xl py-3 font-bold"
           as-child
         >
-          <NuxtLink :to="`/tournaments/${tournamentId}/manage-players`" @click="() => (mobileNav = !mobileNav)">
+          <NuxtLink :to="`/tournaments/${tournamentId}/manage-players`" @click="() => (mobileNav = false)">
             Spravovat hráče
           </NuxtLink>
         </Button>

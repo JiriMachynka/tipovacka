@@ -74,12 +74,12 @@ const selectedSecondScorer = computed(() => {
     @submit="onSubmit"
   >
     <div :class="cn('grid grid-cols-[1fr_1fr_70px] gap-2', {
-      'grid-cols-[1fr_1fr_1fr_50px]': scorers?.length && !playerScorers.lockScorers,
+      'grid-cols-[1fr_1fr_50px] md:grid-cols-[1fr_1fr_1fr_50px]': scorers?.length && !playerScorers.lockScorers,
       })"
     >
       <div
         v-if="scorers.length && !playerScorers.lockScorers"
-        class="space-y-2"
+        class="space-y-2 col-span-3 md:col-span-1"
       >
         <Label>Střelec 1</Label>
         <Popover>
@@ -174,12 +174,12 @@ const selectedSecondScorer = computed(() => {
       </div>
     </div>
     <div :class="cn('grid grid-cols-[1fr_1fr_70px] gap-2', {
-      'grid-cols-[1fr_1fr_1fr_50px]': scorers?.length && !playerScorers.lockScorers,
+      'grid-cols-[1fr_1fr_50px] md:grid-cols-[1fr_1fr_1fr_50px]': scorers?.length && !playerScorers.lockScorers,
       })"
     >
       <div
         v-if="scorers?.length && !playerScorers.lockScorers"
-        class="space-y-2"
+        class="space-y-2 col-span-3 md:col-span-1"
       >
         <Label>Střelec 2</Label>
         <Popover>

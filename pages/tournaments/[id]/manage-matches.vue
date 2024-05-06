@@ -19,12 +19,12 @@ const { data: matches, refresh } = await $client.tournament.getMatches.useQuery(
   <Table v-if="!!matches?.length" class="mt-5 max-w-5xl mx-auto">
     <TableHeader>
       <TableRow>
-        <TableHead>Datum a čas</TableHead>
-        <TableHead>Skupina</TableHead>
-        <TableHead>Domácí</TableHead>
-        <TableHead>Hosté</TableHead>
-        <TableHead>Skóre</TableHead>
-        <TableHead>Akce</TableHead>
+        <TableHead class="text-nowrap">Datum a čas</TableHead>
+        <TableHead class="text-nowrap">Skupina</TableHead>
+        <TableHead class="text-nowrap">Domácí</TableHead>
+        <TableHead class="text-nowrap">Hosté</TableHead>
+        <TableHead class="text-nowrap">Skóre</TableHead>
+        <TableHead class="text-nowrap">Akce</TableHead>
       </TableRow>
     </TableHeader>
     <TableBody>
