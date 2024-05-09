@@ -1,5 +1,5 @@
 import { alias } from 'drizzle-orm/pg-core';
-import { and, asc, eq, or, sql, sum } from 'drizzle-orm';
+import { and, asc, eq, isNotNull, or, sql, sum } from 'drizzle-orm';
 import { db, Players, Scorers, Teams, TournamentMatchTips, TournamentOverallTips, Tournaments, UserMatchTips, Users } from '../db';
 
 export const createTournament = async (authorId: string, name: string, players: string[], teams: string[][]) => {
@@ -134,7 +134,7 @@ export const getTournamentPoints = async (tournamentId: number) => {
 		.from(UserMatchTips)
 		.leftJoin(Players, eq(UserMatchTips.playerId, Players.id))
 		.leftJoin(Users, eq(Players.userId, Users.id))
-		.where(eq(Players.tournamentId, tournamentId))
+		.where(and(eq(Players.tournamentId, tournamentId), isNotNull(UserMatchTips.points)))
 		.groupBy(Users.username)
 		.orderBy(sum(UserMatchTips.points));
 };
