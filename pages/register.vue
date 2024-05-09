@@ -58,7 +58,7 @@ const passwordShowToggle = () => passwordShow.value = !passwordShow.value;
 const passwordConfirmationShowToggle = () => passwordConfirmationShow.value = !passwordConfirmationShow.value;
 </script>
 <template>
-  <main class="containter flex flex-col justify-center items-center gap-4 h-[100dvh]">
+  <main class="container flex flex-col justify-center items-center gap-4 h-dvh">
     <form class="flex flex-col gap-2 max-w-3xl w-full" @submit="onSubmit">
       <h1 class="text-3xl font-bold text-center">Registrace</h1>
       <FormField v-slot="{ componentField }" name="username">

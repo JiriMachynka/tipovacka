@@ -41,7 +41,7 @@ const onSubmit = handleSubmit(async (values) => {
 });
 </script>
 <template>
-  <main class="containter flex flex-col gap-4 justify-center items-center h-dvh px-6 lg:px-0">
+  <main class="container flex flex-col gap-4 justify-center items-center h-dvh">
     <form class="flex flex-col gap-2 max-w-3xl w-full" @submit="onSubmit">
       <h1 class="text-4xl font-bold text-center">Přihlášení</h1>
 			<FormField v-slot="{ componentField }" name="email">
