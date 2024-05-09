@@ -18,7 +18,7 @@ const props = defineProps<{
 }>();
 
 const { toast } = useToast();
-const { $client } = useNuxtApp();
+const { $client, $dayjs } = useNuxtApp();
 
 const { mutate: editMatch } = $client.match.edit.useMutation();
 

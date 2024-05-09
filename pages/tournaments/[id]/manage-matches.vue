@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const { $client } = useNuxtApp();
+const { $client, $dayjs } = useNuxtApp();
 
 const route = useRoute();
 
