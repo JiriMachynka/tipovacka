@@ -14,7 +14,7 @@
     "studio": "drizzle-kit studio",
     "lint": "biome check components layouts pages public server utils",
     "format": "biome format components layouts pages public server utils --write",
-    "clean": "rm -rf node_modules .nuxt"
+    "clean": "rm -rf node_modules"
   },
   "devDependencies": {
     "@biomejs/biome": "1.7.0",
