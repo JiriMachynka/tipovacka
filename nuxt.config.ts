@@ -1,7 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   build: {
-    transpile: ['trpc-nuxt']
+    transpile: [
+      'trpc-nuxt',
+      'dayjs-nuxt'
+    ]
   },
   devtools: { enabled: true },
   modules: [
