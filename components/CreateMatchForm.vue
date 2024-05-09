@@ -1,16 +1,18 @@
 <script lang="ts" setup>
+import type { Team, Group } from '~/types';
 import { toTypedSchema } from '@vee-validate/zod';
 import { useForm } from 'vee-validate';
 import { z } from 'zod';
 
 const emit = defineEmits(['refresh']);
-const props = defineProps<{ tournamentId: number }>();
+const props = defineProps<{
+	tournamentId: number;
+  teams: Team[];
+  groups: Group[];
+}>();
 
 const { toast } = useToast();
 const { $client } = useNuxtApp();
-
-const { data: teams } = await $client.tournament.getTeams.useQuery({ tournamentId: props.tournamentId });
-const { data: groups } = await $client.tournament.getGroups.useQuery({ tournamentId: props.tournamentId });
 
 const { mutate: createMatch, status: createMatchStatus } = $client.match.create.useMutation();
 
@@ -25,7 +27,7 @@ const { handleSubmit, values } = useForm({
 		}),
 	),
 	initialValues: {
-		group: groups!.value[0].name,
+		group: props.groups![0].name,
 	},
 });
 
@@ -82,7 +84,7 @@ const onSubmit = handleSubmit(async (values) => {
           <SelectContent>
             <SelectGroup>
               <SelectItem
-                v-for="group in groups"
+                v-for="group in props.groups"
                 :key="group.name"
                 :value="group.name"
               >
@@ -107,7 +109,7 @@ const onSubmit = handleSubmit(async (values) => {
             <SelectContent>
               <SelectGroup>
                 <SelectItem
-                  v-for="team in teams.filter((team) => team.groupName === values.group)"
+                  v-for="team in props.teams.filter((team) => team.groupName === values.group)"
                   :key="team.id"
                   :value="team.id.toString()"
                 >
@@ -131,7 +133,7 @@ const onSubmit = handleSubmit(async (values) => {
             <SelectContent>
               <SelectGroup>
                 <SelectItem
-                  v-for="team in teams.filter((team) => team.groupName === values.group && team.id !== +values.homeTeamId)"
+                  v-for="team in props.teams.filter((team) => team.groupName === values.group && team.id !== +values.homeTeamId)"
                   :key="team.id"
                   :value="team.id.toString()"
                 >

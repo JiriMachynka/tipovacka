@@ -17,36 +17,36 @@ const modelValue = ref<string[]>([]);
 const open = ref(false);
 const searchTerm = ref('');
 
-const filteredUsers = computed(() => allUsers.value?.filter(u => !modelValue.value.includes(u.username)) || []);
+const filteredUsers = computed(() => allUsers.value?.filter((u) => !modelValue.value.includes(u.username)) || []);
 
 const tagsInputRef = ref(null);
-onClickOutside(tagsInputRef, () => open.value = false);
+onClickOutside(tagsInputRef, () => (open.value = false));
 
 const handleAddPlayers = async () => {
-  toast({
-    title: 'Vydržte',
-    description: 'Hráči budou postupně přidáni do tipovačky',
-    duration: 500,
-  });
+	toast({
+		title: 'Vydržte',
+		description: 'Hráči budou postupně přidáni do tipovačky',
+		duration: 500,
+	});
 
-  modelValue.value.map(async (username) => { 
-    await addPlayer({
-      tournamentId: props.tournamentId,
-      username,
-    });
-  });
-  
-  modelValue.value = [];
+	modelValue.value.map(async (username) => {
+		await addPlayer({
+			tournamentId: props.tournamentId,
+			username,
+		});
+	});
+
+	modelValue.value = [];
 
 	toast({
-    title: 'Přidání hráčů',
+		title: 'Přidání hráčů',
 		description: 'Hráči byly úspěšně přidáni',
 	});
 
-  // TODO: Fix -> players aren't refreshed
-  emit('refreshPlayers');
-  await refresh();
-}
+	// TODO: Fix -> players aren't refreshed
+	emit('refreshPlayers');
+	await refresh();
+};
 </script>
 <template>
   <div class="w-full max-w-xl mx-auto flex flex-col gap-4">

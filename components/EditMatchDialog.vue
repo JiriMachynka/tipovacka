@@ -1,18 +1,9 @@
 <script lang="ts" setup>
+import type { Team, Group } from '~/types';
 import { SquarePen } from 'lucide-vue-next';
 import { toTypedSchema } from '@vee-validate/zod';
 import { useForm } from 'vee-validate';
 import { z } from 'zod';
-
-interface Team {
-	id: number;
-	name: string;
-	groupName: string;
-}
-
-interface Group {
-	name: string;
-}
 
 const emit = defineEmits(['refresh']);
 
@@ -27,7 +18,7 @@ const props = defineProps<{
 }>();
 
 const { toast } = useToast();
-const { $client, $dayjs } = useNuxtApp();
+const { $client } = useNuxtApp();
 
 const { mutate: editMatch } = $client.match.edit.useMutation();
 

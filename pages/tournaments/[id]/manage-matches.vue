@@ -1,19 +1,19 @@
 <script lang="ts" setup>
-import { toTypedSchema } from '@vee-validate/zod';
-import { useForm } from 'vee-validate';
-import { z } from 'zod';
-
 const { $client } = useNuxtApp();
 
 const route = useRoute();
 
 const tournamentId = +route.params.id;
 
+const { data: teams } = await $client.tournament.getTeams.useQuery({ tournamentId });
+const { data: groups } = await $client.tournament.getGroups.useQuery({ tournamentId });
 const { data: matches, refresh } = await $client.tournament.getMatches.useQuery({ tournamentId });
 </script>
 <template>
   <CreateMatchForm
     :tournamentId="tournamentId"
+    :teams="teams"
+    :groups="groups"
     @refresh="refresh"
   />
   <Table v-if="!!matches?.length" class="mt-5 max-w-5xl mx-auto">

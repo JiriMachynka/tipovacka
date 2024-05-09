@@ -19,7 +19,7 @@ const { data: tournament } = await $client.tournament.getData.useQuery({ tournam
 const mobileNav = ref(false);
 
 const logout = async () => {
-  mobileNav.value = false;
+	mobileNav.value = false;
 	await supabaseClient.auth.signOut();
 	navigateTo('/');
 };

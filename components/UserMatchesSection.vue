@@ -3,7 +3,7 @@ const route = useRoute();
 
 const tournamentId = +route.params.id;
 
-const { $client } = useNuxtApp();
+const { $client, $dayjs } = useNuxtApp();
 
 const { data: userMatches, refresh } = await $client.tournament.getUserMatches.useQuery({ tournamentId });
 </script>
