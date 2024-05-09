@@ -50,6 +50,12 @@ const onSubmit = handleSubmit(async (values) => {
 
 	navigateTo('/login');
 });
+
+const passwordShow = ref(false);
+const passwordConfirmationShow = ref(false);
+
+const passwordShowToggle = () => passwordShow.value = !passwordShow.value;
+const passwordConfirmationShowToggle = () => passwordConfirmationShow.value = !passwordConfirmationShow.value;
 </script>
 <template>
   <main class="containter flex flex-col justify-center items-center gap-4 h-[100dvh]">
@@ -77,7 +83,13 @@ const onSubmit = handleSubmit(async (values) => {
 				<FormItem>
 					<FormLabel>Heslo</FormLabel>
 					<FormControl>
-						<Input type="password" v-bind="componentField" />
+						<div class="relative flex">
+							<Input :type="passwordShow ? 'text' : 'password'" v-bind="componentField" />
+							<ShowPasswordButton
+								:show="passwordShow"
+								@toggle-show="passwordShowToggle"
+							/>
+						</div>
 					</FormControl>
 					<FormMessage />
 				</FormItem>
@@ -86,7 +98,13 @@ const onSubmit = handleSubmit(async (values) => {
 				<FormItem>
 					<FormLabel>Heslo znovu</FormLabel>
 					<FormControl>
-						<Input type="password" v-bind="componentField" />
+						<div class="relative flex">
+							<Input :type="passwordConfirmationShow ? 'text' : 'password'" v-bind="componentField" />
+							<ShowPasswordButton
+								:show="passwordConfirmationShow"
+								@toggle-show="passwordConfirmationShowToggle"
+							/>
+						</div>
 					</FormControl>
 					<FormMessage />
 				</FormItem>
