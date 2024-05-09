@@ -8,6 +8,13 @@
       "when": 1714983437825,
       "tag": "0000_icy_wolf_cub",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1715170011571,
+      "tag": "0001_lonely_silver_sable",
+      "breakpoints": true
     }
   ]
 }

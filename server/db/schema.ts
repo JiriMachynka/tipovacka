@@ -27,7 +27,7 @@ export const Players = pgTable('players', {
 	id: serial('id').primaryKey(),
 	userId: uuid('user_id')
 		.notNull()
-		.references(() => Users.id),
+		.references(() => Users.id, { onUpdate: 'cascade' }),
 	tournamentId: integer('tournament_id')
 		.notNull()
 		.references(() => Tournaments.id),
