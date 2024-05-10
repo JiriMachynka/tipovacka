@@ -9,12 +9,12 @@ const tournamentId = +route.params.id;
 
 const { data: tournament } = await $client.tournament.getData.useQuery({ tournamentId });
 
-const numberOfMatches = tournament.value?.userMatches ? tournament.value?.userMatches.length / tournament.value?.data.length : 0;
-console.log(numberOfMatches);
+const numberOfPlayers = tournament.value?.data.numberOfPlayers
+const numberOfMatches = tournament.value?.userMatches ? tournament.value?.userMatches.length / numberOfPlayers! : 0;
 </script>
 <template>
   <h1 class="text-center text-4xl font-bold">
-    {{ tournament?.data[0].name }}
+    {{ tournament?.data.name }}
   </h1> 
   <div v-if="numberOfMatches === 0" class="flex justify-center items-center h-[250px]">
     <p class="text-3xl font-bold text-center md:text-left">Ještě nebyly vyhodnoceny žádné zápasy</p>
@@ -27,7 +27,7 @@ console.log(numberOfMatches);
         <span class="flex justify-center w-full p-2 lg:p-0 border-b border-b-slate-50 lg:border-none"><Swords /></span>
       </div>
       <div
-        v-for="{ username } in tournament?.data"
+        v-for="{ username } in tournament?.players"
         :key="username"
         class="px-3 py-2 text-xl [&:not(:last-child)]:border-b border-slate-50"
       >
@@ -45,16 +45,15 @@ console.log(numberOfMatches);
       >
         <div class="border-b border-b-slate-50 flex flex-col lg:flex-row p-0 lg:p-3 gap-0 lg:gap-2">
           <span class="p-2 lg:p-0 border-b border-b-slate-50 lg:border-none">
-            <!-- {{ row }} {{ numberOfMatches }} -->
-            {{ tournament!.userMatches[row * numberOfMatches - row].homeTeamName }}
+            {{ tournament!.userMatches[row * numberOfPlayers!].homeTeamName }}
           </span> 
           <span class="hidden lg:inline-block">-</span> 
           <span class="p-2 lg:p-0">
-            {{ tournament!.userMatches[row * numberOfMatches - row].awayTeamName }}
+            {{ tournament!.userMatches[row * numberOfPlayers!].awayTeamName }}
           </span>
         </div>
           <div 
-            v-for="userMatch in tournament!.userMatches.slice(col * tournament!.data.length, col * tournament!.data.length + tournament!.data.length)"
+            v-for="userMatch in tournament!.userMatches.slice(col * numberOfPlayers!, col * numberOfPlayers! + numberOfPlayers!)"
             class="[&:not(:last-child)]:border-b border-slate-50 flex justify-center text-xl gap-1 py-2"
           >
             <span>{{ userMatch.homeScore }}</span> :

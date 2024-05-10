@@ -1,5 +1,5 @@
 import { alias } from 'drizzle-orm/pg-core';
-import { and, asc, eq, isNotNull, or, sql, sum } from 'drizzle-orm';
+import { and, asc, count, eq, isNotNull, or, sql, sum } from 'drizzle-orm';
 import { db, Players, Scorers, Teams, TournamentMatchTips, TournamentOverallTips, Tournaments, UserMatchTips, Users } from '../db';
 
 export const createTournament = async (authorId: string, name: string, players: string[], teams: string[][]) => {
@@ -75,18 +75,25 @@ export const getTournaments = async (userId: string) => {
 };
 
 export const getAllTournamentData = async (tournamentId: number) => {
-	const data = await db
+	const [data] = await db
 		.select({
 			name: Tournaments.name,
-			username: sql<string>`${Users.username}`,
 			authorId: Tournaments.authorId,
+			numberOfPlayers: count(Players.id),
 		})
 		.from(Tournaments)
 		.leftJoin(Players, eq(Players.tournamentId, Tournaments.id))
 		.leftJoin(Users, eq(Players.userId, Users.id))
-		.where(eq(Tournaments.id, tournamentId));
+		.where(eq(Tournaments.id, tournamentId))
+		.groupBy(Tournaments.name, Tournaments.authorId);
 
-	if (!data.length) return null;
+	if (!data) return null;
+
+	const players = await db
+		.select({ username: sql<string>`${Users.username}` }) 
+		.from(Players)
+		.leftJoin(Users, eq(Players.userId, Users.id))
+		.where(eq(Players.tournamentId, tournamentId));
 
 	const homeTeam = alias(Teams, 'home_team');
 	const awayTeam = alias(Teams, 'away_team');
@@ -108,6 +115,7 @@ export const getAllTournamentData = async (tournamentId: number) => {
 
 	return {
 		data,
+		players,
 		userMatches,
 	};
 };
