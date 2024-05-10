@@ -14,7 +14,7 @@ const props = defineProps<{
 const { toast } = useToast();
 const { $client } = useNuxtApp();
 
-const { mutate: createMatch, status: createMatchStatus } = $client.match.create.useMutation();
+const { mutate: createMatch } = $client.match.create.useMutation();
 
 const { handleSubmit, values } = useForm({
 	// TODO: Validation schema is same as with edit match dialog
@@ -38,7 +38,7 @@ const onSubmit = handleSubmit(async (values) => {
 		const { date, group, homeTeamId, awayTeamId } = values;
 
 		await createMatch({
-			tournamentId,
+			tournamentId: props.tournamentId,
 			date,
 			group,
 			homeTeamId: +homeTeamId,
