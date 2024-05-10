@@ -45,7 +45,7 @@ console.log(numberOfMatches);
       >
         <div class="border-b border-b-slate-50 flex flex-col lg:flex-row p-0 lg:p-3 gap-0 lg:gap-2">
           <span class="p-2 lg:p-0 border-b border-b-slate-50 lg:border-none">
-            {{ row }} {{ numberOfMatches }}
+            <!-- {{ row }} {{ numberOfMatches }} -->
             {{ tournament!.userMatches[row * numberOfMatches - row].homeTeamName }}
           </span> 
           <span class="hidden lg:inline-block">-</span> 
