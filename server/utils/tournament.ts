@@ -63,7 +63,7 @@ export const createTournament = async (authorId: string, name: string, players: 
 
 export const getTournaments = async (userId: string) => {
 	const allTournaments = await db
-		.select({
+		.selectDistinct({
 			id: Tournaments.id,
 			name: Tournaments.name,
 		})
