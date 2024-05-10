@@ -9,8 +9,8 @@ const tournamentId = +route.params.id;
 
 const { data: tournament } = await $client.tournament.getData.useQuery({ tournamentId });
 
-const numberOfPlayers = tournament.value?.data.numberOfPlayers
-const numberOfMatches = tournament.value?.userMatches ? tournament.value?.userMatches.length / numberOfPlayers! : 0;
+const numberOfPlayers = tournament.value?.data.numberOfPlayers as number;
+const numberOfMatches = tournament.value?.userMatches ? tournament.value?.userMatches.length / numberOfPlayers : 0;
 </script>
 <template>
   <h1 class="text-center text-4xl font-bold">
@@ -40,20 +40,20 @@ const numberOfMatches = tournament.value?.userMatches ? tournament.value?.userMa
     >
       <div
         v-for="col, row in Array.from({ length: numberOfMatches }, (_, index) => index)"
-        :key="`${col}-${row}`"
+        :key="row"
         class="[&:not(:last-child)]:border-r border-r-slate-50"
       >
         <div class="border-b border-b-slate-50 flex flex-col lg:flex-row p-0 lg:p-3 gap-0 lg:gap-2">
           <span class="p-2 lg:p-0 border-b border-b-slate-50 lg:border-none">
-            {{ tournament!.userMatches[row * numberOfPlayers!].homeTeamName }}
+            {{ tournament!.userMatches[row * numberOfPlayers].homeTeamName }}
           </span> 
           <span class="hidden lg:inline-block">-</span> 
           <span class="p-2 lg:p-0">
-            {{ tournament!.userMatches[row * numberOfPlayers!].awayTeamName }}
+            {{ tournament!.userMatches[row * numberOfPlayers].awayTeamName }}
           </span>
         </div>
           <div 
-            v-for="userMatch in tournament!.userMatches.slice(col * numberOfPlayers!, col * numberOfPlayers! + numberOfPlayers!)"
+            v-for="userMatch in tournament!.userMatches.slice(col * numberOfPlayers, col * numberOfPlayers + numberOfPlayers)" 
             class="[&:not(:last-child)]:border-b border-slate-50 flex justify-center text-xl gap-1 py-2"
           >
             <span>{{ userMatch.homeScore }}</span> :

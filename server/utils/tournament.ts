@@ -111,7 +111,8 @@ export const getAllTournamentData = async (tournamentId: number) => {
 		.leftJoin(Tournaments, eq(TournamentMatchTips.tournamentId, Tournaments.id))
 		.leftJoin(homeTeam, eq(TournamentMatchTips.homeTeamId, homeTeam.id))
 		.leftJoin(awayTeam, eq(TournamentMatchTips.awayTeamId, awayTeam.id))
-		.where(and(eq(TournamentMatchTips.locked, true), eq(TournamentMatchTips.tournamentId, tournamentId)));
+		.where(and(eq(TournamentMatchTips.locked, true), eq(TournamentMatchTips.tournamentId, tournamentId)))
+		.orderBy(UserMatchTips.id);
 
 	return {
 		data,
