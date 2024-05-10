@@ -145,7 +145,7 @@ export const getTournamentPoints = async (tournamentId: number) => {
 		.leftJoin(Users, eq(Players.userId, Users.id))
 		.where(and(eq(Players.tournamentId, tournamentId), isNotNull(UserMatchTips.points)))
 		.groupBy(Users.username)
-		.orderBy(sum(UserMatchTips.points));
+		.orderBy(asc(sum(UserMatchTips.points)));
 };
 
 export const getTournamentGroups = async (tournamentId: number) => {
