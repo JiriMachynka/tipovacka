@@ -91,7 +91,7 @@ const logout = async () => {
           </NuxtLink>
         </Button>
       </li>
-      <li v-if="tournament!.data[0].authorId === user?.id" class="hidden lg:inline-flex"> 
+      <li v-if="tournament!.data.authorId === user?.id" class="hidden lg:inline-flex"> 
         <DropdownMenu>
           <DropdownMenuTrigger
             :class="cn(buttonVariants({ variant: 'ghost' }),
@@ -142,7 +142,7 @@ const logout = async () => {
           </DropdownMenuContent>
         </DropdownMenu>
       </li>
-      <li v-if="tournament!.data[0].authorId === user?.id" :class="cn('lg:hidden', { 
+      <li v-if="tournament!.data.authorId === user?.id" :class="cn('lg:hidden', { 
           'hidden': !mobileNav,
           'block': mobileNav,
         })"
@@ -157,7 +157,7 @@ const logout = async () => {
           </NuxtLink>
         </Button>
       </li>
-      <li v-if="tournament!.data[0].authorId === user?.id" :class="cn('lg:hidden', { 
+      <li v-if="tournament!.data.authorId === user?.id" :class="cn('lg:hidden', { 
           'hidden': !mobileNav,
           'block': mobileNav,
         })"
@@ -172,7 +172,7 @@ const logout = async () => {
           </NuxtLink>
         </Button>
       </li>
-      <li v-if="tournament!.data[0].authorId === user?.id" :class="cn('lg:hidden', { 
+      <li v-if="tournament!.data.authorId === user?.id" :class="cn('lg:hidden', { 
           'hidden': !mobileNav,
           'block': mobileNav,
         })"

@@ -15,7 +15,7 @@ if (!tournament.value) {
 }
 
 useHead({
-	titleTemplate: (title) => `${title} | ${tournament.value?.data[0].name}`,
+	titleTemplate: (title) => `${title} | ${tournament.value?.data.name}`,
 });
 </script>
 <template>
