@@ -10,6 +10,7 @@ const tournamentId = +route.params.id;
 const { data: tournament } = await $client.tournament.getData.useQuery({ tournamentId });
 
 const numberOfMatches = tournament.value?.userMatches ? tournament.value?.userMatches.length / tournament.value?.data.length : 0;
+console.log(numberOfMatches);
 </script>
 <template>
   <h1 class="text-center text-4xl font-bold">
@@ -44,11 +45,11 @@ const numberOfMatches = tournament.value?.userMatches ? tournament.value?.userMa
       >
         <div class="border-b border-b-slate-50 flex flex-col lg:flex-row p-0 lg:p-3 gap-0 lg:gap-2">
           <span class="p-2 lg:p-0 border-b border-b-slate-50 lg:border-none">
-            {{ tournament!.userMatches[row + (row * numberOfMatches)].homeTeamName }}
+            {{ tournament!.userMatches[row * numberOfMatches - (row === 0 ? 0 : row)].homeTeamName }}
           </span> 
           <span class="hidden lg:inline-block">-</span> 
           <span class="p-2 lg:p-0">
-            {{ tournament!.userMatches[row + (row * numberOfMatches)].awayTeamName }}
+            {{ tournament!.userMatches[row * numberOfMatches - (row === 0 ? 0 : row)].awayTeamName }}
           </span>
         </div>
           <div 
