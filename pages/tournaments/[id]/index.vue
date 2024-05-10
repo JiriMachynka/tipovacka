@@ -33,7 +33,10 @@ const numberOfMatches = tournament.value?.userMatches ? tournament.value?.userMa
         {{ username }}
       </div>
     </div>
-    <div v-if="tournament!.userMatches.length > 0" class="flex border border-slate-50 overflow-x-auto custom-scrollbar">
+    <div
+      v-if="tournament!.userMatches.length > 0"
+      class="flex border border-slate-50 overflow-x-auto custom-scrollbar"
+    >
       <div
         v-for="col, row in Array.from({ length: numberOfMatches }, (_, index) => index)"
         :key="`${col}-${row}`"
@@ -41,15 +44,15 @@ const numberOfMatches = tournament.value?.userMatches ? tournament.value?.userMa
       >
         <div class="border-b border-b-slate-50 flex flex-col lg:flex-row p-0 lg:p-3 gap-0 lg:gap-2">
           <span class="p-2 lg:p-0 border-b border-b-slate-50 lg:border-none">
-            {{ tournament!.userMatches[row].homeTeamName }}
-          </span>
+            {{ tournament!.userMatches[row + (row * numberOfMatches)].homeTeamName }}
+          </span> 
           <span class="hidden lg:inline-block">-</span> 
           <span class="p-2 lg:p-0">
-            {{ tournament!.userMatches[row].awayTeamName }}
+            {{ tournament!.userMatches[row + (row * numberOfMatches)].awayTeamName }}
           </span>
         </div>
           <div 
-            v-for="userMatch in tournament!.userMatches.slice(col * tournament!.data.length, col * tournament!.data.length + tournament!.data.length)" 
+            v-for="userMatch in tournament!.userMatches.slice(col * tournament!.data.length, col * tournament!.data.length + tournament!.data.length)"
             class="[&:not(:last-child)]:border-b border-slate-50 flex justify-center text-xl gap-1 py-2"
           >
             <span>{{ userMatch.homeScore }}</span> :
