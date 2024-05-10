@@ -2,14 +2,14 @@
 import { ComboboxAnchor, ComboboxInput, ComboboxPortal, ComboboxRoot } from 'radix-vue';
 import { onClickOutside } from '@vueuse/core';
 
-const { toast } = useToast();
-const { $client } = useNuxtApp();
-
-const emit = defineEmits(['refreshPlayers']);
+const emit = defineEmits(['refresh']);
 
 const props = defineProps<{ tournamentId: number }>();
 
-const { data: allUsers, refresh } = await $client.user.getAll.useQuery();
+const { toast } = useToast();
+const { $client } = useNuxtApp();
+
+const { data: allUsers, refresh: refreshUsers } = await $client.user.getAll.useQuery();
 
 const { mutate: addPlayer } = $client.player.add.useMutation();
 
@@ -36,16 +36,16 @@ const handleAddPlayers = async () => {
 		});
 	});
 
-	modelValue.value = [];
-
 	toast({
 		title: 'Přidání hráčů',
 		description: 'Hráči byly úspěšně přidáni',
 	});
 
 	// TODO: Fix -> players aren't refreshed
-	emit('refreshPlayers');
-	await refresh();
+	await emit('refresh');
+	await refreshUsers();
+
+  modelValue.value = [];
 };
 </script>
 <template>
@@ -100,7 +100,8 @@ const handleAddPlayers = async () => {
         </ComboboxPortal>
       </ComboboxRoot>
     </TagsInput>
-    <Button 
+    <Button
+      type="button"
       class="w-full text-xl"
       @click="handleAddPlayers"
     >

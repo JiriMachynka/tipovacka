@@ -10,7 +10,7 @@ const { data: players, refresh } = await $client.player.getTournament.useQuery({
 <template>
   <AddPlayersForm
     :tournamentId="tournamentId"
-    @refresh-players="refresh" 
+    @refresh="refresh"
   />
   <Table
     v-if="!!players?.length"
