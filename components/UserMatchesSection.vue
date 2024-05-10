@@ -23,6 +23,7 @@ const { data: userMatches, refresh } = await $client.tournament.getUserMatches.u
       <TableRow
         v-for="match in userMatches"
         :key="match.id"
+        :class="cn({ 'bg-muted': match.homeScore > 0 || match.awayScore > 0 })"
       >
         <TableCell>{{ $dayjs(match.date).fromNow() }}</TableCell>
         <TableCell>{{ match.group }}</TableCell>
