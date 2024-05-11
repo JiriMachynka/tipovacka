@@ -100,7 +100,7 @@ export const getAllTournamentData = async (tournamentId: number) => {
 
 	const userMatches = await db
 		.select({
-			id: UserMatchTips.id,
+			id: UserMatchTips.playerId,
 			homeTeamName: sql<string>`${homeTeam.name}`,
 			awayTeamName: sql<string>`${awayTeam.name}`,
 			homeScore: UserMatchTips.homeScore,
