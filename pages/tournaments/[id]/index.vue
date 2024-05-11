@@ -44,11 +44,11 @@ const numberOfMatches = tournament.value?.userMatches ? tournament.value?.userMa
         class="[&:not(:last-child)]:border-r border-r-slate-50"
       >
         <div class="border-b border-b-slate-50 flex flex-col lg:flex-row p-0 lg:p-3 gap-0 lg:gap-2">
-          <span class="p-2 lg:p-0 border-b border-b-slate-50 lg:border-none">
+          <span class="p-2 lg:p-0 border-b border-b-slate-50 lg:border-none text-nowrap">
             {{ tournament!.userMatches[row * numberOfPlayers].homeTeamName }}
           </span> 
           <span class="hidden lg:inline-block">-</span> 
-          <span class="p-2 lg:p-0">
+          <span class="p-2 lg:p-0 text-nowrap">
             {{ tournament!.userMatches[row * numberOfPlayers].awayTeamName }}
           </span>
         </div>
