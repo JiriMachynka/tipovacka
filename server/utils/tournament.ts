@@ -126,27 +126,29 @@ export const getTournamentPoints = async (tournamentId: number) => {
 	const scorerFirst = alias(Scorers, 'scorer_first');
 	const scorerSecond = alias(Scorers, 'scorer_second');
 
-	const scorersSq = db
+	const scorersGoalsSq = db
 		.select({
-			scorerPoints: sql<number>`SUM(scorer_first.goals + scorer_second.goals)`,
+			playerId: Players.id,
+			goalsSum: sql<number>`SUM(scorer_first.goals + scorer_second.goals)`,
 		})
 		.from(Players)
 		.leftJoin(scorerFirst, eq(Players.scorerFirstId, scorerFirst.id))
 		.leftJoin(scorerSecond, eq(Players.scorerSecondId, scorerSecond.id))
-		.where(eq(Players.tournamentId, tournamentId))
-		.as('scorersSq');
+		.groupBy(Players.id)
+		.as('scorer_goals_sq');
 
 	return await db
 		.select({
 			username: Users.username,
-			points: sql<number>`${sum(UserMatchTips.points)} + ${scorersSq}`,
+			points: sql<number>`${sum(UserMatchTips.points)} + ${scorersGoalsSq.goalsSum}`,
 		})
 		.from(UserMatchTips)
 		.leftJoin(Players, eq(UserMatchTips.playerId, Players.id))
 		.leftJoin(Users, eq(Players.userId, Users.id))
+		.leftJoin(scorersGoalsSq, eq(Players.id, scorersGoalsSq.playerId))
 		.where(and(eq(Players.tournamentId, tournamentId), isNotNull(UserMatchTips.points)))
-		.groupBy(Users.username)
-		.orderBy(desc(sum(UserMatchTips.points)));
+		.groupBy(Users.username, scorersGoalsSq.goalsSum)
+		.orderBy(desc(sql<number>`${sum(UserMatchTips.points)} + ${scorersGoalsSq.goalsSum}`));
 };
 
 export const getTournamentGroups = async (tournamentId: number) => {
