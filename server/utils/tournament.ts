@@ -129,7 +129,7 @@ export const getTournamentPoints = async (tournamentId: number) => {
 	const scorersGoalsSq = db
 		.select({
 			playerId: Players.id,
-			goalsSum: sql<number>`SUM(scorer_first.goals + scorer_second.goals)`,
+			goalsSum: sql<number>`SUM(scorer_first.goals + scorer_second.goals)`.as('goals_sum'),
 		})
 		.from(Players)
 		.leftJoin(scorerFirst, eq(Players.scorerFirstId, scorerFirst.id))
