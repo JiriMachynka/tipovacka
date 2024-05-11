@@ -93,7 +93,8 @@ export const getAllTournamentData = async (tournamentId: number) => {
 		.select({ username: sql<string>`${Users.username}` }) 
 		.from(Players)
 		.leftJoin(Users, eq(Players.userId, Users.id))
-		.where(eq(Players.tournamentId, tournamentId));
+		.where(eq(Players.tournamentId, tournamentId))
+		.orderBy(Players.id);
 
 	const homeTeam = alias(Teams, 'home_team');
 	const awayTeam = alias(Teams, 'away_team');
