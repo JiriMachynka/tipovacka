@@ -26,7 +26,7 @@ export default defineNuxtConfig({
   },
   dayjs: {
     locales: ['cs'],
-    plugins: ['relativeTime'],
+    plugins: ['relativeTime', 'utc'],
     defaultLocale: 'cs',
   },
   colorMode: {

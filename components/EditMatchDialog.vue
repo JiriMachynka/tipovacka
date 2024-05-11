@@ -32,7 +32,7 @@ const { handleSubmit, values } = useForm({
 		}),
 	),
 	initialValues: {
-		date: $dayjs(props.date).format('YYYY-MM-DDTHH:mm:ss'),
+		date: $dayjs(props.date).utc().format('YYYY-MM-DDTHH:mm:ss'),
 		group: props.group,
 		homeTeamId: props.homeTeamId,
 		awayTeamId: props.awayTeamId,

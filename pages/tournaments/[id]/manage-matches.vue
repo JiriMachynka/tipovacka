@@ -31,9 +31,9 @@ const { data: matches, refresh } = await $client.tournament.getMatches.useQuery(
       <TableRow v-for="match in matches" :key="match.id">
         <TableCell>
           <span v-if="!match.played">
-            <span>{{ $dayjs(match.date).fromNow() }}</span>
+            <span>{{ $dayjs(match.date).utc().fromNow() }}</span>
             <Separator class="my-0.5" />
-            <span>{{ $dayjs(match.date).format("DD.MM.YYYY HH:mm") }}</span>
+            <span>{{ $dayjs(match.date).utc().format("DD.MM.YYYY HH:mm") }}</span>
           </span>
           <span v-else>Odehráno</span>
         </TableCell>

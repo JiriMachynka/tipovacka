@@ -25,7 +25,7 @@ const { data: userMatches, refresh } = await $client.tournament.getUserMatches.u
         :key="match.id"
         :class="cn({ 'bg-muted': match.homeScore > 0 || match.awayScore > 0 })"
       >
-        <TableCell>{{ $dayjs(match.date).fromNow() }}</TableCell>
+        <TableCell>{{ $dayjs(match.date).utc().fromNow() }}</TableCell>
         <TableCell>{{ match.group }}</TableCell>
         <TableCell>{{ match.homeTeamName }}</TableCell>
         <TableCell>{{ match.homeScore }}:{{ match.awayScore }}</TableCell> 
