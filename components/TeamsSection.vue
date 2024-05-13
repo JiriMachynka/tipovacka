@@ -78,7 +78,11 @@ const sections = [
     >
       <FormItem>
         <FormLabel>{{ section.title }}</FormLabel>
-        <Select v-bind="componentField">
+        <Select
+          v-bind="componentField"
+          :disabled="!!overallTips?.lockScorers"
+          class="disabled:opacity-100"
+        >
           <FormControl>
             <SelectTrigger>
               <SelectValue placeholder="Vyberte tým" />
