@@ -144,7 +144,7 @@ export const getUserMatches = async (tournamentId: number, userId: string) => {
 		.leftJoin(awayTeam, eq(TournamentMatchTips.awayTeamId, awayTeam.id))
 		.leftJoin(Tournaments, eq(TournamentMatchTips.tournamentId, Tournaments.id))
 		.where(and(eq(Tournaments.id, tournamentId), eq(Players.userId, userId)))
-		.orderBy(asc(TournamentMatchTips.date));
+		.orderBy(asc(TournamentMatchTips.date), asc(Teams.groupName));
 };
 
 export const updateUserMatchTip = async (tournamentId: number, userId: string, matchId: number, homeScore: number, awayScore: number) => {
