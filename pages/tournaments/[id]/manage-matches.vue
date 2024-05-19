@@ -8,6 +8,9 @@ const tournamentId = +route.params.id;
 const { data: teams } = await $client.tournament.getTeams.useQuery({ tournamentId });
 const { data: groups } = await $client.tournament.getGroups.useQuery({ tournamentId });
 const { data: matches, refresh } = await $client.tournament.getMatches.useQuery({ tournamentId });
+
+const filterMatches = ref(false)
+const filteredMatches = computed(() => matches.value?.filter(m => m.played) || []);
 </script>
 <template>
   <CreateMatchForm
@@ -16,7 +19,13 @@ const { data: matches, refresh } = await $client.tournament.getMatches.useQuery(
     :groups="groups"
     @refresh="refresh"
   />
-  <Table v-if="!!matches?.length" class="mt-5 max-w-5xl mx-auto">
+  <div v-if="matches?.length" class="flex items-center gap-5 my-5 max-w-5xl w-full mx-auto"> 
+    <Switch @click="filterMatches = !filterMatches" :checked="filterMatches" />
+    <p class="text-xl font-bold">
+      Zobrazit všechny zápasy
+    </p>
+  </div>
+  <Table v-if="matches?.length" class="mt-5 max-w-5xl mx-auto">
     <TableHeader>
       <TableRow>
         <TableHead>Datum a čas</TableHead>
@@ -28,7 +37,7 @@ const { data: matches, refresh } = await $client.tournament.getMatches.useQuery(
       </TableRow>
     </TableHeader>
     <TableBody>
-      <TableRow v-for="match in matches" :key="match.id">
+      <TableRow v-for="match in (filterMatches ? matches : filteredMatches)" :key="match.id"> 
         <TableCell>
           <span v-if="!match.played">
             <span>{{ $dayjs(match.date).utc().fromNow() }}</span>
