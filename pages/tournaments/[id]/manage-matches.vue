@@ -10,7 +10,7 @@ const { data: groups } = await $client.tournament.getGroups.useQuery({ tournamen
 const { data: matches, refresh } = await $client.tournament.getMatches.useQuery({ tournamentId });
 
 const filterMatches = ref(false)
-const filteredMatches = computed(() => matches.value?.filter(m => m.played) || []);
+const filteredMatches = computed(() => matches.value?.filter(m => !m.played) || []);
 </script>
 <template>
   <CreateMatchForm
