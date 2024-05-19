@@ -6,9 +6,18 @@ const tournamentId = +route.params.id;
 const { $client, $dayjs } = useNuxtApp();
 
 const { data: userMatches, refresh } = await $client.tournament.getUserMatches.useQuery({ tournamentId });
+
+const filterMatches = ref(false)
+const matches = computed(() => userMatches.value?.filter(m => !m.played) || []);
 </script>
 <template>
-  <Table v-if="userMatches?.length" class="mt-5">
+  <div v-if="userMatches?.length" class="flex items-center gap-5 my-5"> 
+    <Switch @click="filterMatches = !filterMatches" :checked="filterMatches" />
+    <p class="text-xl font-bold">
+      Zobrazit všechny zápasy
+    </p>
+  </div>
+  <Table v-if="matches?.length">
     <TableHeader>
       <TableRow>
         <TableHead>Start</TableHead>
@@ -21,7 +30,7 @@ const { data: userMatches, refresh } = await $client.tournament.getUserMatches.u
     </TableHeader>
     <TableBody>
       <TableRow
-        v-for="match in userMatches"
+        v-for="match in (filterMatches ? userMatches : matches)"
         :key="match.id"
         :class="cn({ 'bg-muted': match.homeScore > 0 || match.awayScore > 0 })"
       >
