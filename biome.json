@@ -31,11 +31,6 @@
 				"noUselessTypeConstraint": "error",
 				"useArrowFunction": "warn"
 			},
-			"correctness": {
-				"noConstAssign": "error",
-				"noUnusedVariables": "error",
-        "noUnusedImports": "error"
-			},
 			"suspicious": {
 				"noExplicitAny": "error",
         "useAwait": "warn"

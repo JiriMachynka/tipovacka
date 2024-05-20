@@ -34,9 +34,10 @@ const numberOfMatches = tournament.value?.userMatches ? tournament.value?.userMa
         {{ username }}
       </div>
     </div>
-    <div
+    <ScrollArea
       v-if="tournament!.userMatches.length > 0"
-      class="flex border border-slate-50 overflow-x-auto custom-scrollbar"
+      class="flex border border-slate-50 overflow-x-auto"
+      orientation="horizontal"
     >
       <div
         v-for="col, row in Array.from({ length: numberOfMatches }, (_, index) => index)"
@@ -60,6 +61,6 @@ const numberOfMatches = tournament.value?.userMatches ? tournament.value?.userMa
             <span>{{ userMatch.awayScore }}</span>
           </div>
       </div>
-    </div>
+    </ScrollArea>
   </div>
 </template>
