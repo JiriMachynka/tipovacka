@@ -47,13 +47,13 @@ const onSubmit = handleSubmit(async (values) => {
 
 		toast({
 			title: 'Vytvořeno',
-			description: `Zápas byl úspěšně vytvořen`,
+			description: 'Zápas byl úspěšně vytvořen',
 		});
 		await emit('refresh');
 	} catch (e) {
 		toast({
 			title: 'Chyba',
-			description: `Nepodařilo se vytvořit záps`,
+			description: 'Nepodařilo se vytvořit záps',
 		});
 	}
 });
