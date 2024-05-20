@@ -38,7 +38,7 @@ const numberOfMatches = tournament.value?.userMatches ? tournament.value?.userMa
       v-if="tournament!.userMatches.length > 0"
       orientation="horizontal"
     >
-      <div class="flex border border-slate-50">
+      <div class="flex border border-slate-50 overflow-x-auto">
         <div
           v-for="col, row in Array.from({ length: numberOfMatches }, (_, index) => index)"
           :key="row"
