@@ -10,7 +10,11 @@ const { data: groups } = await $client.tournament.getGroups.useQuery({ tournamen
 const { data: matches, refresh } = await $client.tournament.getMatches.useQuery({ tournamentId });
 
 const filterMatches = ref(false);
-const filteredMatches = computed(() => matches.value?.filter((m) => !m.played) || []);
+const filteredMatches = computed(() => {
+  return  matches.value?.filter((m) => {
+    return !m.played && $dayjs(m.date).isAfter($dayjs(new Date()).subtract(1, 'day'));
+  }) || [];
+});
 </script>
 <template>
   <CreateMatchForm
