@@ -76,6 +76,10 @@
     @apply bg-background text-foreground;
   }
 
+  input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    @apply bg-white p-1 rounded-md hover:cursor-pointer;
+  }
+
   ::-webkit-scrollbar {
     @apply h-[4px] lg:h-[6px];
   }
