@@ -41,7 +41,6 @@ const filteredMatches = computed(() => {
     <TableBody>
       <TableRow v-for="match in (filterMatches ? matches : filteredMatches)" :key="match.id"> 
         <TableCell>
-          {{ $dayjs(match.date).isAfter($dayjs(new Date()).startOf('date')) }}
           <span v-if="!match.played">
             <span>{{ $dayjs(match.date).utc().fromNow() }}</span>
             <Separator class="my-0.5" />
