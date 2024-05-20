@@ -11,9 +11,7 @@ const { data: matches, refresh } = await $client.tournament.getMatches.useQuery(
 
 const filterMatches = ref(false);
 const filteredMatches = computed(() => {
-  return  matches.value?.filter((m) => {
-    return !m.played || $dayjs(m.date).isAfter($dayjs(new Date()).startOf('date'));
-  }) || [];
+  return matches.value?.filter((m) => !m.played || $dayjs(m.date).isAfter($dayjs(new Date()).startOf('date'))) || [];
 });
 </script>
 <template>
@@ -43,6 +41,7 @@ const filteredMatches = computed(() => {
     <TableBody>
       <TableRow v-for="match in (filterMatches ? matches : filteredMatches)" :key="match.id"> 
         <TableCell>
+          {{ $dayjs(match.date).isAfter($dayjs(new Date()).startOf('date')) }}
           <span v-if="!match.played">
             <span>{{ $dayjs(match.date).utc().fromNow() }}</span>
             <Separator class="my-0.5" />
