@@ -12,7 +12,7 @@ const { data: matches, refresh } = await $client.tournament.getMatches.useQuery(
 const filterMatches = ref(false);
 const filteredMatches = computed(() => {
   return  matches.value?.filter((m) => {
-    return !m.played || $dayjs(m.date).isSame($dayjs(new Date()));
+    return !m.played || $dayjs(m.date).isAfter($dayjs(new Date()).startOf('date'));
   }) || [];
 });
 </script>
