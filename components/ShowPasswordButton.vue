@@ -3,7 +3,7 @@ import { Eye, EyeOff } from 'lucide-vue-next';
 
 const emit = defineEmits(['toggleShow']);
 
-const props = defineProps<{ show: boolean; }>();
+const props = defineProps<{ show: boolean }>();
 </script>
 <template>
   <Button

@@ -7,8 +7,8 @@ const { $client, $dayjs } = useNuxtApp();
 
 const { data: userMatches, refresh } = await $client.tournament.getUserMatches.useQuery({ tournamentId });
 
-const filterMatches = ref(false)
-const matches = computed(() => userMatches.value?.filter(m => !m.played) || []);
+const filterMatches = ref(false);
+const matches = computed(() => userMatches.value?.filter((m) => !m.played) || []);
 </script>
 <template>
   <div v-if="userMatches?.length" class="flex items-center gap-5 my-5"> 

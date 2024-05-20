@@ -54,8 +54,8 @@ const onSubmit = handleSubmit(async (values) => {
 const passwordShow = ref(false);
 const passwordConfirmationShow = ref(false);
 
-const passwordShowToggle = () => passwordShow.value = !passwordShow.value;
-const passwordConfirmationShowToggle = () => passwordConfirmationShow.value = !passwordConfirmationShow.value;
+const passwordShowToggle = () => (passwordShow.value = !passwordShow.value);
+const passwordConfirmationShowToggle = () => (passwordConfirmationShow.value = !passwordConfirmationShow.value);
 </script>
 <template>
   <main class="container flex flex-col justify-center items-center gap-4 h-dvh">

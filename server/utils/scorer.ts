@@ -47,7 +47,7 @@ export const getPlayerScorers = async (tournamentId: number, userId: string) => 
 			secondScorerFirstName: sql<string>`${scorerSecond.firstName}`,
 			secondScorerLastName: sql<string>`${scorerSecond.lastName}`,
 			secondScorerGoals: sql<number>`${scorerSecond.goals}`,
-			lockScorers: Tournaments.lockScorers,
+			lockScorers: sql<boolean>`${Tournaments.lockScorers}`,
 		})
 		.from(Players)
 		.leftJoin(scorerFirst, eq(Players.scorerFirstId, scorerFirst.id))

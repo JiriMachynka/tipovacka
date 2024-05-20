@@ -45,7 +45,7 @@ const handleAddPlayers = async () => {
 	await emit('refresh');
 	await refreshUsers();
 
-  modelValue.value = [];
+	modelValue.value = [];
 };
 </script>
 <template>

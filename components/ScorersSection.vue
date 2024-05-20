@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { AlertTriangle, Check, ChevronsUpDown } from 'lucide-vue-next';
+import { Check, ChevronsUpDown } from 'lucide-vue-next';
 import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';
 import { z } from 'zod';
@@ -140,6 +140,7 @@ const selectedSecondScorer = computed(() => {
                 firstScorerId = 0;
                 setFieldValue('firstScorerFirstName', '');
               }"
+              :class="cn('disabled:opacity-100')"
               :disabled="playerScorers?.lockScorers"
             /> 
           </FormControl>
@@ -159,6 +160,7 @@ const selectedSecondScorer = computed(() => {
                 firstScorerId = 0
                 setFieldValue('firstScorerLastName', '');
               }"
+              :class="cn('disabled:opacity-100')"
               :disabled="playerScorers?.lockScorers"
             />
           </FormControl>
@@ -168,7 +170,7 @@ const selectedSecondScorer = computed(() => {
       </FormField>
       <div class="space-y-2">
         <Label>Góly</Label>
-        <div class="w-[50px] h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background text-center disabled:opacity-100 select-none">
+        <div class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background text-center select-none">
           {{ playerScorers.firstScorerGoals }}
         </div>
       </div>
@@ -239,6 +241,7 @@ const selectedSecondScorer = computed(() => {
                 secondScorerId = 0;
                 setFieldValue('secondScorerFirstName', '');
               }"
+              :class="cn('disabled:opacity-100')"
               :disabled="playerScorers?.lockScorers"
             />
           </FormControl>
@@ -258,6 +261,7 @@ const selectedSecondScorer = computed(() => {
                 secondScorerId = 0
                 setFieldValue('secondScorerLastName', '');
               }"
+              :class="cn('disabled:opacity-100')"
               :disabled="playerScorers?.lockScorers"
             />
           </FormControl>
@@ -267,22 +271,13 @@ const selectedSecondScorer = computed(() => {
       </FormField>
       <div class="space-y-2">
         <Label class="content-center">Góly</Label>
-        <div class="w-[50px] h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background text-center disabled:opacity-100 select-none">
+        <div class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background text-center disabled:opacity-100 select-none">
           {{ playerScorers.secondScorerGoals }}
         </div>
       </div>
     </div>
-    <Card
-      v-if="playerScorers?.lockScorers"
-      class="border-red-500"
-    >
-      <CardContent class="p-3 flex gap-4">
-        <AlertTriangle color="red" class="size-8" />
-        <p class="text-lg font-bold">Střelci byli uzamčeni</p>
-      </CardContent>
-    </Card>
     <Button
-      v-else
+      v-if="!playerScorers?.lockScorers"
       type="submit"
       class="w-full text-xl font-bold"
     >

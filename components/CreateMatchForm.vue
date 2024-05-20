@@ -7,8 +7,8 @@ import { z } from 'zod';
 const emit = defineEmits(['refresh']);
 const props = defineProps<{
 	tournamentId: number;
-  teams: Team[];
-  groups: Group[];
+	teams: Team[];
+	groups: Group[];
 }>();
 
 const { toast } = useToast();
