@@ -34,35 +34,32 @@ const numberOfMatches = tournament.value?.userMatches ? tournament.value?.userMa
         {{ username }}
       </div>
     </div>
-    <ScrollArea
+    <div 
       v-if="tournament!.userMatches.length > 0"
-      :class="cn('overflow-x-auto')"
-      orientation="horizontal"
+      class="flex border border-slate-50 overflow-x-auto"
     >
-      <div class="flex border border-slate-50">
-        <div
-          v-for="col, row in Array.from({ length: numberOfMatches }, (_, index) => index)"
-          :key="row"
-          class="[&:not(:last-child)]:border-r border-r-slate-50"
-        >
-          <div class="border-b border-b-slate-50 flex flex-col lg:flex-row p-0 lg:p-3 gap-0 lg:gap-2">
-            <span class="p-2 lg:p-0 border-b border-b-slate-50 lg:border-none text-nowrap">
-              {{ tournament!.userMatches[row * numberOfPlayers].homeTeamName }}
-            </span> 
-            <span class="hidden lg:inline-block">-</span> 
-            <span class="p-2 lg:p-0 text-nowrap">
-              {{ tournament!.userMatches[row * numberOfPlayers].awayTeamName }}
-            </span>
-          </div>
-            <div 
-              v-for="userMatch in tournament!.userMatches.slice(col * numberOfPlayers, col * numberOfPlayers + numberOfPlayers)" 
-              class="[&:not(:last-child)]:border-b border-slate-50 flex justify-center text-xl gap-1 py-2"
-            >
-              <span>{{ userMatch.homeScore }}</span> :
-              <span>{{ userMatch.awayScore }}</span>
-            </div>
+      <div
+        v-for="col, row in Array.from({ length: numberOfMatches }, (_, index) => index)"
+        :key="row"
+        class="[&:not(:last-child)]:border-r border-r-slate-50"
+      >
+        <div class="border-b border-b-slate-50 flex flex-col lg:flex-row p-0 lg:p-3 gap-0 lg:gap-2">
+          <span class="p-2 lg:p-0 border-b border-b-slate-50 lg:border-none text-nowrap">
+            {{ tournament!.userMatches[row * numberOfPlayers].homeTeamName }}
+          </span> 
+          <span class="hidden lg:inline-block">-</span> 
+          <span class="p-2 lg:p-0 text-nowrap">
+            {{ tournament!.userMatches[row * numberOfPlayers].awayTeamName }}
+          </span>
         </div>
+          <div 
+            v-for="userMatch in tournament!.userMatches.slice(col * numberOfPlayers, col * numberOfPlayers + numberOfPlayers)" 
+            class="[&:not(:last-child)]:border-b border-slate-50 flex justify-center text-xl gap-1 py-2"
+          >
+            <span>{{ userMatch.homeScore }}</span> :
+            <span>{{ userMatch.awayScore }}</span>
+          </div>
       </div>
-    </ScrollArea>
+    </div>
   </div>
 </template>
