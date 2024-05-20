@@ -6,13 +6,15 @@ const route = useRoute();
 const tournamentId = +route.params.id;
 
 const { data: teams } = await $client.tournament.getTeams.useQuery({ tournamentId });
-const { data: groups } = await $client.tournament.getGroups.useQuery({ tournamentId });
+const { data: groupsData } = await $client.tournament.getGroups.useQuery({ tournamentId });
 const { data: matches, refresh } = await $client.tournament.getMatches.useQuery({ tournamentId });
 
 const filterMatches = ref(false);
 const filteredMatches = computed(() => {
-  return matches.value?.filter((m) => !m.played || $dayjs(m.date).isAfter($dayjs(new Date()).startOf('date'))) || [];
+	return matches.value?.filter((m) => !m.played || $dayjs(m.date).isAfter($dayjs(new Date()).startOf('date'))) || [];
 });
+
+const groups = computed(() => [...groupsData.value, { name: 'Playoff' }]);
 </script>
 <template>
   <CreateMatchForm
