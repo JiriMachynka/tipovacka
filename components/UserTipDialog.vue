@@ -26,11 +26,11 @@ const { $client } = useNuxtApp();
 
 const { mutate: updateTip } = $client.tournament.updateUserMatchTip.useMutation();
 
-const { handleSubmit } = useForm({
+const { handleSubmit, errors } = useForm({
 	validationSchema: toTypedSchema(
 		z.object({
-			homeScore: z.number(),
-			awayScore: z.number(),
+			homeScore: z.number({ message: 'Vyžadováno' }),
+			awayScore: z.number({ message: 'Vyžadováno' }),
 		}),
 	),
 	initialValues: {
@@ -73,7 +73,7 @@ const onSubmit = handleSubmit(async (values) => {
               <FormItem class="grid grid-cols-[auto_70px] justify-between items-center space-y-0">
                 <FormLabel>{{ props.homeTeamName }}</FormLabel>
                   <FormControl>
-                    <Input type="number" v-bind="componentField" min="0" />
+                    <Input :class="cn(errors.homeScore && 'row-span-2')" type="number" v-bind="componentField" min="0" />
                   </FormControl>
                 <FormMessage />
               </FormItem>
@@ -82,7 +82,7 @@ const onSubmit = handleSubmit(async (values) => {
             <FormField v-slot="{ componentField }" name="awayScore">
               <FormItem class="grid grid-cols-[70px_auto] justify-between items-center space-y-0">
                 <FormControl>
-                  <Input type="number" v-bind="componentField" min="0" />
+                  <Input :class="cn(errors.awayScore && 'row-span-2')" type="number" v-bind="componentField" min="0" />
                 </FormControl>
                 <FormLabel>{{ props.awayTeamName }}</FormLabel>
                 <FormMessage />
