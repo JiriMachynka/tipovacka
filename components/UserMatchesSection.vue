@@ -17,7 +17,7 @@ const matches = computed(() => userMatches.value?.filter((m) => !m.played) || []
       Zobrazit všechny zápasy
     </p>
   </div>
-  <Table v-if="matches?.length">
+  <Table v-if="userMatches?.length">
     <TableHeader>
       <TableRow>
         <TableHead>Start</TableHead>
