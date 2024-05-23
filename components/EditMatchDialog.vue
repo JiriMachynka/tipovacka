@@ -113,11 +113,7 @@ const onSubmit = handleSubmit(async (values) => {
                     <SelectContent>
                       <SelectGroup>
                         <SelectItem
-                          v-for="team in (
-                            values.group === 'Playoff' ?
-                            props.teams :
-                            props.teams.filter((team) => team.groupName === values.group)
-                          )"
+                          v-for="team in props.teams.filter((team) => values.group === 'Playoff' || team.groupName === values.group).sort((a, b) => a.name.localeCompare(b.name))"
                           :key="team.id"
                           :value="team.id.toString()"
                         >
@@ -141,11 +137,7 @@ const onSubmit = handleSubmit(async (values) => {
                     <SelectContent>
                       <SelectGroup>
                         <SelectItem
-                          v-for="team in (
-                            values.group === 'Playoff' ?
-                            props.teams :
-                            props.teams.filter((team) => team.groupName === values.group && team.id !== +values.homeTeamId)
-                          )"
+                          v-for="team in props.teams.filter((team) => values.group === 'Playoff' || (team.groupName === values.group && team.id !== +values.homeTeamId)).sort((a, b) => a.name.localeCompare(b.name))"
                           :key="team.id"
                           :value="team.id.toString()"
                         >
