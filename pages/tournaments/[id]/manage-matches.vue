@@ -44,7 +44,7 @@ const groups = computed(() => [...groupsData.value, { name: 'Playoff' }]);
       <TableRow v-for="match in (filterMatches ? matches : filteredMatches)" :key="match.id"> 
         <TableCell>
           <span v-if="!match.played">
-            <span>{{ $dayjs(match.date).fromNow() }}</span>
+            <span>{{ $dayjs(match.date).utc().fromNow() }}</span>
             <Separator class="my-0.5" />
             <span>{{ $dayjs(match.date).utc().format("DD.MM.YYYY HH:mm") }}</span>
           </span>
