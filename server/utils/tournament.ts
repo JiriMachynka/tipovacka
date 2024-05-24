@@ -123,6 +123,24 @@ export const getAllTournamentData = async (tournamentId: number) => {
 };
 
 export const getTournamentPoints = async (tournamentId: number) => {
+	const teamsPoints = sql<number>`
+		CASE
+			WHEN tournament_overall_tips.winner_id = tournaments.winner_id THEN 6
+			WHEN tournament_overall_tips.winner_id = tournaments.finalist_id THEN 2
+			WHEN tournament_overall_tips.winner_id IN (tournaments.semifinalist_first_id, tournaments.semifinalist_second_id) THEN 1
+			ELSE 0
+		END + CASE
+			WHEN tournament_overall_tips.finalist_id = tournaments.finalist_id THEN 2
+			WHEN tournament_overall_tips.finalist_id IN (tournaments.semifinalist_first_id, tournaments.semifinalist_second_id) THEN 1
+			ELSE 0
+		END + CASE
+			WHEN tournament_overall_tips.semifinalist_first_id IN (tournaments.semifinalist_first_id, tournaments.semifinalist_second_id) THEN 1
+			ELSE 0
+		END + CASE
+			WHEN tournament_overall_tips.semifinalist_second_id IN (tournaments.semifinalist_first_id, tournaments.semifinalist_second_id) THEN 1
+			ELSE 0
+		END`;
+
 	const scorerFirst = alias(Scorers, 'scorer_first');
 	const scorerSecond = alias(Scorers, 'scorer_second');
 
@@ -140,23 +158,7 @@ export const getTournamentPoints = async (tournamentId: number) => {
 	return await db
 		.select({
 			username: sql<string>`${Users.username}`,
-			points: sql<number>`${sum(UserMatchTips.points)} + ${scorersGoalsSq.goalsSum} + ${sum(sql<number>`
-					CASE
-						WHEN tournament_overall_tips.winner_id = tournaments.winner_id THEN 6
-						WHEN tournament_overall_tips.winner_id = tournaments.finalist_id THEN 2
-						WHEN tournament_overall_tips.winner_id IN (tournaments.semifinalist_first_id, tournaments.semifinalist_second_id) THEN 1
-						ELSE 0
-					END + CASE
-						WHEN tournament_overall_tips.finalist_id = tournaments.finalist_id THEN 2
-						WHEN tournament_overall_tips.finalist_id IN (tournaments.semifinalist_first_id, tournaments.semifinalist_second_id) THEN 1
-						ELSE 0
-					END + CASE
-						WHEN tournament_overall_tips.semifinalist_first_id IN (tournaments.semifinalist_first_id, tournaments.semifinalist_second_id) THEN 1
-						ELSE 0
-					END + CASE
-						WHEN tournament_overall_tips.semifinalist_second_id IN (tournaments.semifinalist_first_id, tournaments.semifinalist_second_id) THEN 1
-						ELSE 0
-					END`)}`,
+			points: sql<number>`${sum(UserMatchTips.points)} + ${scorersGoalsSq.goalsSum} + ${sum(teamsPoints)}`,
 		})
 		.from(UserMatchTips)
 		.leftJoin(Players, eq(UserMatchTips.playerId, Players.id))
@@ -166,7 +168,7 @@ export const getTournamentPoints = async (tournamentId: number) => {
 		.leftJoin(scorersGoalsSq, eq(Players.id, scorersGoalsSq.playerId))
 		.where(and(eq(Players.tournamentId, tournamentId), isNotNull(UserMatchTips.points)))
 		.groupBy(Users.username, scorersGoalsSq.goalsSum)
-		.orderBy(desc(sql<number>`${sum(UserMatchTips.points)} + ${scorersGoalsSq.goalsSum}`));
+		.orderBy(desc(sql<number>`${sum(UserMatchTips.points)} + ${scorersGoalsSq.goalsSum} + ${sum(teamsPoints)}`));
 };
 
 export const getTournamentGroups = async (tournamentId: number) => {
