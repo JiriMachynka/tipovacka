@@ -14,12 +14,32 @@ export const Tournaments = pgTable('tournaments', {
 		.notNull()
 		.references(() => Users.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
 	lockScorers: boolean('lock_scorers').notNull().default(false),
+	winnerId: integer('winner_id').references(() => Teams.id, { onDelete: 'set null', onUpdate: 'cascade' }),
+	finalistId: integer('finalist_id').references(() => Teams.id, { onDelete: 'set null', onUpdate: 'cascade' }),
+	semifinalistFirstId: integer('semifinalist_first_id').references(() => Teams.id, { onDelete: 'set null', onUpdate: 'cascade' }),
+	semifinalistSecondId: integer('semifinalist_second_id').references(() => Teams.id, { onDelete: 'set null', onUpdate: 'cascade' }),
 });
 
 export const tournamentRelations = relations(Tournaments, ({ one }) => ({
 	tournaments: one(Users, {
 		fields: [Tournaments.authorId],
 		references: [Users.id],
+	}),
+	winnerId: one(Teams, {
+		fields: [Tournaments.winnerId],
+		references: [Teams.id],
+	}),
+	finalistId: one(Teams, {
+		fields: [Tournaments.finalistId],
+		references: [Teams.id],
+	}),
+	semifinalistFirstId: one(Teams, {
+		fields: [Tournaments.semifinalistFirstId],
+		references: [Teams.id],
+	}),
+	semifinalistSecondId: one(Teams, {
+		fields: [Tournaments.semifinalistSecondId],
+		references: [Teams.id],
 	}),
 }));
 

@@ -125,6 +125,16 @@ const logout = async () => {
               )"
               as-child
             >
+              <NuxtLink :to="`/tournaments/${tournamentId}/manage-teams`">
+                Spravovat týmy
+              </NuxtLink>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem :class="cn(buttonVariants({ variant: 'ghost' }),
+                'text-lg font-bold px-5 py-3 hover:cursor-pointer'
+              )"
+              as-child
+            >
               <NuxtLink :to="`/tournaments/${tournamentId}/manage-scorers`">
                 Spravovat střelce
               </NuxtLink>
@@ -154,6 +164,21 @@ const logout = async () => {
         >
           <NuxtLink :to="`/tournaments/${tournamentId}/manage-matches`" @click="() => (mobileNav = false)">
             Spravovat zápasy
+          </NuxtLink>
+        </Button>
+      </li>
+      <li v-if="tournament!.data.authorId === user?.id" :class="cn('lg:hidden', { 
+          'hidden': !mobileNav,
+          'block': mobileNav,
+        })"
+      >
+        <Button
+          variant="ghost"
+          class="w-full text-xl py-3 font-bold"
+          as-child
+        >
+          <NuxtLink :to="`/tournaments/${tournamentId}/manage-teams`" @click="() => (mobileNav = false)">
+            Spravovat týmy
           </NuxtLink>
         </Button>
       </li>

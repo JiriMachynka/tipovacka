@@ -139,12 +139,30 @@ export const getTournamentPoints = async (tournamentId: number) => {
 
 	return await db
 		.select({
-			username: Users.username,
-			points: sql<number>`${sum(UserMatchTips.points)} + ${scorersGoalsSq.goalsSum}`,
+			username: sql<string>`${Users.username}`,
+			points: sql<number>`${sum(UserMatchTips.points)} + ${scorersGoalsSq.goalsSum} + ${sum(sql<number>`
+					CASE
+						WHEN tournament_overall_tips.winner_id = tournaments.winner_id THEN 6
+						WHEN tournament_overall_tips.winner_id = tournaments.finalist_id THEN 2
+						WHEN tournament_overall_tips.winner_id IN (tournaments.semifinalist_first_id, tournaments.semifinalist_second_id) THEN 1
+						ELSE 0
+					END + CASE
+						WHEN tournament_overall_tips.finalist_id = tournaments.finalist_id THEN 2
+						WHEN tournament_overall_tips.finalist_id IN (tournaments.semifinalist_first_id, tournaments.semifinalist_second_id) THEN 1
+						ELSE 0
+					END + CASE
+						WHEN tournament_overall_tips.semifinalist_first_id IN (tournaments.semifinalist_first_id, tournaments.semifinalist_second_id) THEN 1
+						ELSE 0
+					END + CASE
+						WHEN tournament_overall_tips.semifinalist_second_id IN (tournaments.semifinalist_first_id, tournaments.semifinalist_second_id) THEN 1
+						ELSE 0
+					END`)}`,
 		})
 		.from(UserMatchTips)
 		.leftJoin(Players, eq(UserMatchTips.playerId, Players.id))
 		.leftJoin(Users, eq(Players.userId, Users.id))
+		.leftJoin(TournamentOverallTips, eq(Players.tournamentOverallTipId, TournamentOverallTips.id))
+		.leftJoin(Tournaments, eq(Players.tournamentId, Tournaments.id))
 		.leftJoin(scorersGoalsSq, eq(Players.id, scorersGoalsSq.playerId))
 		.where(and(eq(Players.tournamentId, tournamentId), isNotNull(UserMatchTips.points)))
 		.groupBy(Users.username, scorersGoalsSq.goalsSum)
@@ -164,6 +182,31 @@ export const getTournamentTeams = async (tournamentId: number) => {
 		})
 		.from(Teams)
 		.where(eq(Teams.tournamentId, tournamentId));
+};
+
+export const getPlayerTeams = async (tournamentId: number) => {
+	const winner = alias(Teams, 'winner');
+	const finalist = alias(Teams, 'finalist');
+	const semifinalistFirst = alias(Teams, 'semifinalist_first');
+	const semifinalistSecond = alias(Teams, 'semifinalist_second');
+
+	return await db
+		.select({
+			username: sql<string>`${Users.username}`,
+			winner: sql<string>`${winner.name}`,
+			finalist: sql<string>`${finalist.name}`,
+			semifinalistFirst: sql<string>`${semifinalistFirst.name}`,
+			semifinalistSecond: sql<string>`${semifinalistSecond.name}`,
+		})
+		.from(Players)
+		.leftJoin(TournamentOverallTips, eq(Players.tournamentOverallTipId, TournamentOverallTips.id))
+		.leftJoin(winner, eq(TournamentOverallTips.winnerId, winner.id))
+		.leftJoin(finalist, eq(TournamentOverallTips.finalistId, finalist.id))
+		.leftJoin(semifinalistFirst, eq(TournamentOverallTips.semifinalistFirstId, semifinalistFirst.id))
+		.leftJoin(semifinalistSecond, eq(TournamentOverallTips.semifinalistSecondId, semifinalistSecond.id))
+		.leftJoin(Users, eq(Players.userId, Users.id))
+		.where(eq(Players.tournamentId, tournamentId))
+		.orderBy(Users.username);
 };
 
 export const getTournamentMatches = async (tournamentId: number) => {
@@ -191,6 +234,21 @@ export const getTournamentMatches = async (tournamentId: number) => {
 		.orderBy(asc(TournamentMatchTips.id));
 };
 
+export const getTournamentOverallTeams = async (tournamentId: number) => {
+	const [teams] = await db
+		.select({
+			winnerId: Tournaments.winnerId,
+			finalistId: Tournaments.finalistId,
+			semifinalistFirstId: Tournaments.semifinalistFirstId,
+			semifinalistSecondId: Tournaments.semifinalistSecondId,
+		})
+		.from(Tournaments)
+		.where(eq(Tournaments.id, tournamentId))
+		.limit(1);
+
+	return teams;
+};
+
 export const updateOverallTip = async (
 	tournamentId: number,
 	userId: string,
@@ -210,4 +268,19 @@ export const updateOverallTip = async (
 			semifinalistSecondId,
 		})
 		.where(eq(TournamentOverallTips.id, overallTipId));
+};
+
+export const updateOverallTeams = async (
+	tournamentId: number,
+	winnerId: number,
+	finalistId: number,
+	semifinalistFirstId: number,
+	semifinalistSecondId: number,
+) => {
+	await db.update(Tournaments).set({
+		winnerId,
+		finalistId,
+		semifinalistFirstId,
+		semifinalistSecondId,
+	});
 };

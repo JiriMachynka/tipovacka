@@ -6,6 +6,8 @@ const getPageName = (pathname: string | undefined) => {
 			return 'Žebříček';
 		case 'manage-matches':
 			return 'Správa zápasů';
+		case 'manage-teams':
+			return 'Správa týmů';
 		case 'manage-scorers':
 			return 'Správa střelců';
 		case 'manage-players':

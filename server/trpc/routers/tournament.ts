@@ -57,6 +57,20 @@ export const tournamentRouter = router({
 			}),
 		)
 		.query(async ({ ctx, input }) => await getUserMatches(input.tournamentId, ctx.userId)),
+	getPlayerTeams: privateProcedure
+		.input(
+			z.object({
+				tournamentId: z.number(),
+			}),
+		)
+		.query(async ({ input }) => await getPlayerTeams(input.tournamentId)),
+	getOverallTeams: privateProcedure
+		.input(
+			z.object({
+				tournamentId: z.number(),
+			}),
+		)
+		.query(async ({ input }) => await getTournamentOverallTeams(input.tournamentId)),
 	getPlayerOverallTips: privateProcedure
 		.input(
 			z.object({
@@ -91,5 +105,20 @@ export const tournamentRouter = router({
 			const { tournamentId, winnerId, finalistId, semifinalistFirstId, semifinalistSecondId } = input;
 
 			await updateOverallTip(tournamentId, ctx.userId, winnerId, finalistId, semifinalistFirstId, semifinalistSecondId);
+		}),
+	updateOverallTeams: privateProcedure
+		.input(
+			z.object({
+				tournamentId: z.number(),
+				winnerId: z.number(),
+				finalistId: z.number(),
+				semifinalistFirstId: z.number(),
+				semifinalistSecondId: z.number(),
+			}),
+		)
+		.mutation(async ({ input }) => {
+			const { tournamentId, winnerId, finalistId, semifinalistFirstId, semifinalistSecondId } = input;
+
+			await updateOverallTeams(tournamentId, winnerId, finalistId, semifinalistFirstId, semifinalistSecondId);
 		}),
 });
