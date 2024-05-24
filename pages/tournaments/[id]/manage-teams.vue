@@ -110,9 +110,9 @@ const sections = [
       Uložit týmy
     </Button>
   </form>
-  <Table>
+  <Table class="mt-4">
     <TableHeader>
-      <TableRow class="[&>*]:text-nowrap">
+      <TableRow class="[&>*]:text-nowrap grid grid-cols-5">
         <TableHead>Jméno</TableHead>
         <TableHead>Vítěz</TableHead>
         <TableHead>Finalista</TableHead>
@@ -124,7 +124,7 @@ const sections = [
       <TableRow
         v-for="player in tableData"
         :key="player.username"
-        :class="cn('[&>*]:text-nowrap [&>*]:py-2')"
+        :class="cn('[&>*]:text-nowrap [&>*]:py-2 grid grid-cols-5')"
       >
         <TableCell>{{ player.username }}</TableCell>
         <TableCell>{{ player.winner }}</TableCell>
