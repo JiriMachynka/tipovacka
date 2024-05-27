@@ -284,5 +284,5 @@ export const updateOverallTeams = async (
 		finalistId,
 		semifinalistFirstId,
 		semifinalistSecondId,
-	});
+	}).where(eq(Tournaments.id, tournamentId));
 };
