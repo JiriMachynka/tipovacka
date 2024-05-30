@@ -158,7 +158,7 @@ export const getTournamentPoints = async (tournamentId: number) => {
 	return await db
 		.select({
 			username: sql<string>`${Users.username}`,
-			points: sql<number>`${sum(UserMatchTips.points)} + ${scorersGoalsSq.goalsSum} + ${sum(teamsPoints)}`,
+			points: sql<number>`${sum(UserMatchTips.points)} + ${scorersGoalsSq.goalsSum} + ${teamsPoints}`, 
 		})
 		.from(UserMatchTips)
 		.leftJoin(Players, eq(UserMatchTips.playerId, Players.id))
@@ -168,7 +168,7 @@ export const getTournamentPoints = async (tournamentId: number) => {
 		.leftJoin(scorersGoalsSq, eq(Players.id, scorersGoalsSq.playerId))
 		.where(and(eq(Players.tournamentId, tournamentId), isNotNull(UserMatchTips.points)))
 		.groupBy(Users.username, scorersGoalsSq.goalsSum)
-		.orderBy(desc(sql<number>`${sum(UserMatchTips.points)} + ${scorersGoalsSq.goalsSum} + ${sum(teamsPoints)}`));
+		.orderBy(desc(sql<number>`${sum(UserMatchTips.points)} + ${scorersGoalsSq.goalsSum} + ${teamsPoints}`));
 };
 
 export const getTournamentGroups = async (tournamentId: number) => {
@@ -280,10 +280,13 @@ export const updateOverallTeams = async (
 	semifinalistFirstId: number,
 	semifinalistSecondId: number,
 ) => {
-	await db.update(Tournaments).set({
-		winnerId,
-		finalistId,
-		semifinalistFirstId,
-		semifinalistSecondId,
-	}).where(eq(Tournaments.id, tournamentId));
+	await db
+		.update(Tournaments)
+		.set({
+			winnerId,
+			finalistId,
+			semifinalistFirstId,
+			semifinalistSecondId,
+		})
+		.where(eq(Tournaments.id, tournamentId));
 };
