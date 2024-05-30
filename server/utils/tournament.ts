@@ -183,7 +183,8 @@ export const getTournamentTeams = async (tournamentId: number) => {
 			groupName: Teams.groupName,
 		})
 		.from(Teams)
-		.where(eq(Teams.tournamentId, tournamentId));
+		.where(eq(Teams.tournamentId, tournamentId))
+		.orderBy(Teams.name);
 };
 
 export const getPlayerTeams = async (tournamentId: number) => {
