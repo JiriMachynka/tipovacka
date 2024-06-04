@@ -47,13 +47,13 @@ export const Players = pgTable('players', {
 	id: serial('id').primaryKey(),
 	userId: uuid('user_id')
 		.notNull()
-		.references(() => Users.id, { onUpdate: 'cascade' }),
+		.references(() => Users.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
 	tournamentId: integer('tournament_id')
 		.notNull()
-		.references(() => Tournaments.id),
+		.references(() => Tournaments.id, { onDelete: 'cascade' }),
 	tournamentOverallTipId: integer('tournament_overall_tip_id')
 		.notNull()
-		.references(() => TournamentOverallTips.id),
+		.references(() => TournamentOverallTips.id, { onDelete: 'cascade' }),
 	scorerFirstId: integer('scorer_first_id').references(() => Scorers.id),
 	scorerSecondId: integer('scorer_second_id').references(() => Scorers.id),
 });

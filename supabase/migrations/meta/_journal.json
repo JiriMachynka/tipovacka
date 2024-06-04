@@ -22,6 +22,20 @@
       "when": 1716570226407,
       "tag": "0002_superb_black_crow",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1717540118854,
+      "tag": "0003_wet_hercules",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1717540189886,
+      "tag": "0004_green_speedball",
+      "breakpoints": true
     }
   ]
 }

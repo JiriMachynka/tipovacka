@@ -1,5 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  css: [
+    'vue-easy-dnd/dist/dnd.css',
+  ],
   build: {
     transpile: [
       'trpc-nuxt',
@@ -8,11 +11,12 @@ export default defineNuxtConfig({
   },
   devtools: { enabled: true },
   modules: [
-    "@nuxtjs/tailwindcss", 
+    "@nuxtjs/tailwindcss",
     "@nuxtjs/supabase",
     '@nuxtjs/color-mode',
     "shadcn-nuxt",
     "dayjs-nuxt",
+    "@nuxt/image"
   ],
   app: {
     head: {
@@ -20,9 +24,12 @@ export default defineNuxtConfig({
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { charset: 'utf-8' },
-        { name: 'description', content: 'Moje Tipovačka' },
+        { name: 'description', content: 'Moje Tipovačka' }
       ],
-    }
+      link: [
+        { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css' }
+      ]
+    },
   },
   dayjs: {
     locales: ['cs'],

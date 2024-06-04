@@ -1,8 +1,9 @@
+import type { Country } from '~/types';
 import { alias } from 'drizzle-orm/pg-core';
 import { and, asc, desc, count, eq, isNotNull, or, sql, sum } from 'drizzle-orm';
 import { db, Players, Scorers, Teams, TournamentMatchTips, TournamentOverallTips, Tournaments, UserMatchTips, Users } from '../db';
 
-export const createTournament = async (authorId: string, name: string, players: string[], teams: string[][]) => {
+export const createTournament = async (authorId: string, name: string, players: string[], teams: Country[]) => {
 	const [createdTournament] = await db
 		.insert(Tournaments)
 		.values({
@@ -12,17 +13,13 @@ export const createTournament = async (authorId: string, name: string, players: 
 		.returning({ id: Tournaments.id });
 
 	await db.insert(Teams).values(
-		teams
-			.map((group, idx) =>
-				group.map((team) => {
-					return {
-						name: team,
-						groupName: `Skupina ${String.fromCharCode(65 + idx)}`,
-						tournamentId: createdTournament.id,
-					};
-				}),
-			)
-			.flatMap((group) => group),
+		teams.map((team) => {
+			return {
+				name: team.name,
+				groupName: `Skupina ${String.fromCharCode(65 + team.group)}`,
+				tournamentId: createdTournament.id,
+			};
+		})
 	);
 
 	if (players.length === 0) {
@@ -58,6 +55,7 @@ export const createTournament = async (authorId: string, name: string, players: 
 			});
 		});
 	}
+
 	return createdTournament.id;
 };
 
@@ -180,7 +178,7 @@ export const getTournamentPoints = async (tournamentId: number) => {
 			Tournaments.finalistId,
 			Tournaments.semifinalistFirstId,
 			Tournaments.semifinalistSecondId,
-			teamsPoints.sql
+			teamsPoints.sql,
 		)
 		.orderBy(desc(sql<number>`${sum(UserMatchTips.points)} + ${scorersGoalsSq.goalsSum} + ${teamsPoints.sql}`));
 };

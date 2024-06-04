@@ -7,3 +7,9 @@ export interface Team {
 export interface Group {
 	name: string;
 }
+
+export interface Country {
+	name: string;
+	code: string;
+	group: number;
+}
