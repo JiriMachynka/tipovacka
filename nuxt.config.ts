@@ -6,7 +6,7 @@ export default defineNuxtConfig({
   build: {
     transpile: [
       'trpc-nuxt',
-      'dayjs-nuxt'
+      'dayjs-nuxt',
     ]
   },
   devtools: { enabled: true },
@@ -16,7 +16,8 @@ export default defineNuxtConfig({
     '@nuxtjs/color-mode',
     "shadcn-nuxt",
     "dayjs-nuxt",
-    "@nuxt/image"
+    "@nuxt/image",
+    'nuxt-cron',
   ],
   app: {
     head: {
@@ -30,6 +31,10 @@ export default defineNuxtConfig({
         { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css' }
       ]
     },
+  },
+  cron: {
+    timeZone: 'Europe/Prague',
+    jobsDir: 'cron',
   },
   dayjs: {
     locales: ['cs'],
