@@ -5,6 +5,8 @@ const route = useRoute();
 
 const tournamentId = +route.params.id;
 
+const countries = ref(useCountries());
+
 const { data: teams } = await $client.tournament.getTeams.useQuery({ tournamentId });
 const { data: groupsData } = await $client.tournament.getGroups.useQuery({ tournamentId });
 const { data: matches, refresh } = await $client.tournament.getMatches.useQuery({ tournamentId });
@@ -41,7 +43,10 @@ const groups = computed(() => [...groupsData.value, { name: 'Playoff' }]);
       </TableRow>
     </TableHeader>
     <TableBody>
-      <TableRow v-for="match in (filterMatches ? matches : filteredMatches)" :key="match.id"> 
+      <TableRow
+        v-for="match in (filterMatches ? matches : filteredMatches)"
+        :key="match.id"
+      > 
         <TableCell>
           <span v-if="!match.played">
             <span>{{ $dayjs(match.date).fromNow() }}</span>
@@ -51,8 +56,14 @@ const groups = computed(() => [...groupsData.value, { name: 'Playoff' }]);
           <span v-else>Odehráno</span>
         </TableCell>
         <TableCell>{{ match.group }}</TableCell>
-        <TableCell>{{ match.homeTeamName }}</TableCell>
-        <TableCell>{{ match.awayTeamName }}</TableCell>
+        <TableCell :class="cn('space-x-4 text-nowrap')">
+          <span :class="`text-lg fi fi-${countries.find((c) => c.name === match.homeTeamName)?.code}`" />
+          <span>{{ match.homeTeamName }}</span>
+        </TableCell>
+        <TableCell :class="cn('space-x-4 text-nowrap')">
+          <span :class="`text-lg fi fi-${countries.find((c) => c.name === match.awayTeamName)?.code}`" />
+          <span>{{ match.awayTeamName }}</span>
+        </TableCell>
         <TableCell>{{ match.homeScore }}:{{ match.awayScore }}</TableCell>
         <TableCell class="space-x-2">
           <EditMatchDialog

@@ -76,7 +76,7 @@ export default function useCountries() {
     { name: "Slovensko", code: "sk" },
     { name: "Slovinsko", code: "si" },
     { name: "Spojené arabské emiráty", code: "ae" },
-    { name: "Spojené státy", code: "us" },
+    { name: "USA", code: "us" },
     { name: "Srbsko", code: "rs" },
     { name: "Španělsko", code: "es" },
     { name: "Švédsko", code: "se" },
