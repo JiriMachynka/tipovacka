@@ -16,7 +16,7 @@ const validationSchema = toTypedSchema(
 const { toast } = useToast();
 const { $client } = useNuxtApp();
 
-const { data: user } = await $client.user.me.useQuery();
+const user = await $client.user.me.query();
 
 const { mutate: createTournament } = $client.tournament.create.useMutation();
 
@@ -37,7 +37,7 @@ const onSubmit = handleSubmit(async (values) => {
 	const tournamentId = await createTournament({
 		tournamentName,
 		teams: teams.value,
-		players: [user.value!.username, ...allPlayers],
+		players: [user.username, ...allPlayers],
 	});
 
   console.log(tournamentId)
