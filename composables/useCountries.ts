@@ -17,7 +17,7 @@ export default function useCountries() {
     { name: "Brazílie", code: "br" },
     { name: "Bulharsko", code: "bg" },
     { name: "Černá Hora", code: "me" },
-    { name: "Česká republika", code: "cz" },
+    { name: "Česko", code: "cz" },
     { name: "Čína", code: "cn" },
     { name: "Dánsko", code: "dk" },
     { name: "Ekvádor", code: "ec" },
