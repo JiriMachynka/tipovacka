@@ -40,6 +40,7 @@ export default function useCountries() {
     { name: "Kamerun", code: "cm" },
     { name: "Kanada", code: "ca" },
     { name: "Katar", code: "qa" },
+    { name: "Kazachstán", code: "kz" },
     { name: "Kolumbie", code: "co" },
     { name: "Kostarika", code: "cr" },
     { name: "Kypr", code: "cy" },
@@ -56,6 +57,7 @@ export default function useCountries() {
     { name: "Německo", code: "de" },
     { name: "Nigérie", code: "ng" },
     { name: "Nizozemsko", code: "nl" },
+    { name: "Norsko", code: "no" },
     { name: "Nový Zéland", code: "nz" },
     { name: "Omán", code: "om" },
     { name: "Paraguay", code: "py" },
@@ -86,6 +88,7 @@ export default function useCountries() {
     { name: "Turecko", code: "tr" },
     { name: "Ukrajina", code: "ua" },
     { name: "Uruguay", code: "uy" },
+    { name: "Velká Británie", code: "gb" },
     { name: "Venezuela", code: "ve" },
     { name: "Vietnam", code: "vn" },
     { name: "Wales", code: "gb-wls" }
