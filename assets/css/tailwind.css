@@ -81,7 +81,7 @@
   }
 
   ::-webkit-scrollbar {
-    @apply h-[4px] lg:h-[6px];
+    @apply w-2 h-2;
   }
 
   ::-webkit-scrollbar-track {
