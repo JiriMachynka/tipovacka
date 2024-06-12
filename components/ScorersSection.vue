@@ -54,7 +54,7 @@ const firstScorerOpen = ref(false);
 const firstScorerId = ref(playerScorers.value?.firstScorerId || 0);
 
 const selectedFirstScorer = computed(() => {
-	return firstScorerId.value && scorers?.value?.length > 0
+	return firstScorerId.value && scorers.value && scorers.value.length > 0
 		? `${scorers.value.find((f) => f.id === firstScorerId.value)?.firstName} ${scorers.value.find((f) => f.id === firstScorerId.value)?.lastName}`
 		: 'Vyber střelce';
 });
@@ -63,7 +63,7 @@ const secondScorerOpen = ref(false);
 const secondScorerId = ref(playerScorers.value?.secondScorerId || 0);
 
 const selectedSecondScorer = computed(() => {
-	return secondScorerId.value && scorers?.value?.length > 0
+	return secondScorerId.value && scorers.value && scorers.value.length > 0
 		? `${scorers.value.find((f) => f.id === secondScorerId.value)?.firstName} ${scorers.value.find((f) => f.id === secondScorerId.value)?.lastName}`
 		: 'Vyber střelce';
 });
@@ -74,11 +74,11 @@ const selectedSecondScorer = computed(() => {
     @submit="onSubmit"
   >
     <div :class="cn('grid grid-cols-[1fr_1fr_70px] gap-2', {
-      'grid-cols-[1fr_1fr_50px] sm:grid-cols-[1fr_1fr_1fr_50px]': scorers?.length && !playerScorers.lockScorers,
+      'grid-cols-[1fr_1fr_50px] sm:grid-cols-[1fr_1fr_1fr_50px]': scorers?.length && !playerScorers?.lockScorers,
       })"
     >
       <div
-        v-if="scorers.length && !playerScorers.lockScorers"
+        v-if="scorers?.length && !playerScorers?.lockScorers"
         class="space-y-2 col-span-3 sm:col-span-1"
       >
         <Label>Střelec 1</Label>
@@ -105,11 +105,12 @@ const selectedSecondScorer = computed(() => {
                     :key="scorer.id"
                     :value="scorer.id"
                     @select="(e) => { 
-                      const currentValue = e.detail.value;
+                      const currentValue = e.detail.value as number;
+                      console.log(currentValue, typeof currentValue);
                       if (currentValue !== secondScorerId && currentValue !== firstScorerId) {
                         firstScorerId = currentValue ?? 0;
-                        setFieldValue('firstScorerFirstName', scorers.find((s) => s.id === firstScorerId)?.firstName);
-                        setFieldValue('firstScorerLastName', scorers.find((s) => s.id === firstScorerId)?.lastName);
+                        setFieldValue('firstScorerFirstName', scorers?.find((s) => s.id === firstScorerId)?.firstName);
+                        setFieldValue('firstScorerLastName', scorers?.find((s) => s.id === firstScorerId)?.lastName);
                         firstScorerOpen = false;
                       }
                     }"
@@ -171,16 +172,16 @@ const selectedSecondScorer = computed(() => {
       <div class="space-y-2">
         <Label>Góly</Label>
         <div class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background text-center select-none">
-          {{ playerScorers.firstScorerGoals }}
+          {{ playerScorers?.firstScorerGoals }}
         </div>
       </div>
     </div>
     <div :class="cn('grid grid-cols-[1fr_1fr_70px] gap-2', {
-      'grid-cols-[1fr_1fr_50px] sm:grid-cols-[1fr_1fr_1fr_50px]': scorers?.length && !playerScorers.lockScorers,
+      'grid-cols-[1fr_1fr_50px] sm:grid-cols-[1fr_1fr_1fr_50px]': scorers?.length && !playerScorers?.lockScorers,
       })"
     >
       <div
-        v-if="scorers?.length && !playerScorers.lockScorers"
+        v-if="scorers?.length && !playerScorers?.lockScorers"
         class="space-y-2 col-span-3 sm:col-span-1"
       >
         <Label>Střelec 2</Label>
@@ -206,11 +207,11 @@ const selectedSecondScorer = computed(() => {
                     :key="scorer.id"
                     :value="scorer.id"
                     @select="(e) => {
-                      const currentValue = e.detail.value;
+                      const currentValue = e.detail.value as number;
                       if (currentValue !== secondScorerId && currentValue !== firstScorerId) {  
                         secondScorerId = currentValue ?? 0;
-                        setFieldValue('secondScorerFirstName', scorers.find((s) => s.id === secondScorerId)?.firstName);
-                        setFieldValue('secondScorerLastName', scorers.find((s) => s.id === secondScorerId)?.lastName);
+                        setFieldValue('secondScorerFirstName', scorers?.find((s) => s.id === secondScorerId)?.firstName);
+                        setFieldValue('secondScorerLastName', scorers?.find((s) => s.id === secondScorerId)?.lastName);
                         secondScorerOpen = false;
                       }
                     }"
@@ -272,7 +273,7 @@ const selectedSecondScorer = computed(() => {
       <div class="space-y-2">
         <Label class="content-center">Góly</Label>
         <div class="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background text-center disabled:opacity-100 select-none">
-          {{ playerScorers.secondScorerGoals }}
+          {{ playerScorers?.secondScorerGoals }}
         </div>
       </div>
     </div>
