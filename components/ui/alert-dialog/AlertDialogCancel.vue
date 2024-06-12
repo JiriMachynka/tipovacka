@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type HTMLAttributes } from 'vue';
+import type { HTMLAttributes } from 'vue';
 import { AlertDialogCancel, type AlertDialogCancelProps } from 'radix-vue';
 
 const props = defineProps<AlertDialogCancelProps & { class?: HTMLAttributes['class'] }>();

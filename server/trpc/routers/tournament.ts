@@ -7,11 +7,13 @@ export const tournamentRouter = router({
 		.input(
 			z.object({
 				tournamentName: z.string(),
-				teams: z.array(z.object({
-					name: z.string(),
-					code: z.string(),
-					group: z.number(),
-				})),
+				teams: z.array(
+					z.object({
+						name: z.string(),
+						code: z.string(),
+						group: z.number(),
+					}),
+				),
 				players: z.array(z.string()),
 			}),
 		)

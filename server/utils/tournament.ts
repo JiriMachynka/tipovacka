@@ -19,7 +19,7 @@ export const createTournament = async (authorId: string, name: string, players: 
 				groupName: `Skupina ${String.fromCharCode(65 + team.group)}`,
 				tournamentId: createdTournament.id,
 			};
-		})
+		}),
 	);
 
 	if (players.length === 0) {
@@ -184,15 +184,18 @@ export const getTournamentPoints = async (tournamentId: number) => {
 };
 
 export const getTournamentGroups = async (tournamentId: number) => {
-	return await db.selectDistinct({ name: Teams.groupName }).from(Teams).where(eq(Teams.tournamentId, tournamentId));
+	return await db
+		.selectDistinct({ name: sql<string>`${Teams.groupName}` })
+		.from(Teams)
+		.where(eq(Teams.tournamentId, tournamentId));
 };
 
 export const getTournamentTeams = async (tournamentId: number) => {
 	return await db
 		.select({
-			id: Teams.id,
-			name: Teams.name,
-			groupName: Teams.groupName,
+			id: sql<number>`${Teams.id}`,
+			name: sql<string>`${Teams.name}`,
+			groupName: sql<string>`${Teams.groupName}`,
 		})
 		.from(Teams)
 		.where(eq(Teams.tournamentId, tournamentId))

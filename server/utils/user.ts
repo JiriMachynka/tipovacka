@@ -2,9 +2,9 @@ import { eq, ne } from 'drizzle-orm';
 import { db, Users } from '../db';
 
 export const getUserInfo = async (userId: string) => {
-	return await db.query.Users.findFirst({
-		where: eq(Users.id, userId),
-	});
+	const [user] = await db.select().from(Users).where(eq(Users.id, userId)).limit(1);
+
+	return user;
 };
 
 export const getAllUsers = async (userId: string) => {

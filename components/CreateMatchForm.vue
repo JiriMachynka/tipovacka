@@ -4,12 +4,14 @@ import { toTypedSchema } from '@vee-validate/zod';
 import { useForm } from 'vee-validate';
 import { z } from 'zod';
 
-const emit = defineEmits(['refresh']);
-const props = defineProps<{
+interface CreateMatchFormProps {
 	tournamentId: number;
 	teams: Team[];
 	groups: Group[];
-}>();
+}
+
+const emit = defineEmits(['refresh']);
+const props = defineProps<CreateMatchFormProps>();
 
 const { toast } = useToast();
 const { $client } = useNuxtApp();
@@ -27,7 +29,7 @@ const { handleSubmit, values } = useForm({
 		}),
 	),
 	initialValues: {
-		group: props.groups![0].name,
+		group: props.groups[0].name,
 	},
 });
 
@@ -140,7 +142,7 @@ const onSubmit = handleSubmit(async (values) => {
                   v-for="team in (
                     values.group === 'Playoff' ?
                     props.teams :
-                    props.teams.filter((team) => team.groupName === values.group && team.id !== +values.homeTeamId)
+                    props.teams.filter((team) => team.groupName === values.group && team.id !== +(values.homeTeamId ?? 0))
                   )"
                   :key="team.id"
                   :value="team.id.toString()"

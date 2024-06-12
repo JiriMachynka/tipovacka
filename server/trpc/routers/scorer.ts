@@ -19,12 +19,12 @@ export const scorerRouter = router({
 		.mutation(async ({ input }) => {
 			return await updateScorerGoals(input.scorerId, input.goals, input.increment);
 		}),
-	updateLockScorers: privateProcedure.input(z.object({ tournamentId: z.number(), lockScorers: z.boolean() })).mutation(async ({ input }) => {
-		return await updateLockScorers(input.tournamentId, input.lockScorers);
-	}),
-	getPlayerScorers: privateProcedure.input(z.object({ tournamentId: z.number() })).query(async ({ ctx, input }) => {
-		return await getPlayerScorers(input.tournamentId, ctx.userId);
-	}),
+	updateLockScorers: privateProcedure
+		.input(z.object({ tournamentId: z.number(), lockScorers: z.boolean() }))
+		.mutation(async ({ input }) => await updateLockScorers(input.tournamentId, input.lockScorers)),
+	getPlayerScorers: privateProcedure
+		.input(z.object({ tournamentId: z.number() }))
+		.query(async ({ ctx, input }) => await getPlayerScorers(input.tournamentId, ctx.userId)),
 	updateScorers: privateProcedure
 		.input(
 			z.object({

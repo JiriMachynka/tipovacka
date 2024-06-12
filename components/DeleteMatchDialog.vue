@@ -20,7 +20,7 @@ const handleDelete = async (matchId: number) => {
 
 	toast({
 		title: 'Zápas byl úspěšně smazán',
-		description: `Zápas byl úspěšně smazán`,
+		description: 'Zápas byl úspěšně smazán',
 	});
 };
 </script>

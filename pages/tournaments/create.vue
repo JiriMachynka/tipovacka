@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { Country } from '~/types';
 import { GripVertical, ChevronLeft, ChevronRight, Trash, Minus, Plus } from 'lucide-vue-next';
-import { Sortable } from 'sortablejs-vue3'; 
+import { Sortable } from 'sortablejs-vue3';
 import { toTypedSchema } from '@vee-validate/zod';
 import { useForm } from 'vee-validate';
 import { z } from 'zod';
@@ -40,51 +40,51 @@ const onSubmit = handleSubmit(async (values) => {
 		players: [user.username, ...allPlayers],
 	});
 
-  console.log(tournamentId)
+	console.log(tournamentId);
 	navigateTo(`/tournaments/${tournamentId}`);
 });
 
 const countries = ref<Omit<Country, 'group'>[]>(useCountries());
 const currentCountry = ref('');
 const teams = ref<Country[]>([]);
-const numberOfGroups = ref(1); 
+const numberOfGroups = ref(1);
 
 watch(currentCountry, (country) => {
-  // TODO: Reset country after assigning to group
-  const countryToPush = JSON.parse(country) as Country; 
-  teams.value.push(countryToPush);
-  countries.value = countries.value.filter((team) => team.code !== countryToPush.code);
-  toast({
-    title: 'Země přidána',
-    description: `${countryToPush.name} je úspěšně přidána`,
-    duration: 1000,
-  });
+	// TODO: Reset country after assigning to group
+	const countryToPush = JSON.parse(country) as Country;
+	teams.value.push(countryToPush);
+	countries.value = countries.value.filter((team) => team.code !== countryToPush.code);
+	toast({
+		title: 'Země přidána',
+		description: `${countryToPush.name} je úspěšně přidána`,
+		duration: 1000,
+	});
 });
 
 watch(numberOfGroups, (newNumber, oldNumber) => {
-  if (newNumber < oldNumber) {
-    teams.value.map(t => {
-      if (t.group >= newNumber) {
-        // Number of groups starts from 1, but groups are indexed from 0
-        t.group = newNumber - 1;
-      }
-    });
-  }
+	if (newNumber < oldNumber) {
+		teams.value.map((t) => {
+			if (t.group >= newNumber) {
+				// Number of groups starts from 1, but groups are indexed from 0
+				t.group = newNumber - 1;
+			}
+		});
+	}
 });
 
 const changeGroup = (countryCode: string, group: number) => {
-  teams.value.map((team) => {
-    if (team.code === countryCode) {
-      team.group = group;
-    }
-  });
+	teams.value.map((team) => {
+		if (team.code === countryCode) {
+			team.group = group;
+		}
+	});
 };
 
 const removeCountry = (countryCode: string) => {
-  const country = teams.value.find((t) => t.code === countryCode) as Country;
-  countries.value.push({ name: country.name, code: country.code });
-  countries.value.sort((a, b) => a.name.localeCompare(b.name));
-  teams.value = teams.value.filter((team) => team.code !== countryCode);
+	const country = teams.value.find((t) => t.code === countryCode) as Country;
+	countries.value.push({ name: country.name, code: country.code });
+	countries.value.sort((a, b) => a.name.localeCompare(b.name));
+	teams.value = teams.value.filter((team) => team.code !== countryCode);
 };
 </script>
 <template>
