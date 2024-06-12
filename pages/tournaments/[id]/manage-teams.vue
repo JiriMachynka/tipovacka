@@ -85,7 +85,7 @@ const sections = [
         >
           <FormControl>
             <SelectTrigger>
-              <SelectValue placeholder="Vyberte tým" />
+              <SelectValue placeholder="Vyberte tým" :class="cn('space-x-4')" />
             </SelectTrigger>
           </FormControl>
           <SelectContent>
@@ -94,8 +94,9 @@ const sections = [
                 v-for="team in teams"
                 :key="team.id"
                 :value="team.id.toString()"
+                :class="cn('[&>:nth-child(2)]:space-x-4')"
               >
-                {{ team.name }}
+                <TeamNameFlag :teamName="team.name" />
               </SelectItem>
             </SelectGroup>
           </SelectContent>
@@ -127,10 +128,18 @@ const sections = [
         :class="cn('[&>*]:text-nowrap [&>*]:py-2 grid grid-cols-5')"
       >
         <TableCell>{{ player.username }}</TableCell>
-        <TableCell>{{ player.winner }}</TableCell>
-        <TableCell>{{ player.finalist }}</TableCell>
-        <TableCell>{{ player.semifinalistFirst }}</TableCell>
-        <TableCell>{{ player.semifinalistSecond }}</TableCell>
+        <TableCell :class="cn('space-x-4')">
+          <TeamNameFlag :teamName="player.winner" />
+        </TableCell>
+        <TableCell :class="cn('space-x-4')">
+          <TeamNameFlag :teamName="player.finalist" />
+        </TableCell>
+        <TableCell :class="cn('space-x-4')">
+          <TeamNameFlag :teamName="player.semifinalistFirst" />
+        </TableCell>
+        <TableCell :class="cn('space-x-4')">
+          <TeamNameFlag :teamName="player.semifinalistSecond" />
+        </TableCell>
       </TableRow>
     </TableBody>
   </Table>

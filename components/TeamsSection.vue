@@ -112,7 +112,7 @@ const overallTipsTeams = [
           <SelectContent>
             <SelectGroup>
               <SelectItem
-                v-for="team in teams"
+                v-for="team in teams?.sort((a, b) => a.name.localeCompare(b.name))"
                 :key="team.id"
                 :value="team.id.toString()"
               >

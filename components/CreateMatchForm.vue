@@ -106,7 +106,7 @@ const onSubmit = handleSubmit(async (values) => {
           <Select v-bind="componentField">
             <FormControl>
               <SelectTrigger>
-                <SelectValue placeholder="Vyberte tým" />
+                <SelectValue placeholder="Vyberte tým" :class="cn('space-x-4')" />
               </SelectTrigger>
             </FormControl>
             <SelectContent>
@@ -114,13 +114,14 @@ const onSubmit = handleSubmit(async (values) => {
                 <SelectItem
                   v-for="team in (
                     values.group === 'Playoff' ?
-                    props.teams :
-                    props.teams.filter((team) => team.groupName === values.group)
+                    props.teams.sort((a, b) => a.name.localeCompare(b.name)) :
+                    props.teams.filter((team) => team.groupName === values.group).sort((a, b) => a.name.localeCompare(b.name))
                   )"
                   :key="team.id"
                   :value="team.id.toString()"
+                  :class="cn('[&>:nth-child(2)]:space-x-4')"
                 >
-                  {{ team.name }}
+                  <TeamNameFlag :teamName="team.name" />
                 </SelectItem>
               </SelectGroup>
             </SelectContent>
@@ -134,7 +135,7 @@ const onSubmit = handleSubmit(async (values) => {
           <Select v-bind="componentField">
             <FormControl>
               <SelectTrigger>
-                <SelectValue placeholder="Vyberte tým" />
+                <SelectValue placeholder="Vyberte tým" :class="cn('space-x-4')" />
               </SelectTrigger>
             </FormControl>
             <SelectContent>
@@ -142,13 +143,15 @@ const onSubmit = handleSubmit(async (values) => {
                 <SelectItem
                   v-for="team in (
                     values.group === 'Playoff' ?
-                    props.teams :
-                    props.teams.filter((team) => team.groupName === values.group && team.id !== +(values.homeTeamId ?? 0))
+                    props.teams.sort((a, b) => a.name.localeCompare(b.name)) :
+                    props.teams.filter((team) => team.groupName === values.group && team.id !== +(values.homeTeamId ?? 0)).sort((a, b) => a.name.localeCompare(b.name))
                   )"
                   :key="team.id"
                   :value="team.id.toString()"
+                  :class="cn('[&>:nth-child(2)]:space-x-4')"
                 >
-                  {{ team.name }}
+                  <TeamNameFlag :teamName="team.name" />
+                  <!-- {{ team.name }}s -->
                 </SelectItem>
               </SelectGroup>
             </SelectContent>
