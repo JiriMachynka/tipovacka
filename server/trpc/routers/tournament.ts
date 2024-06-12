@@ -21,68 +21,22 @@ export const tournamentRouter = router({
 			const { tournamentName, players, teams } = input;
 			return await createTournament(ctx.userId, tournamentName, players, teams);
 		}),
-	getData: privateProcedure
-		.input(
-			z.object({
-				tournamentId: z.number(),
-			}),
-		)
-		.query(async ({ input }) => await getAllTournamentData(input.tournamentId)),
-	getGroups: privateProcedure
-		.input(
-			z.object({
-				tournamentId: z.number(),
-			}),
-		)
-		.query(async ({ input }) => await getTournamentGroups(input.tournamentId)),
-	getTeams: privateProcedure
-		.input(
-			z.object({
-				tournamentId: z.number(),
-			}),
-		)
-		.query(async ({ input }) => await getTournamentTeams(input.tournamentId)),
+	getData: privateProcedure.input(z.object({ tournamentId: z.number() })).query(async ({ input }) => await getAllTournamentData(input.tournamentId)),
+	getGroups: privateProcedure.input(z.object({ tournamentId: z.number() })).query(async ({ input }) => await getTournamentGroups(input.tournamentId)),
+	getTeams: privateProcedure.input(z.object({ tournamentId: z.number() })).query(async ({ input }) => await getTournamentTeams(input.tournamentId)),
 	getMatches: privateProcedure
-		.input(
-			z.object({
-				tournamentId: z.number(),
-			}),
-		)
+		.input(z.object({ tournamentId: z.number() }))
 		.query(async ({ input }) => await getTournamentMatches(input.tournamentId)),
-	getPoints: privateProcedure
-		.input(
-			z.object({
-				tournamentId: z.number(),
-			}),
-		)
-		.query(async ({ input }) => await getTournamentPoints(input.tournamentId)),
+	getPoints: privateProcedure.input(z.object({ tournamentId: z.number() })).query(async ({ input }) => await getTournamentPoints(input.tournamentId)),
 	getUserMatches: privateProcedure
-		.input(
-			z.object({
-				tournamentId: z.number(),
-			}),
-		)
+		.input(z.object({ tournamentId: z.number() }))
 		.query(async ({ ctx, input }) => await getUserMatches(input.tournamentId, ctx.userId)),
-	getPlayerTeams: privateProcedure
-		.input(
-			z.object({
-				tournamentId: z.number(),
-			}),
-		)
-		.query(async ({ input }) => await getPlayerTeams(input.tournamentId)),
+	getPlayerTeams: privateProcedure.input(z.object({ tournamentId: z.number() })).query(async ({ input }) => await getPlayerTeams(input.tournamentId)),
 	getOverallTeams: privateProcedure
-		.input(
-			z.object({
-				tournamentId: z.number(),
-			}),
-		)
+		.input(z.object({ tournamentId: z.number() }))
 		.query(async ({ input }) => await getTournamentOverallTeams(input.tournamentId)),
 	getPlayerOverallTips: privateProcedure
-		.input(
-			z.object({
-				tournamentId: z.number(),
-			}),
-		)
+		.input(z.object({ tournamentId: z.number() }))
 		.query(async ({ ctx, input }) => await getPlayerOverallTips(input.tournamentId, ctx.userId)),
 	updateUserMatchTip: privateProcedure
 		.input(

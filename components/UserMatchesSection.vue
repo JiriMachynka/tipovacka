@@ -36,9 +36,13 @@ const matches = computed(() => userMatches.value?.filter((m) => !m.played) || []
       >
         <TableCell>{{ $dayjs(match.date).fromNow() }}</TableCell>
         <TableCell>{{ match.group }}</TableCell>
-        <TableCell>{{ match.homeTeamName }}</TableCell>
+        <TableCell :class="cn('space-x-4 text-nowrap')">
+          <TeamNameFlag :teamName="match.homeTeamName" />
+        </TableCell>
         <TableCell>{{ match.homeScore }}:{{ match.awayScore }}</TableCell> 
-        <TableCell>{{ match.awayTeamName }}</TableCell>
+        <TableCell :class="cn('space-x-4 text-nowrap')">
+          <TeamNameFlag :teamName="match.awayTeamName" />
+        </TableCell>
         <TableCell>
           <span v-if="match.locked && !match.played" class="text-lg font-bold">
             Čeká se na<br />vyhodnocení zápasu

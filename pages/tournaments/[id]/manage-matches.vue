@@ -21,7 +21,7 @@ const groups = computed(() => [...groupsData.value, { name: 'Playoff' }]);
 <template>
   <CreateMatchForm
     :tournamentId="tournamentId"
-    :teams="teams"
+    :teams="teams!"
     :groups="groups"
     @refresh="refresh"
   />
@@ -31,7 +31,7 @@ const groups = computed(() => [...groupsData.value, { name: 'Playoff' }]);
       Zobrazit všechny zápasy
     </p>
   </div>
-  <Table v-if="matches?.length" class="mt-5 max-w-5xl mx-auto">
+  <Table v-if="matches?.length" :class="cn('mt-5')">
     <TableHeader>
       <TableRow>
         <TableHead>Datum a čas</TableHead>
@@ -57,12 +57,10 @@ const groups = computed(() => [...groupsData.value, { name: 'Playoff' }]);
         </TableCell>
         <TableCell>{{ match.group }}</TableCell>
         <TableCell :class="cn('space-x-4 text-nowrap')">
-          <span :class="`text-lg fi fi-${countries.find((c) => c.name === match.homeTeamName)?.code}`" />
-          <span>{{ match.homeTeamName }}</span>
+          <TeamNameFlag :teamName="match.homeTeamName" />
         </TableCell>
         <TableCell :class="cn('space-x-4 text-nowrap')">
-          <span :class="`text-lg fi fi-${countries.find((c) => c.name === match.awayTeamName)?.code}`" />
-          <span>{{ match.awayTeamName }}</span>
+          <TeamNameFlag :teamName="match.awayTeamName" />
         </TableCell>
         <TableCell>{{ match.homeScore }}:{{ match.awayScore }}</TableCell>
         <TableCell class="space-x-2">
@@ -70,7 +68,7 @@ const groups = computed(() => [...groupsData.value, { name: 'Playoff' }]);
             v-if="!match.locked"
             :matchId="match.id"
             :date="match.date"
-            :teams="teams"
+            :teams="teams!"
             :groups="groups"
             :group="match.group"
             :homeTeamId="match.homeTeamId.toString()"

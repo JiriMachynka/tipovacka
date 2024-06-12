@@ -8,8 +8,9 @@ const route = useRoute();
 
 const tournamentId = +route.params.id;
 
-const { toast } = useToast();
 const { $client } = useNuxtApp();
+
+const { toast } = useToast();
 
 const { data: teams } = await $client.tournament.getTeams.useQuery({ tournamentId });
 const { data: overallTips } = await $client.tournament.getPlayerOverallTips.useQuery({ tournamentId });
@@ -115,7 +116,9 @@ const overallTipsTeams = [
                 :key="team.id"
                 :value="team.id.toString()"
               >
-                {{ team.name }}
+                <span class="inline-flex items-center gap-4">
+                  <TeamNameFlag :teamName="team.name" />
+                </span>
               </SelectItem>
             </SelectGroup>
           </SelectContent>
@@ -139,8 +142,8 @@ const overallTipsTeams = [
       <p class="text-lg font-bold leading-none">
         {{ title }}
       </p>
-      <div class="inline-flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background select-none cursor-not-allowed">
-        {{ name }}
+      <div class="inline-flex items-center gap-4 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background select-none cursor-not-allowed">
+        <TeamNameFlag :teamName="name" />
       </div>
     </div>
     <Card class="border-red-500 min-[500px]:col-span-2 lg:col-span-4">

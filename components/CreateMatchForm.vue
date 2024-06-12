@@ -13,8 +13,9 @@ interface CreateMatchFormProps {
 const emit = defineEmits(['refresh']);
 const props = defineProps<CreateMatchFormProps>();
 
-const { toast } = useToast();
 const { $client } = useNuxtApp();
+
+const { toast } = useToast();
 
 const { mutate: createMatch } = $client.match.create.useMutation();
 

@@ -144,8 +144,7 @@ const removeCountry = (countryCode: string) => {
                   :value="JSON.stringify(Object.assign({}, country, { group: 0 }))"
                 >
                   <span class="inline-flex items-center gap-4">
-                    <span :class="`text-lg fi fi-${country.code}`" />
-                    <span class="text-base">{{ country.name }}</span>
+                    <TeamNameFlag :teamName="country.name" />
                   </span>
                 </SelectItem>
               </SelectGroup>

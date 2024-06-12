@@ -62,8 +62,9 @@ export default defineNuxtConfig({
   },
   imports: {
     dirs: [
-      './components/**'
-    ],
+      './components/ui/toast',
+      './components/ui/button',
+    ]
   },
   runtimeConfig: {
     public: {

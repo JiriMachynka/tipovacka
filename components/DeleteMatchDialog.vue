@@ -9,8 +9,9 @@ defineProps<{
 	awayTeamName: string;
 }>();
 
-const { toast } = useToast();
 const { $client } = useNuxtApp();
+
+const { toast } = useToast();
 
 const { mutate: deleteMatch } = $client.match.delete.useMutation();
 

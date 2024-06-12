@@ -6,8 +6,9 @@ const emit = defineEmits(['refresh']);
 
 const props = defineProps<{ tournamentId: number }>();
 
-const { toast } = useToast();
 const { $client } = useNuxtApp();
+
+const { toast } = useToast();
 
 const { data: allUsers, refresh: refreshUsers } = await $client.user.getAll.useQuery();
 
