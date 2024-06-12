@@ -36,10 +36,10 @@ const { handleSubmit, setFieldValue } = useForm({
 const onSubmit = handleSubmit(async (values) => {
 	await updateScorers({
 		tournamentId,
-		firstScorerFirstName: values.firstScorerFirstName,
-		firstScorerLastName: values.firstScorerLastName,
-		secondScorerFirstName: values.secondScorerFirstName,
-		secondScorerLastName: values.secondScorerLastName,
+		firstScorerFirstName: values.firstScorerFirstName.trim(),
+		firstScorerLastName: values.firstScorerLastName.trim(),
+		secondScorerFirstName: values.secondScorerFirstName.trim(),
+		secondScorerLastName: values.secondScorerLastName.trim(),
 	});
 
 	await refresh();
