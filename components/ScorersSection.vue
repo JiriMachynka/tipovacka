@@ -135,7 +135,7 @@ const selectedSecondScorer = computed(() => {
             <Input
               type="text"
               v-bind="componentField"
-              placeholder="Sydney"
+              placeholder="Cristiano"
               @click="() => {
                 firstScorerId = 0;
                 setFieldValue('firstScorerFirstName', '');
@@ -155,7 +155,7 @@ const selectedSecondScorer = computed(() => {
             <Input
               type="text"
               v-bind="componentField"
-              placeholder="Crosby"
+              placeholder="Ronaldo"
               @click="() => {
                 firstScorerId = 0
                 setFieldValue('firstScorerLastName', '');
@@ -236,7 +236,7 @@ const selectedSecondScorer = computed(() => {
             <Input
               type="text"
               v-bind="componentField"
-              placeholder="Roman"
+              placeholder="Patrik"
               @click="() => {
                 secondScorerId = 0;
                 setFieldValue('secondScorerFirstName', '');
@@ -256,7 +256,7 @@ const selectedSecondScorer = computed(() => {
             <Input
               type="text"
               v-bind="componentField"
-              placeholder="Červenka"
+              placeholder="Schick"
               @click="() => {
                 secondScorerId = 0
                 setFieldValue('secondScorerLastName', '');
