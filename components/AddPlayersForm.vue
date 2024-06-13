@@ -10,7 +10,7 @@ const { $client } = useNuxtApp();
 
 const { toast } = useToast();
 
-const { data: allUsers, refresh: refreshUsers } = await $client.user.getAll.useQuery();
+const { data: allUsers, refresh: refreshUsers } = await $client.user.getAll.useQuery({ tournamentId: props.tournamentId });
 
 const { mutate: addPlayer } = $client.player.add.useMutation();
 
@@ -23,13 +23,7 @@ const filteredUsers = computed(() => allUsers.value?.filter((u) => !modelValue.v
 const tagsInputRef = ref(null);
 onClickOutside(tagsInputRef, () => (open.value = false));
 
-const handleAddPlayers = async () => {
-	toast({
-		title: 'Vydržte',
-		description: 'Hráči budou postupně přidáni do tipovačky',
-		duration: 500,
-	});
-
+const handleAddPlayers = () => {
 	modelValue.value.map(async (username) => {
 		await addPlayer({
 			tournamentId: props.tournamentId,
@@ -39,12 +33,12 @@ const handleAddPlayers = async () => {
 
 	toast({
 		title: 'Přidání hráčů',
-		description: 'Hráči byly úspěšně přidáni',
+		description: 'Hráči byli úspěšně přidáni',
+		duration: 1200,
 	});
 
-	// TODO: Fix -> players aren't refreshed
-	await emit('refresh');
-	await refreshUsers();
+	refreshUsers();
+	setTimeout(() => emit('refresh'), 300);
 
 	modelValue.value = [];
 };

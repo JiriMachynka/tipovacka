@@ -16,22 +16,6 @@ export const getTournamentPlayers = async (tournamentId: number, authorId: strin
 };
 
 export const addPlayer = async (tournamentId: number, username: string) => {
-	const userExists = await db.query.Users.findFirst({
-		where: eq(Users.username, username),
-		columns: { id: true },
-	});
-
-	if (!userExists) return 'Uživatel s tímto uživatelským jménem neexistuje.';
-
-	const [playerReady] = await db
-		.select({ id: Players.id })
-		.from(Players)
-		.leftJoin(Users, eq(Players.userId, Users.id))
-		.where(and(eq(Players.tournamentId, tournamentId), eq(Users.username, username)))
-		.limit(1);
-
-	if (playerReady?.id) return 'Hráč je již v tipovačce.';
-
 	const [tournamentOverallTip] = await db.insert(TournamentOverallTips).values({ tournamentId }).returning({ id: TournamentOverallTips.id });
 
 	const user = await db.query.Users.findFirst({
@@ -49,7 +33,10 @@ export const addPlayer = async (tournamentId: number, username: string) => {
 		.returning({ id: Players.id });
 
 	// Creating matchtips for user
-	const matchTips = await db.select({ id: TournamentMatchTips.id }).from(TournamentMatchTips).where(eq(TournamentMatchTips.tournamentId, tournamentId));
+	const matchTips = await db
+		.select({ id: TournamentMatchTips.id })
+		.from(TournamentMatchTips)
+		.where(eq(TournamentMatchTips.tournamentId, tournamentId));
 
 	matchTips.map(async (matchTip) => {
 		await db.insert(UserMatchTips).values({
@@ -72,9 +59,7 @@ export const deletePlayer = async (playerId: number) => {
 		.where(eq(Players.id, playerId))
 		.returning({ tournamentOverallTipId: Players.tournamentOverallTipId });
 
-	await db
-		.delete(TournamentOverallTips)
-		.where(eq(TournamentOverallTips.id, deletedPlayer.tournamentOverallTipId));
+	await db.delete(TournamentOverallTips).where(eq(TournamentOverallTips.id, deletedPlayer.tournamentOverallTipId));
 };
 
 export const getPlayerId = async (tournamentId: number, userId: string) => {

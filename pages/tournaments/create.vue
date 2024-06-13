@@ -40,7 +40,6 @@ const onSubmit = handleSubmit(async (values) => {
 		players: [user.username, ...allPlayers],
 	});
 
-	console.log(tournamentId);
 	navigateTo(`/tournaments/${tournamentId}`);
 });
 

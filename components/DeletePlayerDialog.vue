@@ -10,15 +10,21 @@ const emit = defineEmits(['refresh']);
 
 const props = defineProps<DeletePlayerDialogProps>();
 
+const route = useRoute();
+
+const tournamentId = +route.params.id;
+
 const { $client } = useNuxtApp();
 
 const { mutate: deletePlayer } = $client.player.delete.useMutation();
+const { refresh: refreshUsers } = await $client.user.getAll.useQuery({ tournamentId });
 
 const handleDelete = async () => {
 	await deletePlayer({
 		playerId: props.playerId,
 	});
 	emit('refresh');
+	refreshUsers();
 };
 </script>
 <template>

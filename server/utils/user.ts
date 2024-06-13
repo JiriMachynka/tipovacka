@@ -1,5 +1,5 @@
-import { eq, ne } from 'drizzle-orm';
-import { db, Users } from '../db';
+import { and, eq, isNull, ne, or } from 'drizzle-orm';
+import { db, Players, Users } from '../db';
 
 export const getUserInfo = async (userId: string) => {
 	const [user] = await db.select().from(Users).where(eq(Users.id, userId)).limit(1);
@@ -7,7 +7,7 @@ export const getUserInfo = async (userId: string) => {
 	return user;
 };
 
-export const getAllUsers = async (userId: string) => {
+export const getAllUsers = async (userId: string, tournamentId: number) => {
 	return await db
 		.select({
 			id: Users.id,
@@ -15,5 +15,6 @@ export const getAllUsers = async (userId: string) => {
 			email: Users.email,
 		})
 		.from(Users)
-		.where(ne(Users.id, userId));
+		.leftJoin(Players, eq(Users.id, Players.userId))
+		.where(or(and(ne(Users.id, userId), ne(Players.tournamentId, tournamentId)), isNull(Players.tournamentId)));
 };
