@@ -1,13 +1,6 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue';
-import {
-	AlertDialogContent,
-	type AlertDialogContentEmits,
-	type AlertDialogContentProps,
-	AlertDialogOverlay,
-	AlertDialogPortal,
-	useForwardPropsEmits,
-} from 'radix-vue';
+import { AlertDialogContent, type AlertDialogContentEmits, type AlertDialogContentProps, AlertDialogOverlay, AlertDialogPortal, useForwardPropsEmits } from 'radix-vue';
 
 const props = defineProps<AlertDialogContentProps & { class?: HTMLAttributes['class'] }>();
 const emits = defineEmits<AlertDialogContentEmits>();

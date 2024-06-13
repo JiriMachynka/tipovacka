@@ -23,10 +23,7 @@ export const createTournament = async (authorId: string, name: string, players: 
 	);
 
 	if (players.length === 0) {
-		const [tournamentOverallTip] = await db
-			.insert(TournamentOverallTips)
-			.values({ tournamentId: createdTournament.id })
-			.returning({ id: TournamentOverallTips.id });
+		const [tournamentOverallTip] = await db.insert(TournamentOverallTips).values({ tournamentId: createdTournament.id }).returning({ id: TournamentOverallTips.id });
 
 		await db.insert(Players).values({
 			userId: authorId,
@@ -35,10 +32,7 @@ export const createTournament = async (authorId: string, name: string, players: 
 		});
 	} else {
 		players.map(async (player) => {
-			const [tournamentOverallTip] = await db
-				.insert(TournamentOverallTips)
-				.values({ tournamentId: createdTournament.id })
-				.returning({ id: TournamentOverallTips.id });
+			const [tournamentOverallTip] = await db.insert(TournamentOverallTips).values({ tournamentId: createdTournament.id }).returning({ id: TournamentOverallTips.id });
 
 			const [playerRecord] = await db
 				.select({
@@ -267,14 +261,7 @@ export const getTournamentOverallTeams = async (tournamentId: number) => {
 	return teams;
 };
 
-export const updateOverallTip = async (
-	tournamentId: number,
-	userId: string,
-	winnerId: number,
-	finalistId: number,
-	semifinalistFirstId: number,
-	semifinalistSecondId: number,
-) => {
+export const updateOverallTip = async (tournamentId: number, userId: string, winnerId: number, finalistId: number, semifinalistFirstId: number, semifinalistSecondId: number) => {
 	const overallTipId = await getPlayerOverallTipId(tournamentId, userId);
 
 	await db
@@ -288,13 +275,7 @@ export const updateOverallTip = async (
 		.where(eq(TournamentOverallTips.id, overallTipId));
 };
 
-export const updateOverallTeams = async (
-	tournamentId: number,
-	winnerId: number,
-	finalistId: number,
-	semifinalistFirstId: number,
-	semifinalistSecondId: number,
-) => {
+export const updateOverallTeams = async (tournamentId: number, winnerId: number, finalistId: number, semifinalistFirstId: number, semifinalistSecondId: number) => {
 	await db
 		.update(Tournaments)
 		.set({

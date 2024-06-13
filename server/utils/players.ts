@@ -49,10 +49,7 @@ export const addPlayer = async (tournamentId: number, username: string) => {
 		.returning({ id: Players.id });
 
 	// Creating matchtips for user
-	const matchTips = await db
-		.select({ id: TournamentMatchTips.id })
-		.from(TournamentMatchTips)
-		.where(eq(TournamentMatchTips.tournamentId, tournamentId));
+	const matchTips = await db.select({ id: TournamentMatchTips.id }).from(TournamentMatchTips).where(eq(TournamentMatchTips.tournamentId, tournamentId));
 
 	matchTips.map(async (matchTip) => {
 		await db.insert(UserMatchTips).values({

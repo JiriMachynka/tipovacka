@@ -20,7 +20,7 @@ const { toast } = useToast();
 const { mutate: createMatch } = $client.match.create.useMutation();
 
 configure({ validateOnModelUpdate: false });
-const { handleSubmit, values, setFieldValue } = useForm({
+const { handleSubmit, values, setFieldValue, setErrors } = useForm({
 	validationSchema: toTypedSchema(
 		z.object({
 			date: z.string(),
@@ -34,7 +34,6 @@ const { handleSubmit, values, setFieldValue } = useForm({
 	},
 });
 
-// TODO: Reset away teams when homeTeamId changes
 const onSubmit = handleSubmit(async (values) => {
 	try {
 		const { date, group, homeTeamId, awayTeamId } = values;
@@ -60,9 +59,30 @@ const onSubmit = handleSubmit(async (values) => {
 	}
 });
 
-watch(() => values.group, () => {
-  setFieldValue('homeTeamId', undefined, false);
-  setFieldValue('awayTeamId', undefined, false);
+watch(
+	() => values.group,
+	() => {
+		setFieldValue('homeTeamId', undefined, false);
+		setFieldValue('awayTeamId', undefined, false);
+	},
+);
+
+watch(
+	() => values.homeTeamId,
+	(homeTeamIdValue) => {
+		if (homeTeamIdValue && values.awayTeamId && +homeTeamIdValue === +values.awayTeamId) {
+			setFieldValue('awayTeamId', undefined, false);
+		}
+	},
+);
+
+watch(values, () => {
+  setErrors({
+    date: undefined,
+    group: undefined,
+    homeTeamId: undefined,
+    awayTeamId: undefined,
+  });
 });
 </script>
 <template>
