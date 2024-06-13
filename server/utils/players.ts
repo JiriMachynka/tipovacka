@@ -67,7 +67,14 @@ export const deletePlayer = async (playerId: number) => {
 
 	if (!player) return 'Hráč neexistuje.';
 
-	await db.delete(Players).where(eq(Players.id, playerId));
+	const [deletedPlayer] = await db
+		.delete(Players)
+		.where(eq(Players.id, playerId))
+		.returning({ tournamentOverallTipId: Players.tournamentOverallTipId });
+
+	await db
+		.delete(TournamentOverallTips)
+		.where(eq(TournamentOverallTips.id, deletedPlayer.tournamentOverallTipId));
 };
 
 export const getPlayerId = async (tournamentId: number, userId: string) => {

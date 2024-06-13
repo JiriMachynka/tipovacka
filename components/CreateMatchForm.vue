@@ -77,12 +77,12 @@ watch(
 );
 
 watch(values, () => {
-  setErrors({
-    date: undefined,
-    group: undefined,
-    homeTeamId: undefined,
-    awayTeamId: undefined,
-  });
+	setErrors({
+		date: undefined,
+		group: undefined,
+		homeTeamId: undefined,
+		awayTeamId: undefined,
+	});
 });
 </script>
 <template>
