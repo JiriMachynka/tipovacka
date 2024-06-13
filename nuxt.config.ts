@@ -18,6 +18,7 @@ export default defineNuxtConfig({
     "dayjs-nuxt",
     "@nuxt/image",
     'nuxt-cron',
+    '@vee-validate/nuxt',
   ],
   app: {
     head: {

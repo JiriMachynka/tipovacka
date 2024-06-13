@@ -27,6 +27,7 @@
     "@trpc/client": "^10.45.2",
     "@trpc/server": "^10.45.2",
     "@types/pg": "^8.11.6",
+    "@vee-validate/nuxt": "^4.13.1",
     "@vee-validate/zod": "^4.13.0",
     "@vueuse/core": "^10.10.0",
     "class-variance-authority": "^0.7.0",

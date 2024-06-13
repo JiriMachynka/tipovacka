@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { Team, Group } from '~/types';
 import { toTypedSchema } from '@vee-validate/zod';
-import { useForm } from 'vee-validate';
+import { useForm, configure } from 'vee-validate';
 import { z } from 'zod';
 
 interface CreateMatchFormProps {
@@ -19,8 +19,8 @@ const { toast } = useToast();
 
 const { mutate: createMatch } = $client.match.create.useMutation();
 
-const { handleSubmit, values } = useForm({
-	// TODO: Validation schema is same as with edit match dialog
+configure({ validateOnModelUpdate: false });
+const { handleSubmit, values, setFieldValue } = useForm({
 	validationSchema: toTypedSchema(
 		z.object({
 			date: z.string(),
@@ -34,7 +34,6 @@ const { handleSubmit, values } = useForm({
 	},
 });
 
-// TODO: Reset teams when group changes
 // TODO: Reset away teams when homeTeamId changes
 const onSubmit = handleSubmit(async (values) => {
 	try {
@@ -59,6 +58,11 @@ const onSubmit = handleSubmit(async (values) => {
 			description: 'Nepodařilo se vytvořit záps',
 		});
 	}
+});
+
+watch(() => values.group, () => {
+  setFieldValue('homeTeamId', undefined, false);
+  setFieldValue('awayTeamId', undefined, false);
 });
 </script>
 <template>
