@@ -20,7 +20,7 @@ const numberOfMatches = tournament.value?.userMatches ? tournament.value?.userMa
     <p class="text-3xl font-bold text-center md:text-left">Ještě nebyly vyhodnoceny žádné zápasy</p>
   </div>
   <div v-else class="flex justify-center mt-5">
-    <div class="flex flex-col border border-slate-50 border-r border-r-transparent">
+    <div class="flex flex-col border border-slate-50">
       <div class="border-b border-slate-50 flex flex-col-reverse lg:flex-row items-center lg:items-start p-0 lg:p-3 lg:gap-2 justify-center">
         <span class="flex justify-center w-full p-2 lg:p-0"><Users /></span>
         <span class="hidden lg:inline">/</span>
@@ -32,6 +32,32 @@ const numberOfMatches = tournament.value?.userMatches ? tournament.value?.userMa
         class="px-3 py-2 text-xl [&:not(:last-child)]:border-b border-slate-50"
       >
         {{ username }}
+      </div>
+    </div>
+    <div class="flex">
+      <div class="border border-slate-50">
+        <span class="inline-flex w-full justify-center border-b border-b-slate-50 py-[26.5px] lg:p-3 text-lg lg:text-base">
+          Střelec 1
+        </span>
+        <div
+          v-for="{ scorerFirstName } in tournament?.players"
+          :key="scorerFirstName"
+          class="[&:not(:last-child)]:border-r border-r-slate-50"
+        >
+          <div class="p-3">{{ scorerFirstName }}</div>
+        </div>
+      </div>
+      <div class="border border-slate-50">
+        <span class="inline-flex w-full justify-center border-b border-b-slate-50 py-[26.5px] lg:p-3 text-lg lg:text-base">
+          Střelec 2
+        </span>
+        <div
+          v-for="{ scorerSecondName } in tournament?.players"
+          :key="scorerSecondName"
+          class="[&:not(:last-child)]:border-r border-r-slate-50"
+        >
+          <div class="p-3">{{ scorerSecondName }}</div>
+        </div>
       </div>
     </div>
     <div 
@@ -52,13 +78,13 @@ const numberOfMatches = tournament.value?.userMatches ? tournament.value?.userMa
             {{ tournament!.userMatches[row * numberOfPlayers].awayTeamName }}
           </span>
         </div>
-          <div 
-            v-for="userMatch in tournament!.userMatches.slice(col * numberOfPlayers, col * numberOfPlayers + numberOfPlayers)" 
-            class="[&:not(:last-child)]:border-b border-slate-50 flex justify-center text-xl gap-1 py-2"
-          >
-            <span>{{ userMatch.homeScore }}</span> :
-            <span>{{ userMatch.awayScore }}</span>
-          </div>
+        <div 
+          v-for="userMatch in tournament!.userMatches.slice(col * numberOfPlayers, col * numberOfPlayers + numberOfPlayers)" 
+          class="[&:not(:last-child)]:border-b border-slate-50 flex justify-center text-xl gap-1 py-2"
+        >
+          <span>{{ userMatch.homeScore }}</span> :
+          <span>{{ userMatch.awayScore }}</span>
+        </div>
       </div>
     </div>
   </div>

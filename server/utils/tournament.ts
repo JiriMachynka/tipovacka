@@ -87,9 +87,18 @@ export const getAllTournamentData = async (tournamentId: number) => {
 
 	if (!data) return null;
 
+	const scorerFirst = alias(Scorers, 'scorer_first');
+	const scorerSecond = alias(Scorers, 'scorer_second');
+
 	const players = await db
-		.select({ username: sql<string>`${Users.username}` })
+		.select({
+			username: sql<string>`${Users.username}`,
+			scorerFirstName: sql<string>`CONCAT(${scorerFirst.firstName}, ' ', ${scorerFirst.lastName})`,
+			scorerSecondName: sql<string>`CONCAT(${scorerSecond.firstName}, ' ', ${scorerSecond.lastName})`,
+		})
 		.from(Players)
+		.leftJoin(scorerFirst, eq(Players.scorerFirstId, scorerFirst.id))
+		.leftJoin(scorerSecond, eq(Players.scorerSecondId, scorerSecond.id))
 		.leftJoin(Users, eq(Players.userId, Users.id))
 		.where(eq(Players.tournamentId, tournamentId))
 		.orderBy(Players.id);
