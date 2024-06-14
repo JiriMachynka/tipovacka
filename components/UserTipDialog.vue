@@ -1,9 +1,9 @@
 <script lang="ts" setup>
+import { Flag } from 'lucide-vue-next';
 import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';
 import { z } from 'zod';
 
-import { Flag } from 'lucide-vue-next';
 
 interface UserTipDialogProps {
 	matchId: number;
@@ -26,7 +26,7 @@ const { $client } = useNuxtApp();
 
 const { mutate: updateTip } = $client.tournament.updateUserMatchTip.useMutation();
 
-const { handleSubmit, errors } = useForm({
+const { handleSubmit, errors, resetForm } = useForm({
 	validationSchema: toTypedSchema(
 		z.object({
 			homeScore: z.number({ message: 'Vyžadováno' }),
@@ -37,6 +37,7 @@ const { handleSubmit, errors } = useForm({
 		homeScore: props.homeScore,
 		awayScore: props.awayScore,
 	},
+  keepValuesOnUnmount: true,
 });
 
 const onSubmit = handleSubmit(async (values) => {
@@ -46,7 +47,7 @@ const onSubmit = handleSubmit(async (values) => {
 		homeScore: values.homeScore,
 		awayScore: values.awayScore,
 	});
-	await emit('refresh');
+	emit('refresh');
 
 	toast({
 		title: 'Úspěšně upraven',
@@ -91,7 +92,7 @@ const onSubmit = handleSubmit(async (values) => {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter class="mt-2">
-          <AlertDialogCancel>
+          <AlertDialogCancel @click="resetForm()">
             Zrušit
           </AlertDialogCancel>
           <AlertDialogAction type="submit">

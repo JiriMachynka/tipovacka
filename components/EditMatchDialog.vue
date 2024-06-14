@@ -5,9 +5,7 @@ import { toTypedSchema } from '@vee-validate/zod';
 import { useForm } from 'vee-validate';
 import { z } from 'zod';
 
-const emit = defineEmits(['refresh']);
-
-const props = defineProps<{
+interface EditMatchDialogProps {
 	teams: Team[];
 	groups: Group[];
 	matchId: number;
@@ -15,14 +13,18 @@ const props = defineProps<{
 	group: string;
 	homeTeamId: string;
 	awayTeamId: string;
-}>();
+}
+
+const emit = defineEmits(['refresh']);
+
+const props = defineProps<EditMatchDialogProps>();
 
 const { toast } = useToast();
 const { $client, $dayjs } = useNuxtApp();
 
 const { mutate: editMatch } = $client.match.edit.useMutation();
 
-const { handleSubmit, values } = useForm({
+const { handleSubmit, values, resetForm } = useForm({
 	validationSchema: toTypedSchema(
 		z.object({
 			date: z.string(),
@@ -37,6 +39,7 @@ const { handleSubmit, values } = useForm({
 		homeTeamId: props.homeTeamId,
 		awayTeamId: props.awayTeamId,
 	},
+  keepValuesOnUnmount: true,
 });
 
 // TODO: Fix props not changing after edited match
@@ -48,7 +51,7 @@ const onSubmit = handleSubmit(async (values) => {
 		homeTeamId: +values.homeTeamId,
 		awayTeamId: +values.awayTeamId,
 	});
-	await emit('refresh');
+	emit('refresh');
 	toast({
 		title: 'Úprava zápasu',
 		description: 'Zápas byl úspěšně upraven',
@@ -153,12 +156,15 @@ const onSubmit = handleSubmit(async (values) => {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter class="mt-2">
-          <AlertDialogCancel :class="cn(buttonVariants({ variant: 'destructive' }), 'font-bold')">
+          <AlertDialogCancel
+            :class="cn(buttonVariants({ variant: 'destructive' }), 'font-bold')"
+            @click="resetForm()"
+          >
             Zrušit
           </AlertDialogCancel>
           <AlertDialogAction 
             type="submit"
-            class="font-bold"
+            :class="cn('font-bold')"
           >
             Upravit
           </AlertDialogAction>

@@ -19,7 +19,7 @@ const props = defineProps<FinishMatchDialogProps>();
 const { toast } = useToast();
 const { $client } = useNuxtApp();
 
-const { handleSubmit } = useForm({
+const { handleSubmit, resetForm } = useForm({
 	validationSchema: toTypedSchema(
 		z.object({
 			homeScore: z.number(),
@@ -30,6 +30,7 @@ const { handleSubmit } = useForm({
 		homeScore: props.homeScore,
 		awayScore: props.awayScore,
 	},
+  keepValuesOnUnmount: true,
 });
 
 const { mutate: finishMatch } = $client.match.finish.useMutation();
@@ -40,7 +41,7 @@ const onSubmit = handleSubmit(async (values) => {
 		homeScore: values.homeScore,
 		awayScore: values.awayScore,
 	});
-	await emit('refresh');
+	emit('refresh');
 	toast({
 		title: 'Výsledný stav',
 		description: 'Zápas byl úspěšně upraven',
@@ -84,12 +85,15 @@ const onSubmit = handleSubmit(async (values) => {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter class="mt-2">
-          <AlertDialogCancel :class="cn(buttonVariants({ variant: 'destructive' }), 'font-bold')">
+          <AlertDialogCancel
+            :class="cn(buttonVariants({ variant: 'destructive' }), 'font-bold')"
+            @click="resetForm()"
+          >
             Zrušit
           </AlertDialogCancel>
           <AlertDialogAction 
             type="submit"
-            class="font-bold"
+            :class="cn('font-bold')"
           >
             Upravit
           </AlertDialogAction>
