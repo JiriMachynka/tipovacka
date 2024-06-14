@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { Eye, EyeOff } from 'lucide-vue-next';
-
 const emit = defineEmits(['toggleShow']);
 
 const props = defineProps<{ show: boolean }>();

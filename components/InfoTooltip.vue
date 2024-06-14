@@ -1,6 +1,3 @@
-<script lang="ts" setup>
-import { Info } from 'lucide-vue-next';
-</script>
 <template>
   <TooltipProvider>
     <Tooltip>

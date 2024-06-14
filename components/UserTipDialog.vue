@@ -1,9 +1,7 @@
 <script lang="ts" setup>
-import { Flag } from 'lucide-vue-next';
 import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';
 import { z } from 'zod';
-
 
 interface UserTipDialogProps {
 	matchId: number;
@@ -37,7 +35,7 @@ const { handleSubmit, errors, resetForm } = useForm({
 		homeScore: props.homeScore,
 		awayScore: props.awayScore,
 	},
-  keepValuesOnUnmount: true,
+	keepValuesOnUnmount: true,
 });
 
 const onSubmit = handleSubmit(async (values) => {

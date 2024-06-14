@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { Unlock, Lock } from 'lucide-vue-next';
-
 interface UpdateMatchStatusProps {
 	matchId: number;
 	locked: boolean;

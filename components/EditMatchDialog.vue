@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type { Team, Group } from '~/types';
-import { SquarePen } from 'lucide-vue-next';
 import { toTypedSchema } from '@vee-validate/zod';
 import { useForm } from 'vee-validate';
 import { z } from 'zod';
@@ -39,7 +38,7 @@ const { handleSubmit, values, resetForm } = useForm({
 		homeTeamId: props.homeTeamId,
 		awayTeamId: props.awayTeamId,
 	},
-  keepValuesOnUnmount: true,
+	keepValuesOnUnmount: true,
 });
 
 // TODO: Fix props not changing after edited match

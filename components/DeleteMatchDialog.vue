@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { Trash } from 'lucide-vue-next';
-
 const emits = defineEmits(['refresh']);
 
 defineProps<{

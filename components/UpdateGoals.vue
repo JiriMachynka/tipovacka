@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { Plus, Minus } from 'lucide-vue-next';
-
 interface UpdateGoalsProps {
 	scorerId: number;
 	goals: number;

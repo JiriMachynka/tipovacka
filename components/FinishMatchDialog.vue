@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { Flag } from 'lucide-vue-next';
 import { toTypedSchema } from '@vee-validate/zod';
 import { useForm } from 'vee-validate';
 import { z } from 'zod';
@@ -30,7 +29,7 @@ const { handleSubmit, resetForm } = useForm({
 		homeScore: props.homeScore,
 		awayScore: props.awayScore,
 	},
-  keepValuesOnUnmount: true,
+	keepValuesOnUnmount: true,
 });
 
 const { mutate: finishMatch } = $client.match.finish.useMutation();

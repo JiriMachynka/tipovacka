@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { Menu, X, ChevronDown, ChevronUp } from 'lucide-vue-next';
-
 const supabaseClient = useSupabaseClient();
 
 const route = useRoute();

@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { LogOut, ChevronRight } from 'lucide-vue-next';
-
 const { toast } = useToast();
 const supabaseClient = useSupabaseClient();
 

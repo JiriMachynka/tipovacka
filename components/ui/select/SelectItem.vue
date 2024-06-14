@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue';
 import { SelectItem, SelectItemIndicator, type SelectItemProps, SelectItemText, useForwardProps } from 'radix-vue';
-import { Check } from 'lucide-vue-next';
 
 const props = defineProps<SelectItemProps & { class?: HTMLAttributes['class'] }>();
 

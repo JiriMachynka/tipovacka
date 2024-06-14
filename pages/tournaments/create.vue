@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type { Country } from '~/types';
-import { GripVertical, ChevronLeft, ChevronRight, Trash, Minus, Plus } from 'lucide-vue-next';
 import { Sortable } from 'sortablejs-vue3';
 import { toTypedSchema } from '@vee-validate/zod';
 import { useForm } from 'vee-validate';

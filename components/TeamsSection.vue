@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { AlertTriangle } from 'lucide-vue-next';
 import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';
 import { z } from 'zod';

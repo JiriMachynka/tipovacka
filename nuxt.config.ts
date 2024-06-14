@@ -19,6 +19,7 @@ export default defineNuxtConfig({
     "@nuxt/image",
     'nuxt-cron',
     '@vee-validate/nuxt',
+    'nuxt-lucide-icons',
   ],
   app: {
     head: {
@@ -33,9 +34,8 @@ export default defineNuxtConfig({
       ]
     },
   },
-  cron: {
-    timeZone: 'Europe/Prague',
-    jobsDir: 'cron',
+  lucide: {
+    namePrefix: '',
   },
   dayjs: {
     locales: ['cs'],

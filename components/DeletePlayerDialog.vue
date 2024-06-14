@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { Trash } from 'lucide-vue-next';
-
 interface DeletePlayerDialogProps {
 	username: string;
 	playerId: number;
