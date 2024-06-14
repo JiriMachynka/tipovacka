@@ -42,9 +42,9 @@ const numberOfMatches = tournament.value?.userMatches ? tournament.value?.userMa
         <div
           v-for="{ scorerFirstName } in tournament?.players"
           :key="scorerFirstName"
-          class="[&:not(:last-child)]:border-r border-r-slate-50"
+          class="[&:not(:last-child)]:border-b border-b-slate-50"
         >
-          <div class="[&:not(:last-child)]:border-b border-slate-50 flex justify-center text-xl gap-1 px-4 py-2">
+          <div class="flex justify-center text-xl gap-1 px-4 py-2">
             {{ scorerFirstName }}
           </div>
         </div>
@@ -56,9 +56,9 @@ const numberOfMatches = tournament.value?.userMatches ? tournament.value?.userMa
         <div
           v-for="{ scorerSecondName } in tournament?.players"
           :key="scorerSecondName"
-          class="[&:not(:last-child)]:border-r border-r-slate-50"
+          class="[&:not(:last-child)]:border-b border-b-slate-50"
         >
-          <div class="[&:not(:last-child)]:border-b border-slate-50 flex justify-center text-xl gap-1 px-4 py-2">
+          <div class="flex justify-center text-xl gap-1 px-4 py-2">
             {{ scorerSecondName }}
           </div>
         </div>
