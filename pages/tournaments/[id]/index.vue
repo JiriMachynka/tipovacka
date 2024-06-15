@@ -20,9 +20,9 @@ const numberOfMatches = tournament.value?.userMatches ? tournament.value?.userMa
   <div v-else class="flex justify-center mt-5">
     <div class="flex flex-col border border-slate-50">
       <div class="border-b border-slate-50 flex flex-col-reverse lg:flex-row items-center lg:items-start p-0 lg:p-3 lg:gap-2 justify-center">
-        <span class="flex justify-center w-full p-2 lg:p-0"><Users /></span>
+        <span class="flex justify-center w-full p-2 lg:p-0"><IconUsers /></span>
         <span class="hidden lg:inline">/</span>
-        <span class="flex justify-center w-full p-2 lg:p-0 border-b border-b-slate-50 lg:border-none"><Swords /></span>
+        <span class="flex justify-center w-full p-2 lg:p-0 border-b border-b-slate-50 lg:border-none"><IconSwords /></span>
       </div>
       <div
         v-for="{ username } in tournament?.players"

@@ -28,7 +28,7 @@ const handleUpdate = async (increment: boolean) => {
 		class="p-2"
 		@click="handleUpdate(false)"
 	>
-		<Minus />
+		<IconMinus />
 	</Button>
 	<div v-else class="w-[42px]" />
   <Button
@@ -36,6 +36,6 @@ const handleUpdate = async (increment: boolean) => {
 		class="p-2"
 		@click="handleUpdate(true)"
 	>
-    <Plus  />
+    <IconPlus  />
   </Button>
 </template>

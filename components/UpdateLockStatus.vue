@@ -28,7 +28,7 @@ const handleUpdate = async (matchId: number, locked: boolean) => {
 </script>
 <template>
   <Button variant="ghost" class="px-2">
-    <Lock v-if="!locked" class="cursor-pointer" @click="handleUpdate(matchId, true)" />
-    <Unlock v-else class="cursor-pointer" @click="handleUpdate(matchId, false)" />
+    <IconLock v-if="!locked" class="cursor-pointer" @click="handleUpdate(matchId, true)" />
+    <IconUnlock v-else class="cursor-pointer" @click="handleUpdate(matchId, false)" />
   </Button>
 </template>

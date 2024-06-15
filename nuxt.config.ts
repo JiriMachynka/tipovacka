@@ -17,7 +17,6 @@ export default defineNuxtConfig({
     "shadcn-nuxt",
     "dayjs-nuxt",
     "@nuxt/image",
-    'nuxt-cron',
     '@vee-validate/nuxt',
     'nuxt-lucide-icons',
   ],
@@ -35,7 +34,7 @@ export default defineNuxtConfig({
     },
   },
   lucide: {
-    namePrefix: '',
+    namePrefix: 'icon',
   },
   dayjs: {
     locales: ['cs'],

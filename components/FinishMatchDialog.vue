@@ -29,7 +29,7 @@ const { handleSubmit, resetForm } = useForm({
 		homeScore: props.homeScore,
 		awayScore: props.awayScore,
 	},
-	keepValuesOnUnmount: true,
+  keepValuesOnUnmount: true,
 });
 
 const { mutate: finishMatch } = $client.match.finish.useMutation();
@@ -50,7 +50,7 @@ const onSubmit = handleSubmit(async (values) => {
 <template>
   <AlertDialog>
     <AlertDialogTrigger :class="cn(buttonVariants({ variant: 'ghost' }), 'px-2')">
-      <Flag />
+      <IconFlag />
     </AlertDialogTrigger>
     <AlertDialogContent>
       <form @submit="onSubmit">

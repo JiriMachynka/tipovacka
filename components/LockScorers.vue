@@ -27,11 +27,11 @@ const handleLock = async (lockScorers: boolean) => {
 <template>
   <div class="flex items-center gap-4 max-w-4xl mx-auto">
     <Button variant="ghost" class="px-2" @click="handleLock(!data!.lockScorers)">
-      <Lock
+      <IconLock
         v-if="!data?.lockScorers"
         class="cursor-pointer"
       />
-      <Unlock
+      <IconUnlock
         v-else
         class="cursor-pointer"
       />

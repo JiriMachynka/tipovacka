@@ -20,7 +20,7 @@ const logout = async () => {
 <template>
   <div class="flex flex-col justify-between items-center h-dvh container">
     <Button class="my-3" @click="logout">
-      <LogOut class="size-8" />
+      <IconLogOut class="size-8" />
     </Button>
     <div class="flex flex-col gap-4 w-full overflow-y-auto max-h-[70dvh]">
       <NuxtLink
@@ -34,7 +34,7 @@ const logout = async () => {
       >
         <span>{{ tournament.name }}</span>
         <div class="mr-5 group-hover:mr-0 transition-all ease-in-out duration-300">
-          <ChevronRight class="size-6" /> 
+          <IconChevronRight class="size-6" /> 
         </div>
       </NuxtLink>
     </div>

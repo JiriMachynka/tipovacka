@@ -10,7 +10,7 @@ const props = defineProps<{ show: boolean }>();
     class="absolute right-0"
     @click="emit('toggleShow')"
   >
-    <Eye v-if="!props.show" />
-    <EyeOff v-else />
+    <IconEye v-if="!props.show" />
+    <IconEyeOff v-else />
   </Button>
 </template>

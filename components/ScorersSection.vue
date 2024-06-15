@@ -90,7 +90,7 @@ const selectedSecondScorer = computed(() => {
               class="w-full h-auto justify-between text-md font-normal"
             >
               {{ selectedFirstScorer }}
-              <ChevronsUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
+              <IconChevronsUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
           <PopoverContent class="max-w-[250px] mt-1 p-0">
@@ -117,7 +117,7 @@ const selectedSecondScorer = computed(() => {
                       'hover:cursor-default pointer-events-none': firstScorerId === scorer.id || secondScorerId === scorer.id,
                     })"
                   >
-                    <Check :class="cn('mr-2 size-4', 
+                    <IconCheck :class="cn('mr-2 size-4', 
                       firstScorerId === scorer.id || secondScorerId === scorer.id ? 'opacity-100' : 'opacity-0'
                     )" />
                     {{ scorer.firstName }} {{ scorer.lastName }}
@@ -193,7 +193,7 @@ const selectedSecondScorer = computed(() => {
               class="w-full h-fit justify-between text-md font-normal"
             >
               {{ selectedSecondScorer }}
-              <ChevronsUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
+              <IconChevronsUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
           <PopoverContent class="max-w-[250px] mt-1 p-0">
@@ -218,7 +218,7 @@ const selectedSecondScorer = computed(() => {
                       'hover:cursor-default pointer-events-none': firstScorerId === scorer.id || secondScorerId === scorer.id,
                     })"
                   >
-                    <Check :class="cn('mr-2 size-4', 
+                    <IconCheck :class="cn('mr-2 size-4', 
                       firstScorerId === scorer.id || secondScorerId === scorer.id ? 'opacity-100' : 'opacity-0', 
                     )" /> 
                     {{ scorer.firstName }} {{ scorer.lastName }}

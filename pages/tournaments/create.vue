@@ -24,7 +24,6 @@ const { handleSubmit, isSubmitting } = useForm({
 	initialValues: {
 		tournamentName: '',
 		players: '',
-		teams: '',
 	},
 });
 
@@ -160,7 +159,7 @@ const removeCountry = (countryCode: string) => {
               :disabled="numberOfGroups === 1"
               @click="() => (numberOfGroups--)"
             >
-              <Minus class="size-5" />
+              <IconMinus class="size-5" />
             </Button>
             <Button
               type="button"
@@ -168,7 +167,7 @@ const removeCountry = (countryCode: string) => {
               :class="cn('p-2')"
               @click="() => (numberOfGroups++)"
             >
-              <Plus class="size-5" />
+              <IconPlus class="size-5" />
             </Button>
           </div>
         </div>
@@ -192,7 +191,7 @@ const removeCountry = (countryCode: string) => {
               <div class="draggable cursor-move border border-input px-4 py-2 w-full rounded-md" :key="element.code">
                 <div class="flex justify-between items-center gap-6">
                   <div class="flex items-center gap-4">
-                    <GripVertical class="-mr-2 size-5" />
+                    <IconGripVertical class="-mr-2 size-5" />
                     <span :class="`text-lg fi fi-${element.code}`" />
                     <span class="text-base">{{ element.name }}</span>
                   </div>
@@ -203,7 +202,7 @@ const removeCountry = (countryCode: string) => {
                       :class="cn('p-2')"
                       @click="removeCountry(element.code)"
                     >
-                      <Trash class="size-5" />
+                      <IconTrash class="size-5" />
                     </Button>
                     <Button
                       type="button"
@@ -212,7 +211,7 @@ const removeCountry = (countryCode: string) => {
                       :disabled="element.group === 0"
                       @click="changeGroup(element.code, index - 1)"
                     >
-                      <ChevronLeft class="size-5" />
+                      <IconChevronLeft class="size-5" />
                     </Button>
                     <Button
                       type="button"
@@ -221,7 +220,7 @@ const removeCountry = (countryCode: string) => {
                       :disabled="element.group === numberOfGroups - 1"
                       @click="changeGroup(element.code, index + 1)"
                     >
-                      <ChevronRight class="size-5" />
+                      <IconChevronRight class="size-5" />
                     </Button>
                   </div>
                 </div>

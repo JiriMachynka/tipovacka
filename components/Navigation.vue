@@ -98,11 +98,11 @@ const logout = async () => {
           >
             <span>Admin sekce</span>
             <!-- TODO: Make icons animated -->
-            <ChevronUp
+            <IconChevronUp
               :size="20"
               class="group-data-[state=closed]:hidden group-data-[state=open]:block"
             />
-            <ChevronDown
+            <IconChevronDown
               :size="20"
               class="group-data-[state=closed]:block group-data-[state=open]:hidden"
             />
@@ -258,12 +258,12 @@ const logout = async () => {
       :aria-expanded="mobileNav"
       @click="() => (mobileNav = !mobileNav)"
     >
-      <X
+      <IconX
         v-if="mobileNav"
         :size="30"
         :stroke="colorMode.value === 'dark' ? 'white' : 'black'"
       /> 
-      <Menu
+      <IconMenu
         v-else
         :size="30"
         :stroke="colorMode.value === 'dark' ? 'white' : 'black'"

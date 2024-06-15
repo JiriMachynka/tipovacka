@@ -147,7 +147,7 @@ const overallTipsTeams = [
     </div>
     <Card class="border-red-500 min-[500px]:col-span-2 lg:col-span-4">
       <CardContent class="flex items-center gap-4 p-3">
-        <AlertTriangle color="red" class="size-8" />
+        <IconAlertTriangle color="red" class="size-8" />
         <p class="text-lg font-bold">Střelci a týmy jsou uzamčeny</p> 
       </CardContent>
     </Card>

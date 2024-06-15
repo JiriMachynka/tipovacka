@@ -30,7 +30,7 @@ const handleDelete = async (matchId: number) => {
         'px-2 hover:bg-destructive transition-colors duration-300 hover:cursor-pointer'
       )"
     >
-      <Trash />
+      <IconTrash />
     </AlertDialogTrigger>
     <AlertDialogContent>
       <AlertDialogHeader>

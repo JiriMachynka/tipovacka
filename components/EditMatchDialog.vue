@@ -38,7 +38,7 @@ const { handleSubmit, values, resetForm } = useForm({
 		homeTeamId: props.homeTeamId,
 		awayTeamId: props.awayTeamId,
 	},
-	keepValuesOnUnmount: true,
+  keepValuesOnUnmount: true,
 });
 
 // TODO: Fix props not changing after edited match
@@ -60,7 +60,7 @@ const onSubmit = handleSubmit(async (values) => {
 <template>
   <AlertDialog>
     <AlertDialogTrigger :class="cn(buttonVariants({ variant: 'ghost' }), 'px-2')">
-      <SquarePen />
+      <IconSquarePen />
     </AlertDialogTrigger>
     <AlertDialogContent>
       <form @submit="onSubmit">
