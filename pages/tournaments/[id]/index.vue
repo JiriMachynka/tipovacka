@@ -32,41 +32,39 @@ const numberOfMatches = tournament.value?.userMatches ? tournament.value?.userMa
         {{ username }}
       </div>
     </div>
-    <div class="flex">
-      <div class="border border-slate-50">
-        <span class="inline-flex w-full justify-center border-b border-b-slate-50 py-[26.5px] lg:p-3 text-lg lg:text-base">
-          Střelec 1
-        </span>
-        <div
-          v-for="{ scorerFirstName } in tournament?.players"
-          :key="scorerFirstName"
-          class="[&:not(:last-child)]:border-b border-b-slate-50"
-        >
-          <div class="flex justify-center text-xl gap-1 px-4 py-2">
-            {{ scorerFirstName }}
+    <div class="flex border border-slate-50 overflow-x-auto">
+      <div class="flex">
+        <div class="border border-slate-50">
+          <span class="inline-flex w-full justify-center border-b border-b-slate-50 py-[26px] lg:py-[11.5px] text-lg lg:text-base">
+            Střelec 1
+          </span>
+          <div
+            v-for="{ scorerFirstName } in tournament?.players"
+            :key="scorerFirstName"
+            class="[&:not(:last-child)]:border-b border-b-slate-50"
+          >
+            <div class="flex justify-center text-xl gap-1 px-4 py-2 text-nowrap">
+              {{ scorerFirstName }}
+            </div>
+          </div>
+        </div>
+        <div class="border border-slate-50">
+          <span class="inline-flex w-full justify-center border-b border-b-slate-50 py-[26px] lg:py-[11.5px] text-lg lg:text-base">
+            Střelec 2
+          </span>
+          <div
+            v-for="{ scorerSecondName } in tournament?.players"
+            :key="scorerSecondName"
+            class="[&:not(:last-child)]:border-b border-b-slate-50"
+          >
+            <div class="flex justify-center text-xl gap-1 px-4 py-2 text-nowrap">
+              {{ scorerSecondName }}
+            </div>
           </div>
         </div>
       </div>
-      <div class="border border-slate-50">
-        <span class="inline-flex w-full justify-center border-b border-b-slate-50 py-[26.5px] lg:p-3 text-lg lg:text-base">
-          Střelec 2
-        </span>
-        <div
-          v-for="{ scorerSecondName } in tournament?.players"
-          :key="scorerSecondName"
-          class="[&:not(:last-child)]:border-b border-b-slate-50"
-        >
-          <div class="flex justify-center text-xl gap-1 px-4 py-2">
-            {{ scorerSecondName }}
-          </div>
-        </div>
-      </div>
-    </div>
-    <div 
-      v-if="tournament!.userMatches.length > 0"
-      class="flex border border-slate-50 overflow-x-auto"
-    >
       <div
+        v-if="tournament!.userMatches.length > 0"
         v-for="col, row in Array.from({ length: numberOfMatches }, (_, index) => index)"
         :key="row"
         class="[&:not(:last-child)]:border-r border-r-slate-50"
