@@ -35,7 +35,7 @@ const numberOfMatches = tournament.value?.userMatches ? tournament.value?.userMa
     <div class="flex border border-slate-50 overflow-x-auto">
       <div class="flex">
         <div class="border border-slate-50">
-          <span class="inline-flex w-full justify-center border-b border-b-slate-50 py-[26px] lg:py-[11.5px] text-lg lg:text-base">
+          <span class="inline-flex w-full justify-center border-b border-b-slate-50 py-[26px] lg:py-[11.5dpx] text-lg lg:text-base">
             Střelec 1
           </span>
           <div
@@ -43,7 +43,7 @@ const numberOfMatches = tournament.value?.userMatches ? tournament.value?.userMa
             :key="scorerFirstName"
             class="[&:not(:last-child)]:border-b border-b-slate-50"
           >
-            <div class="flex justify-center text-xl gap-1 px-4 py-2 text-nowrap">
+            <div class="text-center text-xl px-4 py-2 text-nowrap">
               {{ scorerFirstName }}
             </div>
           </div>
@@ -57,7 +57,7 @@ const numberOfMatches = tournament.value?.userMatches ? tournament.value?.userMa
             :key="scorerSecondName"
             class="[&:not(:last-child)]:border-b border-b-slate-50"
           >
-            <div class="flex justify-center text-xl gap-1 px-4 py-2 text-nowrap">
+            <div class="[&:not(:last-child)]:border-b border-b-slate-50 text-center text-xl px-4 py-2 text-nowrap">
               {{ scorerSecondName }}
             </div>
           </div>
@@ -67,9 +67,9 @@ const numberOfMatches = tournament.value?.userMatches ? tournament.value?.userMa
         v-if="tournament!.userMatches.length > 0"
         v-for="col, row in Array.from({ length: numberOfMatches }, (_, index) => index)"
         :key="row"
-        class="[&:not(:last-child)]:border-r border-r-slate-50"
+        class="[&:not(:last-child)]:border-r border-r-slate-50 [&:not(:last-child)]:border-b border-b-slate-50"
       >
-        <div class="border-b border-b-slate-50 flex flex-col lg:flex-row p-0 lg:p-3 gap-0 lg:gap-2">
+        <div class="flex flex-col lg:flex-row p-0 lg:p-3 gap-0 lg:gap-2">
           <span class="p-2 lg:p-0 border-b border-b-slate-50 lg:border-none text-nowrap">
             {{ tournament!.userMatches[row * numberOfPlayers].homeTeamName }}
           </span> 
@@ -78,9 +78,9 @@ const numberOfMatches = tournament.value?.userMatches ? tournament.value?.userMa
             {{ tournament!.userMatches[row * numberOfPlayers].awayTeamName }}
           </span>
         </div>
-        <div 
+        <div
           v-for="userMatch in tournament!.userMatches.slice(col * numberOfPlayers, col * numberOfPlayers + numberOfPlayers)" 
-          class="[&:not(:last-child)]:border-b border-slate-50 flex justify-center text-xl gap-1 py-2"
+          class="flex justify-center text-xl gap-1 py-2"
         >
           <span>{{ userMatch.homeScore }}</span> :
           <span>{{ userMatch.awayScore }}</span>
