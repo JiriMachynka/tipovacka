@@ -80,7 +80,7 @@ const numberOfMatches = tournament.value?.userMatches ? tournament.value?.userMa
         </div>
         <div
           v-for="userMatch in tournament!.userMatches.slice(col * numberOfPlayers, col * numberOfPlayers + numberOfPlayers)" 
-          class="flex justify-center text-xl gap-1 py-2"
+          class="[&:not(:last-child)]:border-b border-b-primary flex justify-center text-xl gap-1 py-2"
         >
           <span>{{ userMatch.homeScore }}</span> :
           <span>{{ userMatch.awayScore }}</span>
