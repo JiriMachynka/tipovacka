@@ -35,7 +35,7 @@ const numberOfMatches = tournament.value?.userMatches ? tournament.value?.userMa
     <div class="flex border border-primary overflow-x-auto">
       <div class="flex">
         <div class="border border-primary">
-          <span class="inline-flex w-full justify-center border-b border-b-primary py-[26px] lg:py-[11.5dpx] text-lg lg:text-base">
+          <span class="inline-flex w-full justify-center border-b border-b-primary py-[26px] lg:py-[11.5px] text-lg lg:text-base">
             Střelec 1
           </span>
           <div
