@@ -29,7 +29,7 @@ const { handleSubmit, resetForm } = useForm({
 		homeScore: props.homeScore,
 		awayScore: props.awayScore,
 	},
-  keepValuesOnUnmount: true,
+	keepValuesOnUnmount: true,
 });
 
 const { mutate: finishMatch } = $client.match.finish.useMutation();

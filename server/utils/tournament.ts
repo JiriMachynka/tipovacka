@@ -72,11 +72,11 @@ export const getTournaments = async (userId: string) => {
 	return allTournaments || [];
 };
 
-export const getAllTournamentData = async (tournamentId: number) => {
+export const getAllTournamentData = async (userId: string, tournamentId: number) => {
 	const [data] = await db
 		.select({
-			name: Tournaments.name,
-			authorId: Tournaments.authorId,
+			name: sql<string>`${Tournaments.name}`,
+			isAuthor: sql<boolean>`CASE WHEN ${Tournaments.authorId} = ${userId} THEN true ELSE false END`,
 			numberOfPlayers: count(Players.id),
 		})
 		.from(Tournaments)
@@ -84,8 +84,6 @@ export const getAllTournamentData = async (tournamentId: number) => {
 		.leftJoin(Users, eq(Players.userId, Users.id))
 		.where(eq(Tournaments.id, tournamentId))
 		.groupBy(Tournaments.name, Tournaments.authorId);
-
-	if (!data) return null;
 
 	const scorerFirst = alias(Scorers, 'scorer_first');
 	const scorerSecond = alias(Scorers, 'scorer_second');
@@ -161,8 +159,6 @@ export const getTournamentPoints = async (tournamentId: number) => {
 		.leftJoin(scorerSecond, eq(Players.scorerSecondId, scorerSecond.id))
 		.groupBy(Players.id)
 		.as('scorer_goals_sq');
-
-	console.clear();
 
 	return await db
 		.select({

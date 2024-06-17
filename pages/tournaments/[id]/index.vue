@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import xlsx, { type IJsonSheet } from 'json-as-xlsx';
+
 const { $client } = useNuxtApp();
 
 const route = useRoute();
@@ -9,11 +11,63 @@ const { data: tournament } = await $client.tournament.getData.useQuery({ tournam
 
 const numberOfPlayers = tournament.value?.data.numberOfPlayers as number;
 const numberOfMatches = tournament.value?.userMatches ? tournament.value?.userMatches.length / numberOfPlayers : 0;
+
+const downloadTournament = () => {
+	const columnsData = [
+		{ label: 'Hráč', value: '0player' },
+		{ label: 'Střelec 1', value: '1scorerFirst' },
+		{ label: 'Střelec 2', value: '2scorerSecond' },
+		...Array.from({ length: numberOfMatches }, (_, index) => index).map((_, row) => ({
+			label: `${tournament.value?.userMatches[row * numberOfPlayers].homeTeamName} - ${tournament.value?.userMatches[row * numberOfPlayers].awayTeamName}`,
+			value: `${3 + row}${tournament.value?.userMatches[row * numberOfPlayers].homeTeamName.toLowerCase()}${tournament.value?.userMatches[row * numberOfPlayers].awayTeamName.toLowerCase()}`,
+		})),
+	];
+
+	const contentData = tournament.value?.userMatches
+		.flatMap((_, row) => {
+			return tournament.value?.players.map(({ username, scorerFirstName, scorerSecondName }) => ({
+				'0player': username,
+				'1scorerFirst': scorerFirstName,
+				'2scorerSecond': scorerSecondName,
+				[`${3 + row}${tournament.value?.userMatches[row * numberOfPlayers].homeTeamName.toLowerCase()}${tournament.value?.userMatches[row * numberOfPlayers].awayTeamName.toLowerCase()}`]: `${tournament.value?.userMatches[row * numberOfPlayers].homeScore} - ${tournament.value?.userMatches[row * numberOfPlayers].awayScore}`,
+			}));
+		})
+		.reduce((acc, curr) => {
+			Object.keys(curr).forEach((key) => {
+				if (key !== 'player' || key !== 'scorerFirst' || key !== 'scorerSecond') {
+					if (!acc[key]) {
+						acc[key] = curr[key];
+					}
+				} else {
+					acc[curr.Hrac] = { ...acc[curr.Hrac], [key]: curr[key] };
+				}
+			});
+			return acc;
+		}, {});
+
+	const data: IJsonSheet[] = [
+		{
+			sheet: 'Tipovačka',
+			columns: columnsData,
+			content: [contentData],
+		},
+	];
+
+	xlsx(data, { fileName: 'Tipovačka' });
+};
 </script>
 <template>
-  <h1 class="text-center text-4xl font-bold">
-    {{ tournament?.data.name }}
-  </h1> 
+  <div :class="cn('inline-flex justify-center items-center', tournament?.data.isAuthor && 'gap-6')"> 
+    <h1 class="text-4xl font-bold">{{ tournament?.data.name }}</h1>
+    <Button
+      v-if="tournament?.data.isAuthor"
+      variant="outline"
+      :class="cn('p-2')"
+      @click="downloadTournament"
+    >
+      <IconDownload class="size-6" />
+    </Button>
+  </div> 
   <div v-if="numberOfMatches === 0" class="flex justify-center items-center h-[250px]">
     <p class="text-3xl font-bold text-center md:text-left">Ještě nebyly vyhodnoceny žádné zápasy</p>
   </div>

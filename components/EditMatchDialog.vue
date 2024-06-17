@@ -38,7 +38,7 @@ const { handleSubmit, values, resetForm } = useForm({
 		homeTeamId: props.homeTeamId,
 		awayTeamId: props.awayTeamId,
 	},
-  keepValuesOnUnmount: true,
+	keepValuesOnUnmount: true,
 });
 
 // TODO: Fix props not changing after edited match

@@ -21,7 +21,9 @@ export const tournamentRouter = router({
 			const { tournamentName, players, teams } = input;
 			return await createTournament(ctx.userId, tournamentName, players, teams);
 		}),
-	getData: privateProcedure.input(z.object({ tournamentId: z.number() })).query(async ({ input }) => await getAllTournamentData(input.tournamentId)),
+	getData: privateProcedure
+		.input(z.object({ tournamentId: z.number() }))
+		.query(async ({ ctx, input }) => await getAllTournamentData(ctx.userId, input.tournamentId)),
 	getGroups: privateProcedure.input(z.object({ tournamentId: z.number() })).query(async ({ input }) => await getTournamentGroups(input.tournamentId)),
 	getTeams: privateProcedure.input(z.object({ tournamentId: z.number() })).query(async ({ input }) => await getTournamentTeams(input.tournamentId)),
 	getMatches: privateProcedure
