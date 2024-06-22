@@ -18,7 +18,8 @@ const handleUpdate = async (increment: boolean) => {
 		goals: props.goals,
 		increment,
 	});
-	await emit('refresh');
+
+	emit('refresh');
 };
 </script>
 <template>

@@ -50,7 +50,9 @@ const onSubmit = handleSubmit(async (values) => {
 		homeTeamId: +values.homeTeamId,
 		awayTeamId: +values.awayTeamId,
 	});
+
 	emit('refresh');
+
 	toast({
 		title: 'Úprava zápasu',
 		description: 'Zápas byl úspěšně upraven',

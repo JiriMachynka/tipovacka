@@ -50,7 +50,8 @@ const onSubmit = handleSubmit(async (values) => {
 			title: 'Vytvořeno',
 			description: 'Zápas byl úspěšně vytvořen',
 		});
-		await emit('refresh');
+
+		emit('refresh');
 	} catch (e) {
 		toast({
 			title: 'Chyba',

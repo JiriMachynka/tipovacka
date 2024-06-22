@@ -18,7 +18,8 @@ const handleUpdate = async (matchId: number, locked: boolean) => {
 		matchId,
 		locked,
 	});
-	await emit('refresh');
+
+	emit('refresh');
 
 	toast({
 		title: locked ? 'Odemčeno' : 'Zamčeno',
