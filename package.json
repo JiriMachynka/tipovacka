@@ -19,6 +19,7 @@
   "type": "module",
   "devDependencies": {
     "@biomejs/biome": "1.8.0",
+    "@nuxt/fonts": "^0.7.0",
     "@nuxt/image": "^1.7.0",
     "@nuxtjs/color-mode": "^3.4.1",
     "@nuxtjs/supabase": "^1.2.2",
