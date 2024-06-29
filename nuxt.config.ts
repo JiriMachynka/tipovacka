@@ -19,7 +19,6 @@ export default defineNuxtConfig({
     "@nuxt/image",
     '@vee-validate/nuxt',
     'nuxt-lucide-icons',
-    "@nuxt/fonts"
   ],
   app: {
     head: {
@@ -33,11 +32,6 @@ export default defineNuxtConfig({
         { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css' }
       ]
     },
-  },
-  fonts: {
-    families: [
-      { name: 'Rubik', provider: 'google' },
-    ]
   },
   lucide: {
     namePrefix: 'icon',
