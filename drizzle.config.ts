@@ -2,9 +2,9 @@ import { defineConfig } from 'drizzle-kit';
 
 export default defineConfig({
 	schema: "./server/db/schema.ts",
-	driver: "pg",
+	dialect: "postgresql",
 	out: "./supabase/migrations",
 	dbCredentials: {
-		connectionString: process.env.NUXT_PUBLIC_DATABASE_URL!,
+		url: process.env.NUXT_PUBLIC_DATABASE_URL as string,
 	}
 });
