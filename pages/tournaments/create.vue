@@ -41,7 +41,8 @@ const onSubmit = handleSubmit(async (values) => {
 	navigateTo(`/tournaments/${tournamentId}`);
 });
 
-const countries = ref<Omit<Country, 'group'>[]>(useCountries());
+// const countries = ref<Omit<Country, 'group'>[]>(useCountries());
+const countries = ref<Omit<Country, 'group'>[]>(useTeams());
 const currentCountry = ref('');
 const teams = ref<Country[]>([]);
 const numberOfGroups = ref(1);
@@ -141,8 +142,12 @@ const removeCountry = (countryCode: string) => {
                   :value="JSON.stringify(Object.assign({}, country, { group: 0 }))"
                 >
                   <span class="inline-flex items-center gap-4">
-                    <TeamNameFlag :teamName="country.name" />
+                    <img :src="`/teams/${country.code}.png`" class="h-6 w-6" />
+                    {{ country.name }}
                   </span>
+                  <!-- <span class="inline-flex items-center gap-4">
+                    <TeamNameFlag :teamName="country.name" />
+                  </span> -->
                 </SelectItem>
               </SelectGroup>
             </SelectContent>
@@ -192,7 +197,8 @@ const removeCountry = (countryCode: string) => {
                 <div class="flex justify-between items-center gap-6">
                   <div class="flex items-center gap-4">
                     <IconGripVertical class="-mr-2 size-5" />
-                    <span :class="`text-lg fi fi-${element.code}`" />
+                    <!-- <span :class="`text-lg fi fi-${element.code}`" /> -->
+                    <img :src="`/teams/${element.code}.png`" class="h-6 w-6" />
                     <span class="text-base">{{ element.name }}</span>
                   </div>
                   <div class="grid grid-cols-[38px_38px_38px] gap-2">

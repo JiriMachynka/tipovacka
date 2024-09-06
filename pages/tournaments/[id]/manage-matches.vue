@@ -57,10 +57,10 @@ const groups = computed(() => [...groupsData.value, { name: 'Playoff' }]);
         </TableCell>
         <TableCell>{{ match.group }}</TableCell>
         <TableCell :class="cn('space-x-4 text-nowrap')">
-          <TeamNameFlag :teamName="match.homeTeamName" />
+          <TeamNameFlag :teamName="match.homeTeamName" :showImg="true" />
         </TableCell>
         <TableCell :class="cn('space-x-4 text-nowrap')">
-          <TeamNameFlag :teamName="match.awayTeamName" />
+          <TeamNameFlag :teamName="match.awayTeamName" :showImg="true" />
         </TableCell>
         <TableCell>{{ match.homeScore }}:{{ match.awayScore }}</TableCell>
         <TableCell class="space-x-2">

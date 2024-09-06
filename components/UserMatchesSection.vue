@@ -37,11 +37,11 @@ const matches = computed(() => userMatches.value?.filter((m) => !m.played) || []
         <TableCell>{{ $dayjs(match.date).fromNow() }}</TableCell>
         <TableCell>{{ match.group }}</TableCell>
         <TableCell :class="cn('space-x-4 text-nowrap')">
-          <TeamNameFlag :teamName="match.homeTeamName" />
+          <TeamNameFlag :teamName="match.homeTeamName" :showImg="true" />
         </TableCell>
         <TableCell>{{ match.homeScore }}:{{ match.awayScore }}</TableCell> 
         <TableCell :class="cn('space-x-4 text-nowrap')">
-          <TeamNameFlag :teamName="match.awayTeamName" />
+          <TeamNameFlag :teamName="match.awayTeamName" :showImg="true" />
         </TableCell>
         <TableCell>
           <span v-if="match.locked && !match.played" class="text-lg font-bold">

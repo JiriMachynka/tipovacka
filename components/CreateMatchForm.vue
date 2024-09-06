@@ -146,7 +146,7 @@ watch(values, () => {
                   :value="team.id.toString()"
                   :class="cn('[&>:nth-child(2)]:space-x-4')"
                 >
-                  <TeamNameFlag :teamName="team.name" />
+                  <TeamNameFlag :teamName="team.name" :showImg="true" />
                 </SelectItem>
               </SelectGroup>
             </SelectContent>
@@ -175,8 +175,7 @@ watch(values, () => {
                   :value="team.id.toString()"
                   :class="cn('[&>:nth-child(2)]:space-x-4')"
                 >
-                  <TeamNameFlag :teamName="team.name" />
-                  <!-- {{ team.name }}s -->
+                  <TeamNameFlag :teamName="team.name" :showImg="true" />
                 </SelectItem>
               </SelectGroup>
             </SelectContent>

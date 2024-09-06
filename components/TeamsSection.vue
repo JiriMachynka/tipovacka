@@ -116,7 +116,7 @@ const overallTipsTeams = [
                 :value="team.id.toString()"
               >
                 <span class="inline-flex items-center gap-4">
-                  <TeamNameFlag :teamName="team.name" />
+                  <TeamNameFlag :teamName="team.name" :showImg="true" />
                 </span>
               </SelectItem>
             </SelectGroup>
@@ -142,7 +142,7 @@ const overallTipsTeams = [
         {{ title }}
       </p>
       <div class="inline-flex items-center gap-4 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background select-none cursor-not-allowed">
-        <TeamNameFlag :teamName="name" />
+        <TeamNameFlag :teamName="name" :showImg="true" />
       </div>
     </div>
     <Card class="border-red-500 min-[500px]:col-span-2 lg:col-span-4">

@@ -96,7 +96,7 @@ const sections = [
                 :value="team.id.toString()"
                 :class="cn('[&>:nth-child(2)]:space-x-4')"
               >
-                <TeamNameFlag :teamName="team.name" />
+                <TeamNameFlag :teamName="team.name" :showImg="true" />
               </SelectItem>
             </SelectGroup>
           </SelectContent>
@@ -129,16 +129,16 @@ const sections = [
       >
         <TableCell>{{ player.username }}</TableCell>
         <TableCell :class="cn('space-x-4')">
-          <TeamNameFlag :teamName="player.winner" />
+          <TeamNameFlag :teamName="player.winner" :showImg="true" />
         </TableCell>
         <TableCell :class="cn('space-x-4')">
-          <TeamNameFlag :teamName="player.finalist" />
+          <TeamNameFlag :teamName="player.finalist" :showImg="true" />
         </TableCell>
         <TableCell :class="cn('space-x-4')">
-          <TeamNameFlag :teamName="player.semifinalistFirst" />
+          <TeamNameFlag :teamName="player.semifinalistFirst" :showImg="true" />
         </TableCell>
         <TableCell :class="cn('space-x-4')">
-          <TeamNameFlag :teamName="player.semifinalistSecond" />
+          <TeamNameFlag :teamName="player.semifinalistSecond" :showImg="true" />
         </TableCell>
       </TableRow>
     </TableBody>
