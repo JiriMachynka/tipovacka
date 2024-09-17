@@ -163,7 +163,7 @@ export const getTournamentPoints = async (tournamentId: number) => {
 	return await db
 		.select({
 			username: sql<string>`${Users.username}`,
-			points: sql<number>`${sum(UserMatchTips.points)} + ${scorersGoalsSq.goalsSum} + ${teamsPoints.sql}`,
+			points: sql<number>`${sum(UserMatchTips.points)} + COALESCE(${scorersGoalsSq.goalsSum}, 0) + ${teamsPoints.sql}`,
 		})
 		.from(UserMatchTips)
 		.leftJoin(Players, eq(UserMatchTips.playerId, Players.id))
@@ -185,7 +185,7 @@ export const getTournamentPoints = async (tournamentId: number) => {
 			Tournaments.semifinalistSecondId,
 			teamsPoints.sql,
 		)
-		.orderBy(desc(sql<number>`${sum(UserMatchTips.points)} + ${scorersGoalsSq.goalsSum} + ${teamsPoints.sql}`));
+		.orderBy(desc(sql<number>`${sum(UserMatchTips.points)} + COALESCE(${scorersGoalsSq.goalsSum}, 0) + ${teamsPoints.sql}`));
 };
 
 export const getTournamentGroups = async (tournamentId: number) => {
