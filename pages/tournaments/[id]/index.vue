@@ -10,7 +10,7 @@ const tournamentId = +route.params.id;
 const { data: tournament } = await $client.tournament.getData.useQuery({ tournamentId });
 
 const numberOfPlayers = tournament.value?.data.numberOfPlayers as number;
-const numberOfMatches = tournament.value?.userMatches ? tournament.value?.userMatches.length / numberOfPlayers : 0;
+const numberOfMatches = tournament.value?.userMatches ? (tournament.value?.userMatches.length + 1) / numberOfPlayers : 0;
 
 const downloadTournament = () => {
 	const columnsData = [
@@ -119,17 +119,17 @@ const downloadTournament = () => {
       </div> -->
       <div
         v-if="tournament!.userMatches.length > 0"
-        v-for="col, row in Array.from({ length: numberOfMatches }, (_, index) => index)"
-        :key="row"
+        v-for="col in Array.from({ length: numberOfMatches }, (_, index) => index)"
+        :key="col"
         class="[&:not(:last-child)]:border-r border-r-primary [&:not(:last-child)]:border-b border-b-primary"
       >
         <div class="border-b border-primary flex flex-col lg:flex-row p-0 lg:p-3 gap-0 lg:gap-2">
           <span class="p-2 lg:p-0 border-b border-b-primary lg:border-none text-nowrap">
-            {{ tournament!.userMatches[row * numberOfPlayers].homeTeamName }}
+            {{ tournament!.userMatches[col * numberOfPlayers].homeTeamName }}
           </span> 
           <span class="hidden lg:inline-block">-</span> 
           <span class="p-2 lg:p-0 text-nowrap">
-            {{ tournament!.userMatches[row * numberOfPlayers].awayTeamName }}
+            {{ tournament!.userMatches[col * numberOfPlayers].awayTeamName }}
           </span>
         </div>
         <div
