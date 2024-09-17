@@ -1,5 +1,5 @@
 <template>
-  <ScorersSection />
+  <!-- <ScorersSection /> -->
   <TeamsSection />
   <UserMatchesSection />
 </template>

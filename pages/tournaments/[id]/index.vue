@@ -87,7 +87,7 @@ const downloadTournament = () => {
       </div>
     </div>
     <div class="flex border border-primary overflow-x-auto">
-      <div class="flex">
+      <!-- <div class="flex">
         <div class="border border-primary">
           <span class="inline-flex w-full justify-center border-b border-b-primary py-[26px] lg:py-[11.5px] text-lg lg:text-base">
             Střelec 1
@@ -116,7 +116,7 @@ const downloadTournament = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
       <div
         v-if="tournament!.userMatches.length > 0"
         v-for="col, row in Array.from({ length: numberOfMatches }, (_, index) => index)"
