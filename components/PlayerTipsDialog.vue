@@ -28,14 +28,8 @@ const { data: playerTips } = await $client.player.getMatchTips.useQuery({ tourna
             class="grid grid-cols-[1fr_70px] items-center gap-2 group"
           >
             <span class="flex flex-col font-semibold">
-              <span class="inline-flex items-center gap-2">
-                <TeamNameFlag :teamName="homeTeamName" :showImg="true" />
-                <span>{{ homeTeamName }}</span>
-              </span>
-              <span class="inline-flex items-center gap-2">
-                <TeamNameFlag :teamName="awayTeamName" :showImg="true" />
-                <span>{{ awayTeamName }}</span>
-              </span>
+              <TeamNameFlag :teamName="homeTeamName" :showImg="true" />
+              <TeamNameFlag :teamName="awayTeamName" :showImg="true" />
             </span>
             <span class="text-xl">
               {{ homeScore }} : {{ awayScore }}
