@@ -1,6 +1,5 @@
 import type { Country } from '~/types';
-import { alias } from 'drizzle-orm/pg-core';
-import { and, asc, desc, count, eq, isNotNull, or, sql, sum } from 'drizzle-orm';
+import { and, asc, desc, count, eq, isNotNull, or, sql, sum, aliasedTable } from 'drizzle-orm';
 import { db, Players, Scorers, Teams, TournamentMatchTips, TournamentOverallTips, Tournaments, UserMatchTips, Users } from '../db';
 
 export const createTournament = async (authorId: string, name: string, players: string[], teams: Country[]) => {
@@ -85,8 +84,8 @@ export const getAllTournamentData = async (userId: string, tournamentId: number)
 		.where(eq(Tournaments.id, tournamentId))
 		.groupBy(Tournaments.name, Tournaments.authorId);
 
-	const scorerFirst = alias(Scorers, 'scorer_first');
-	const scorerSecond = alias(Scorers, 'scorer_second');
+	const scorerFirst = aliasedTable(Scorers, 'scorer_first');
+	const scorerSecond = aliasedTable(Scorers, 'scorer_second');
 
 	const players = await db
 		.select({
@@ -102,8 +101,8 @@ export const getAllTournamentData = async (userId: string, tournamentId: number)
 		.where(eq(Players.tournamentId, tournamentId))
 		.orderBy(Players.id);
 
-	const homeTeam = alias(Teams, 'home_team');
-	const awayTeam = alias(Teams, 'away_team');
+	const homeTeam = aliasedTable(Teams, 'home_team');
+	const awayTeam = aliasedTable(Teams, 'away_team');
 
 	const userMatches = await db
 		.select({
@@ -147,8 +146,8 @@ export const getTournamentPoints = async (tournamentId: number) => {
 			ELSE 0
 		END`.as('teams_points');
 
-	const scorerFirst = alias(Scorers, 'scorer_first');
-	const scorerSecond = alias(Scorers, 'scorer_second');
+	const scorerFirst = aliasedTable(Scorers, 'scorer_first');
+	const scorerSecond = aliasedTable(Scorers, 'scorer_second');
 
 	const scorersGoalsSq = db
 		.select({
@@ -209,10 +208,10 @@ export const getTournamentTeams = async (tournamentId: number) => {
 };
 
 export const getPlayerTeams = async (tournamentId: number) => {
-	const winner = alias(Teams, 'winner');
-	const finalist = alias(Teams, 'finalist');
-	const semifinalistFirst = alias(Teams, 'semifinalist_first');
-	const semifinalistSecond = alias(Teams, 'semifinalist_second');
+	const winner = aliasedTable(Teams, 'winner');
+	const finalist = aliasedTable(Teams, 'finalist');
+	const semifinalistFirst = aliasedTable(Teams, 'semifinalist_first');
+	const semifinalistSecond = aliasedTable(Teams, 'semifinalist_second');
 
 	return await db
 		.select({
@@ -234,8 +233,8 @@ export const getPlayerTeams = async (tournamentId: number) => {
 };
 
 export const getTournamentMatches = async (tournamentId: number) => {
-	const homeTeam = alias(Teams, 'home_team');
-	const awayTeam = alias(Teams, 'away_team');
+	const homeTeam = aliasedTable(Teams, 'home_team');
+	const awayTeam = aliasedTable(Teams, 'away_team');
 
 	return await db
 		.select({

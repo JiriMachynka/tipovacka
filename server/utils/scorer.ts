@@ -1,6 +1,5 @@
-import { and, asc, eq, sql } from 'drizzle-orm';
+import { aliasedTable, and, asc, eq, sql } from 'drizzle-orm';
 import { db, Players, Scorers, Tournaments, Users } from '../db';
-import { alias } from 'drizzle-orm/pg-core';
 
 export const getScorers = async (tournamentId: number) => {
 	return await db
@@ -33,8 +32,8 @@ export const updateLockScorers = async (tournamentId: number, lockScorers: boole
 };
 
 export const getPlayerScorers = async (tournamentId: number, userId: string) => {
-	const scorerFirst = alias(Scorers, 'scorer_first');
-	const scorerSecond = alias(Scorers, 'scorer_second');
+	const scorerFirst = aliasedTable(Scorers, 'scorer_first');
+	const scorerSecond = aliasedTable(Scorers, 'scorer_second');
 
 	const [scorers] = await db
 		.select({

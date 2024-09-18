@@ -1,6 +1,5 @@
-import { and, asc, eq, sql } from 'drizzle-orm';
+import { aliasedTable, and, asc, eq, sql } from 'drizzle-orm';
 import { db, Players, Teams, TournamentMatchTips, Tournaments, UserMatchTips } from '../db';
-import { alias } from 'drizzle-orm/pg-core';
 
 export const createMatch = async (tournamentId: number, date: Date, group: string, homeTeamId: number, awayTeamId: number) => {
 	const [createdMatch] = await db
@@ -120,8 +119,8 @@ export const finishMatch = async (matchId: number, homeScore: number, awayScore:
 };
 
 export const getUserMatches = async (tournamentId: number, userId: string) => {
-	const homeTeam = alias(Teams, 'homeTeam');
-	const awayTeam = alias(Teams, 'awayTeam');
+	const homeTeam = aliasedTable(Teams, 'homeTeam');
+	const awayTeam = aliasedTable(Teams, 'awayTeam');
 
 	return await db
 		.select({
