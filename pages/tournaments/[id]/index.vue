@@ -81,7 +81,7 @@ const downloadTournament = () => {
       <div
         v-for="{ username } in tournament?.players"
         :key="username"
-        class="inline-flex text-xl px-3 py-2 [&:not(:last-child)]:border-b border-b-primary"
+        class="inline-flex text-xl px-3 py-2 [&:not(:last-child)]:border-b border-b-primary text-nowrap"
       >
         {{ username }}
       </div>
