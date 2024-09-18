@@ -71,4 +71,5 @@ export default defineNuxtConfig({
       databaseUrl: '',
     }
   },
+  compatibilityDate: '2024-09-18',
 })
