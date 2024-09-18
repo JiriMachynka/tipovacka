@@ -90,6 +90,7 @@ export const getAllTournamentData = async (userId: string, tournamentId: number)
 
 	const players = await db
 		.select({
+			id: Players.id,
 			username: sql<string>`${Users.username}`,
 			scorerFirstName: sql<string>`CONCAT(${scorerFirst.firstName}, ' ', ${scorerFirst.lastName})`,
 			scorerSecondName: sql<string>`CONCAT(${scorerSecond.firstName}, ' ', ${scorerSecond.lastName})`,

@@ -1,0 +1,49 @@
+<script lang="ts" setup>
+interface PlayerTipsDialogProps {
+	username: string;
+	playerId: number;
+	tournamentId: number;
+}
+
+const props = defineProps<PlayerTipsDialogProps>();
+
+const { $client } = useNuxtApp();
+
+const { data: playerTips } = await $client.player.getMatchTips.useQuery({ tournamentId: props.tournamentId, playerId: props.playerId });
+</script>
+<template>  
+  <Dialog>
+    <DialogTrigger :class="cn('inline-flex gap-2')">
+      <slot />
+    </DialogTrigger>
+    <DialogContent>
+      <DialogHeader>
+        <DialogTitle class="text-2xl font-bold">
+          Tipy hráče {{ props.username }}
+        </DialogTitle>
+        <DialogDescription :class="cn('overflow-y-auto max-h-[400px]')">
+          <div
+            v-for="{ id, homeTeamName, awayTeamName, homeScore, awayScore } in playerTips"
+            :key="id"
+            class="grid grid-cols-[1fr_70px] items-center gap-2 group"
+          >
+            <span class="flex flex-col font-semibold">
+              <span class="inline-flex items-center gap-2">
+                <TeamNameFlag :teamName="homeTeamName" :showImg="true" />
+                <span>{{ homeTeamName }}</span>
+              </span>
+              <span class="inline-flex items-center gap-2">
+                <TeamNameFlag :teamName="awayTeamName" :showImg="true" />
+                <span>{{ awayTeamName }}</span>
+              </span>
+            </span>
+            <span class="text-xl">
+              {{ homeScore }} : {{ awayScore }}
+            </span>
+            <Separator class="col-span-2 my-2 group-last:hidden" />
+          </div>
+        </DialogDescription>
+      </DialogHeader>
+    </DialogContent>
+  </Dialog>
+</template>

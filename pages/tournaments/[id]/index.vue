@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import xlsx, { type IJsonSheet } from 'json-as-xlsx';
+import { ExternalLink } from 'lucide-vue-next';
 
 const { $client } = useNuxtApp();
 
@@ -79,11 +80,14 @@ const downloadTournament = () => {
         <span class="flex justify-center w-full p-2 lg:p-0 border-b border-b-primary lg:border-none"><IconSwords /></span>
       </div>
       <div
-        v-for="{ username } in tournament?.players"
+        v-for="{ id, username } in tournament?.players"
         :key="username"
-        class="inline-flex text-xl px-3 py-2 [&:not(:last-child)]:border-b border-b-primary text-nowrap"
+        class="text-xl px-3 py-2 [&:not(:last-child)]:border-b border-b-primary text-nowrap"
       >
-        {{ username }}
+        <PlayerTipsDialog :username="username" :tournamentId="tournamentId" :playerId="id">
+          {{ username }}
+          <ExternalLink class="size-4" />
+        </PlayerTipsDialog>
       </div>
     </div>
     <div class="flex border border-primary overflow-x-auto">

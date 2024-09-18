@@ -1,5 +1,5 @@
-import { and, eq, ne, sql } from 'drizzle-orm';
-import { db, Players, Tournaments, TournamentMatchTips, TournamentOverallTips, UserMatchTips, Users } from '../db';
+import { aliasedTable, and, eq, isNotNull, ne, sql } from 'drizzle-orm';
+import { db, Players, Tournaments, TournamentMatchTips, TournamentOverallTips, UserMatchTips, Users, Teams } from '../db';
 
 export const getTournamentPlayers = async (tournamentId: number, authorId: string) => {
 	const players = await db
@@ -100,4 +100,31 @@ export const getPlayerOverallTipId = async (tournamentId: number, userId: string
 		.limit(1);
 
 	return player.overallTipId;
+};
+
+export const getPlayerMatchTips = async (tournamentId: number, playerId: number) => {
+	const homeTeam = aliasedTable(Teams, 'homeTeam');
+	const awayTeam = aliasedTable(Teams, 'awayTeam');
+
+	return await db
+		.select({
+			id: UserMatchTips.id,
+			homeTeamName: sql<string>`${homeTeam.name}`,
+			awayTeamName: sql<string>`${awayTeam.name}`,
+			homeScore: UserMatchTips.homeScore,
+			awayScore: UserMatchTips.awayScore,
+		})
+		.from(UserMatchTips)
+		.leftJoin(TournamentMatchTips, eq(UserMatchTips.tournamentMatchTipId, TournamentMatchTips.id))
+		.leftJoin(homeTeam, eq(TournamentMatchTips.homeTeamId, homeTeam.id))
+		.leftJoin(awayTeam, eq(TournamentMatchTips.awayTeamId, awayTeam.id))
+		.leftJoin(Players, eq(UserMatchTips.playerId, Players.id))
+		.where(and(
+			eq(TournamentMatchTips.locked, true),
+			eq(TournamentMatchTips.locked, true),
+			eq(Players.tournamentId, tournamentId),
+			eq(Players.id, playerId),
+			isNotNull(UserMatchTips.points),
+		))
+		.orderBy(TournamentMatchTips.date);
 };

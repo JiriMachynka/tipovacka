@@ -22,4 +22,7 @@ export const playerRouter = router({
 		.mutation(async ({ ctx, input }) => {
 			return await deletePlayer(input.playerId);
 		}),
+	getMatchTips: privateProcedure
+		.input(z.object({ tournamentId: z.number(), playerId: z.number() }))
+		.query(async ({ input }) => await getPlayerMatchTips(input.tournamentId, input.playerId)),
 });
