@@ -1,4 +1,4 @@
-const calculatePoints = (userHomeScore: number, userAwayScore: number, homeScore: number, awayScore: number) => {
+export const calculatePoints = (userHomeScore: number, userAwayScore: number, homeScore: number, awayScore: number) => {
   const draw = userHomeScore === userAwayScore && homeScore === awayScore;
   const homeWin = userHomeScore > userAwayScore && homeScore > awayScore;
   const awayWin = userHomeScore < userAwayScore && homeScore < awayScore;
