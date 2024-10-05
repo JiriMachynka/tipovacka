@@ -90,32 +90,16 @@ export const finishMatch = async (matchId: number, homeScore: number, awayScore:
 		.from(UserMatchTips)
 		.where(eq(UserMatchTips.tournamentMatchTipId, matchId));
 
-	userMatches.map(async (matchTip) => {
-		const draw = matchTip.userHomeScore === matchTip.userAwayScore && homeScore === awayScore;
-		const homeWin = matchTip.userHomeScore > matchTip.userAwayScore && homeScore > awayScore;
-		const awayWin = matchTip.userHomeScore < matchTip.userAwayScore && homeScore < awayScore;
-
-		const exactDraw = matchTip.userHomeScore === homeScore && matchTip.userHomeScore === matchTip.userAwayScore && homeScore === awayScore;
-
-		const exactHomeWin =
-			matchTip.userHomeScore === homeScore &&
-			matchTip.userAwayScore === awayScore &&
-			matchTip.userHomeScore > matchTip.userAwayScore &&
-			homeScore > awayScore;
-
-		const exactAwayWin =
-			matchTip.userHomeScore === homeScore &&
-			matchTip.userAwayScore === awayScore &&
-			matchTip.userHomeScore < matchTip.userAwayScore &&
-			homeScore < awayScore;
-
-		await db
+	const updatePromises = userMatches.map((matchTip) => {
+		return db
 			.update(UserMatchTips)
 			.set({
-				points: exactDraw || exactHomeWin || exactAwayWin ? 3 : draw || homeWin || awayWin ? 1 : 0,
+				points: calculatePoints(matchTip.userHomeScore, matchTip.userAwayScore, homeScore, awayScore)
 			})
 			.where(eq(UserMatchTips.id, matchTip.id));
 	});
+
+	await Promise.all(updatePromises);
 };
 
 export const getUserMatches = async (tournamentId: number, userId: string) => {
