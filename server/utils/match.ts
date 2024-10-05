@@ -20,12 +20,12 @@ export const createMatch = async (tournamentId: number, date: Date, group: strin
 		.from(Players)
 		.where(eq(Players.tournamentId, tournamentId));
 
-	players.map(async (player) => {
-		await db.insert(UserMatchTips).values({
-			tournamentMatchTipId: createdMatch.id,
-			playerId: player.id,
-		});
-	});
+	const playerMatches = players.map((player) => ({
+		tournamentMatchTipId: createdMatch.id,
+		playerId: player.id,
+	}))
+
+	await db.insert(UserMatchTips).values(playerMatches);
 
 	return createdMatch.id;
 };
