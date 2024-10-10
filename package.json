@@ -58,6 +58,7 @@
     "zod": "^3.23.8"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.12.3"
+    "@nuxt/kit": "^3.12.3",
+    "simple-analytics-vue": "^3.0.2"
   }
 }
