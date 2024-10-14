@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import xlsx, { type IJsonSheet } from 'json-as-xlsx';
+import { createSpreadsheet } from 'bun-spreadsheets';
 import { ExternalLink } from 'lucide-vue-next';
 
 const { $client } = useNuxtApp();
@@ -10,51 +10,30 @@ const tournamentId = +route.params.id;
 
 const { data: tournament } = await $client.tournament.getData.useQuery({ tournamentId });
 
-const numberOfPlayers = tournament.value?.data.numberOfPlayers as number;
-const numberOfMatches = tournament.value?.userMatches ? (tournament.value?.userMatches.length + 1) / numberOfPlayers : 0;
+const numberOfPlayers = tournament.value?.data.numberOfPlayers ?? 0;
+const numberOfMatches = tournament.value?.userMatches ? tournament.value?.userMatches.length / numberOfPlayers : 0;
 
 const downloadTournament = () => {
-	const columnsData = [
-		{ label: 'Hráč', value: '0player' },
-		{ label: 'Střelec 1', value: '1scorerFirst' },
-		{ label: 'Střelec 2', value: '2scorerSecond' },
-		...Array.from({ length: numberOfMatches }, (_, index) => index).map((_, row) => ({
-			label: `${tournament.value?.userMatches[row * numberOfPlayers].homeTeamName} - ${tournament.value?.userMatches[row * numberOfPlayers].awayTeamName}`,
-			value: `${3 + row}${tournament.value?.userMatches[row * numberOfPlayers].homeTeamName.toLowerCase()}${tournament.value?.userMatches[row * numberOfPlayers].awayTeamName.toLowerCase()}`,
-		})),
-	];
+	const matches = Array.from({ length: numberOfMatches }, (_, index) => index).map((_, row) => ({
+		match: `${capitalize(tournament.value?.userMatches[row].homeTeamName ?? '')} - ${capitalize(tournament.value?.userMatches[row].awayTeamName ?? '')}`,
+	}));
 
-	const contentData = tournament.value?.userMatches
-		.flatMap((_, row) => {
-			return tournament.value?.players.map(({ username, scorerFirstName, scorerSecondName }) => ({
-				'0player': username,
-				'1scorerFirst': scorerFirstName,
-				'2scorerSecond': scorerSecondName,
-				[`${3 + row}${tournament.value?.userMatches[row * numberOfPlayers].homeTeamName.toLowerCase()}${tournament.value?.userMatches[row * numberOfPlayers].awayTeamName.toLowerCase()}`]: `${tournament.value?.userMatches[row * numberOfPlayers].homeScore} - ${tournament.value?.userMatches[row * numberOfPlayers].awayScore}`,
-			}));
-		})
-		.reduce((acc, curr) => {
-			Object.keys(curr).forEach((key) => {
-				if (key !== 'player' || key !== 'scorerFirst' || key !== 'scorerSecond') {
-					if (!acc[key]) {
-						acc[key] = curr[key];
-					}
-				} else {
-					acc[curr.Hrac] = { ...acc[curr.Hrac], [key]: curr[key] };
-				}
-			});
-			return acc;
-		}, {});
+	const data = {
+		headings: ['Hráč', 'Střelec 1', 'Střelec 2', ...matches.map(({ match }) => match)],
+		data: [
+			tournament.value?.players.map(({ username, scorerFirstName, scorerSecondName }, row) => [
+				username,
+				scorerFirstName.trim(),
+				scorerSecondName.trim(),
+				...(tournament.value?.userMatches
+					?.slice(row * numberOfPlayers, row * numberOfPlayers + numberOfMatches)
+					?.map((um) => `${um.homeScore}:${um.awayScore}`) || []),
+			]),
+		],
+	};
 
-	const data: IJsonSheet[] = [
-		{
-			sheet: 'Tipovačka',
-			columns: columnsData,
-			content: [contentData],
-		},
-	];
-
-	xlsx(data, { fileName: 'Tipovačka' });
+	const excelSpreadsheet = createSpreadsheet(data, { type: 'excel' });
+	excelSpreadsheet.download('Tipovacka_tabulka');
 };
 </script>
 <template>
@@ -123,21 +102,21 @@ const downloadTournament = () => {
       </div> -->
       <div
         v-if="tournament!.userMatches.length > 0"
-        v-for="col in Array.from({ length: numberOfMatches }, (_, index) => index)"
-        :key="col"
+        v-for="row in Array.from({ length: numberOfMatches }, (_, index) => index)"
+        :key="row"
         class="[&:not(:last-child)]:border-r border-r-primary [&:not(:last-child)]:border-b border-b-primary"
       >
         <div class="border-b border-primary flex flex-col lg:flex-row p-0 lg:p-3 gap-0 lg:gap-2">
           <span class="p-2 lg:p-0 border-b border-b-primary lg:border-none text-nowrap">
-            {{ tournament!.userMatches[col * numberOfPlayers].homeTeamName }}
+            {{ tournament!.userMatches[row * numberOfPlayers].homeTeamName }}
           </span> 
           <span class="hidden lg:inline-block">-</span> 
           <span class="p-2 lg:p-0 text-nowrap">
-            {{ tournament!.userMatches[col * numberOfPlayers].awayTeamName }}
+            {{ tournament!.userMatches[row * numberOfPlayers].awayTeamName }}
           </span>
         </div>
         <div
-          v-for="userMatch in tournament!.userMatches.slice(col * numberOfPlayers, col * numberOfPlayers + numberOfPlayers)" 
+          v-for="userMatch in tournament!.userMatches.slice(row * numberOfPlayers, row * numberOfPlayers + numberOfPlayers)" 
           class="border-b border-b-primary flex justify-center text-xl gap-1 py-2"
         >
           <span>{{ userMatch.homeScore }}</span> :

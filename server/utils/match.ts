@@ -23,7 +23,7 @@ export const createMatch = async (tournamentId: number, date: Date, group: strin
 	const playerMatches = players.map((player) => ({
 		tournamentMatchTipId: createdMatch.id,
 		playerId: player.id,
-	}))
+	}));
 
 	await db.insert(UserMatchTips).values(playerMatches);
 
@@ -94,7 +94,7 @@ export const finishMatch = async (matchId: number, homeScore: number, awayScore:
 		return db
 			.update(UserMatchTips)
 			.set({
-				points: calculatePoints(matchTip.userHomeScore, matchTip.userAwayScore, homeScore, awayScore)
+				points: calculatePoints(matchTip.userHomeScore, matchTip.userAwayScore, homeScore, awayScore),
 			})
 			.where(eq(UserMatchTips.id, matchTip.id));
 	});
