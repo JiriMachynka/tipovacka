@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { createSpreadsheet } from 'bun-spreadsheets';
+import { utils, write } from 'xlsx';
+import { saveAs } from 'file-saver';
 import { ExternalLink } from 'lucide-vue-next';
 
 const { $client } = useNuxtApp();
@@ -18,22 +19,25 @@ const downloadTournament = () => {
 		match: `${capitalize(tournament.value?.userMatches[row].homeTeamName ?? '')} - ${capitalize(tournament.value?.userMatches[row].awayTeamName ?? '')}`,
 	}));
 
-	const data = {
-		headings: ['Hráč', 'Střelec 1', 'Střelec 2', ...matches.map(({ match }) => match)],
-		data: [
-			tournament.value?.players.map(({ username, scorerFirstName, scorerSecondName }, row) => [
-				username,
-				scorerFirstName.trim(),
-				scorerSecondName.trim(),
-				...(tournament.value?.userMatches
-					?.slice(row * numberOfPlayers, row * numberOfPlayers + numberOfMatches)
-					?.map((um) => `${um.homeScore}:${um.awayScore}`) || []),
-			]),
-		],
-	};
+	const data = [
+		['Hráč', 'Střelec 1', 'Střelec 2', ...matches.map(({ match }) => match)],
+		...(tournament.value?.players.map(({ username, scorerFirstName, scorerSecondName }, row) => [
+			username,
+			scorerFirstName.trim(),
+			scorerSecondName.trim(),
+			...(tournament.value?.userMatches
+				?.slice(row * numberOfPlayers, row * numberOfPlayers + numberOfMatches)
+				?.map((um) => `${um.homeScore}:${um.awayScore}`) ?? []),
+		]) ?? []),
+	];
 
-	const excelSpreadsheet = createSpreadsheet(data, { type: 'excel' });
-	excelSpreadsheet.download('Tipovacka_tabulka');
+	const worksheet = utils.aoa_to_sheet(data);
+	const workbook = utils.book_new();
+	utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+	write(workbook, { bookType: 'xlsx', type: 'array' });
+	const excelBuffer = write(workbook, { bookType: 'xlsx', type: 'array' });
+	const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
+	saveAs(blob, 'Tipovacka_tabulka.xlsx');
 };
 </script>
 <template>
