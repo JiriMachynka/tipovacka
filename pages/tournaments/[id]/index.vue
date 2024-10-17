@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-// import { utils, write } from 'xlsx';
-// import { saveAs } from 'file-saver';
 import { ExternalLink } from 'lucide-vue-next';
 
 const { $client } = useNuxtApp();
