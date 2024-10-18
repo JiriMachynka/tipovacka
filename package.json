@@ -58,8 +58,5 @@
   "dependencies": {
     "@nuxt/kit": "^3.13.2",
     "simple-analytics-vue": "^3.0.2"
-  },
-  "engines": {
-    "node": ">=20.10.0"
   }
 }
