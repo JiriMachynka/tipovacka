@@ -109,7 +109,7 @@ const downloadTournament = () => {
         :key="row"
         class="[&:not(:last-child)]:border-r border-r-primary [&:not(:last-child)]:border-b border-b-primary"
       >
-        <div class="border-b border-primary flex flex-col lg:flex-row p-0 lg:p-3 gap-0 lg:gap-2">
+        <div class="border-b border-primary flex flex-col lg:flex-row p-0 lg:p-3 gap-0 lg:gap-2 sticky top-0">
           <span class="p-2 lg:p-0 border-b border-b-primary lg:border-none text-nowrap">
             {{ tournament!.userMatches[row * numberOfPlayers].homeTeamName }}
           </span> 
