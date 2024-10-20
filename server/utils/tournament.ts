@@ -162,7 +162,7 @@ export const getTournamentPoints = async (tournamentId: number, userId: string) 
 
 	return await db
 		.select({
-			currentPlayer: sql<boolean>`CASE WHEN ${Players.userId} = ${userId} THEN true ELSE false END`,
+			highlight: sql<boolean>`CASE WHEN ${Users.id} = ${userId} THEN true ELSE false END`,
 			username: sql<string>`${Users.username}`,
 			points: sql<number>`${sum(UserMatchTips.points)} + COALESCE(${scorersGoalsSq.goalsSum}, 0) + ${teamsPoints.sql}`,
 		})
@@ -174,6 +174,7 @@ export const getTournamentPoints = async (tournamentId: number, userId: string) 
 		.leftJoin(scorersGoalsSq, eq(Players.id, scorersGoalsSq.playerId))
 		.where(and(eq(Players.tournamentId, tournamentId), isNotNull(UserMatchTips.points)))
 		.groupBy(
+			Users.id,
 			Users.username,
 			scorersGoalsSq.goalsSum,
 			TournamentOverallTips.winnerId,

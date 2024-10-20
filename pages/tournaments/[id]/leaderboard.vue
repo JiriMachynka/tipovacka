@@ -22,7 +22,7 @@ const { data: leaderboard } = await $client.tournament.getPoints.useQuery({ tour
         v-for="(row, i) in leaderboard"
         :key="row.username"
         class="grid grid-cols-[100px_1fr_100px]"
-        :class="row.currentPlayer && 'bg-gray-600'"
+        :class="row.highlight && 'bg-gray-700'"
       >
         <TableCell>{{ i + 1 }}</TableCell>
         <TableCell>{{ row.username }}</TableCell>
