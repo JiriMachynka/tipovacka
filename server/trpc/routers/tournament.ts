@@ -29,7 +29,9 @@ export const tournamentRouter = router({
 	getMatches: privateProcedure
 		.input(z.object({ tournamentId: z.number() }))
 		.query(async ({ input }) => await getTournamentMatches(input.tournamentId)),
-	getPoints: privateProcedure.input(z.object({ tournamentId: z.number() })).query(async ({ input }) => await getTournamentPoints(input.tournamentId)),
+	getPoints: privateProcedure
+		.input(z.object({ tournamentId: z.number() }))
+		.query(async ({ ctx, input }) => await getTournamentPoints(input.tournamentId, ctx.userId)),
 	getUserMatches: privateProcedure
 		.input(z.object({ tournamentId: z.number() }))
 		.query(async ({ ctx, input }) => await getUserMatches(input.tournamentId, ctx.userId)),

@@ -127,7 +127,7 @@ export const getAllTournamentData = async (userId: string, tournamentId: number)
 	};
 };
 
-export const getTournamentPoints = async (tournamentId: number) => {
+export const getTournamentPoints = async (tournamentId: number, userId: string) => {
 	const teamsPoints = sql<string>`
 		CASE
 			WHEN ${TournamentOverallTips.winnerId} = ${Tournaments.winnerId} THEN 6 
@@ -162,6 +162,7 @@ export const getTournamentPoints = async (tournamentId: number) => {
 
 	return await db
 		.select({
+			currentPlayer: sql<boolean>`CASE WHEN ${Players.userId} = ${userId} THEN true ELSE false END`,
 			username: sql<string>`${Users.username}`,
 			points: sql<number>`${sum(UserMatchTips.points)} + COALESCE(${scorersGoalsSq.goalsSum}, 0) + ${teamsPoints.sql}`,
 		})

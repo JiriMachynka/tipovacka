@@ -5,6 +5,7 @@ const route = useRoute();
 
 const tournamentId = +route.params.id;
 
+const user = await useSupabaseUser();
 const { data: leaderboard } = await $client.tournament.getPoints.useQuery({ tournamentId });
 </script>
 <template>
@@ -17,15 +18,16 @@ const { data: leaderboard } = await $client.tournament.getPoints.useQuery({ tour
       </TableRow>
     </TableHeader>
     <TableBody>
-      <Table.Row
+      <TableRow
         v-for="(row, i) in leaderboard"
         :key="row.username"
         class="grid grid-cols-[100px_1fr_100px]"
+        :class="row.currentPlayer && 'bg-gray-600'"
       >
-        <Table.Cell>{{ i + 1 }}</Table.Cell>
-        <Table.Cell>{{ row.username }}</Table.Cell>
-        <Table.Cell>{{ row.points }}</Table.Cell>
-      </Table.Row>
+        <TableCell>{{ i + 1 }}</TableCell>
+        <TableCell>{{ row.username }}</TableCell>
+        <TableCell>{{ row.points }}</TableCell>
+      </TableRow>
     </TableBody>
   </Table>
   <div v-else class="flex justify-center items-center h-[250px]">
