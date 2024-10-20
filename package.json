@@ -36,7 +36,6 @@
     "dayjs-nuxt": "^2.1.11",
     "drizzle-kit": "^0.26.2",
     "drizzle-orm": "^0.35.1",
-    "jwt-decode": "^4.0.0",
     "lucide-vue-next": "^0.453.0",
     "nuxt": "^3.13.2",
     "nuxt-lucide-icons": "^1.0.5",

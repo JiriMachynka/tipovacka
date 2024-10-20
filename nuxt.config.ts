@@ -58,7 +58,12 @@ export default defineNuxtConfig({
     },
   },
   supabase: {
-    redirect: false, 
+    redirect: false,
+    clientOptions: {
+      auth: {
+        storageKey: 'sb-access-token',
+      }
+    }
   },
   imports: {
     dirs: [
