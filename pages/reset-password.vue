@@ -3,7 +3,6 @@ import { toTypedSchema } from '@vee-validate/zod';
 import { useForm } from 'vee-validate';
 import { z } from 'zod';
 
-const route = useRoute();
 const { toast } = useToast();
 const supabaseClient = useSupabaseClient();
 
@@ -18,14 +17,11 @@ const validationSchema = toTypedSchema(
 		}),
 );
 
-const nonce = route.query?.code as string;
-
 const { handleSubmit, isSubmitting, resetForm } = useForm({ validationSchema });
 
 const onSubmit = handleSubmit(async (values) => {
 	const { error } = await supabaseClient.auth.updateUser({
 		password: values.password,
-		nonce,
 	});
 
 	if (error) {
@@ -45,10 +41,6 @@ const onSubmit = handleSubmit(async (values) => {
 	});
 
 	navigateTo('/login');
-});
-
-onMounted(() => {
-	if (!nonce) navigateTo('/');
 });
 </script>
 <template>
