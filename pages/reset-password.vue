@@ -64,7 +64,7 @@ onMounted(() => {
 					<FormMessage />
 				</FormItem>
 			</FormField>
-      <FormField v-slot="{ componentField }" name="passwordConfirmation">
+      <FormField v-slot="{ componentField }" name="passwordConfirm">
 				<FormItem>
 					<FormLabel>Heslo znova</FormLabel>
 					<FormControl>
