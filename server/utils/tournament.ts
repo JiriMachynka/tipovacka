@@ -72,6 +72,24 @@ export const getTournaments = async (userId: string) => {
 };
 
 export const getAllTournamentData = async (userId: string, tournamentId: number) => {
+	const playersCountTable = db
+		.select({
+			tournamentId: Players.tournamentId,
+			numberOfPlayers: count(Players.id),
+		})
+		.from(Players)
+		.groupBy(Players.tournamentId)
+		.as('players_count');
+
+	const matchCountTable = db
+		.select({
+			tournamentId: TournamentMatchTips.tournamentId,
+			numberOfPlayers: count(TournamentMatchTips.id),
+		})
+		.from(TournamentMatchTips)
+		.groupBy(TournamentMatchTips.tournamentId)
+		.as('match_count');
+
 	const [data] = await db
 		.select({
 			name: sql<string>`${Tournaments.name}`,
@@ -80,11 +98,8 @@ export const getAllTournamentData = async (userId: string, tournamentId: number)
 			numberOfMatches: count(TournamentMatchTips.id),
 		})
 		.from(Tournaments)
-		.leftJoin(TournamentMatchTips, eq(Tournaments.id, TournamentMatchTips.tournamentId))
-		.leftJoin(Players, eq(Players.tournamentId, Tournaments.id))
-		.leftJoin(Users, eq(Players.userId, Users.id))
-		.where(eq(Tournaments.id, tournamentId))
-		.groupBy(Tournaments.name, Tournaments.authorId);
+		.leftJoin(playersCountTable, eq(Tournaments.id, playersCountTable.tournamentId))
+		.leftJoin(matchCountTable, eq(Tournaments.id, matchCountTable.tournamentId));
 
 	const scorerFirst = aliasedTable(Scorers, 'scorer_first');
 	const scorerSecond = aliasedTable(Scorers, 'scorer_second');
