@@ -99,7 +99,8 @@ export const getAllTournamentData = async (userId: string, tournamentId: number)
 		})
 		.from(Tournaments)
 		.leftJoin(playersCountTable, eq(Tournaments.id, playersCountTable.tournamentId))
-		.leftJoin(matchCountTable, eq(Tournaments.id, matchCountTable.tournamentId));
+		.leftJoin(matchCountTable, eq(Tournaments.id, matchCountTable.tournamentId))
+		.where(eq(Tournaments.id, tournamentId));
 
 	const scorerFirst = aliasedTable(Scorers, 'scorer_first');
 	const scorerSecond = aliasedTable(Scorers, 'scorer_second');
