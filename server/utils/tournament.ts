@@ -106,7 +106,7 @@ export const getAllTournamentData = async (userId: string, tournamentId: number)
 
 	const userMatches = await db
 		.select({
-			id: UserMatchTips.playerId,
+			id: UserMatchTips.id,
 			homeTeamName: sql<string>`${homeTeam.name}`,
 			awayTeamName: sql<string>`${awayTeam.name}`,
 			homeScore: UserMatchTips.homeScore,
@@ -118,7 +118,7 @@ export const getAllTournamentData = async (userId: string, tournamentId: number)
 		.leftJoin(homeTeam, eq(TournamentMatchTips.homeTeamId, homeTeam.id))
 		.leftJoin(awayTeam, eq(TournamentMatchTips.awayTeamId, awayTeam.id))
 		.where(and(eq(TournamentMatchTips.locked, true), eq(TournamentMatchTips.tournamentId, tournamentId), isNotNull(UserMatchTips.points)))
-		.orderBy(UserMatchTips.playerId, TournamentMatchTips.date);
+		.orderBy(UserMatchTips.playerId, TournamentMatchTips.id, TournamentMatchTips.date);
 
 	return {
 		data,
