@@ -75,7 +75,7 @@ export const getAllTournamentData = async (userId: string, tournamentId: number)
 	const playersCountTable = db
 		.select({
 			tournamentId: Players.tournamentId,
-			numberOfPlayers: count(Players.id),
+			numberOfPlayers: count(Players.id).as('numberOfPlayers'),
 		})
 		.from(Players)
 		.groupBy(Players.tournamentId)
@@ -84,7 +84,7 @@ export const getAllTournamentData = async (userId: string, tournamentId: number)
 	const matchCountTable = db
 		.select({
 			tournamentId: TournamentMatchTips.tournamentId,
-			numberOfMatches: count(TournamentMatchTips.id),
+			numberOfMatches: count(TournamentMatchTips.id).as('numberOfMatches'),
 		})
 		.from(TournamentMatchTips)
 		.groupBy(TournamentMatchTips.tournamentId)
