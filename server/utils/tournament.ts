@@ -84,7 +84,7 @@ export const getAllTournamentData = async (userId: string, tournamentId: number)
 	const matchCountTable = db
 		.select({
 			tournamentId: TournamentMatchTips.tournamentId,
-			numberOfPlayers: count(TournamentMatchTips.id),
+			numberOfMatches: count(TournamentMatchTips.id),
 		})
 		.from(TournamentMatchTips)
 		.groupBy(TournamentMatchTips.tournamentId)
@@ -94,8 +94,8 @@ export const getAllTournamentData = async (userId: string, tournamentId: number)
 		.select({
 			name: sql<string>`${Tournaments.name}`,
 			isAuthor: sql<boolean>`CASE WHEN ${Tournaments.authorId} = ${userId} THEN true ELSE false END`,
-			numberOfPlayers: count(Players.id),
-			numberOfMatches: count(TournamentMatchTips.id),
+			numberOfPlayers: playersCountTable.numberOfPlayers,
+			numberOfMatches: matchCountTable.numberOfMatches,
 		})
 		.from(Tournaments)
 		.leftJoin(playersCountTable, eq(Tournaments.id, playersCountTable.tournamentId))
