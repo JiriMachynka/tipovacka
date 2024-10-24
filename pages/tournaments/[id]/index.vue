@@ -10,25 +10,56 @@ const tournamentId = +route.params.id;
 const { data: tournament } = await $client.tournament.getData.useQuery({ tournamentId });
 
 const numberOfPlayers = tournament.value?.data.numberOfPlayers ?? 0;
-const numberOfMatches = tournament.value?.userMatches ? tournament.value?.userMatches.length / numberOfPlayers : 0;
+const numberOfMatches = tournament.value?.data.numberOfMatches ?? 0;
 
-const downloadTournament = () => {
+const matches = Array.from({ length: numberOfMatches }, (_, index) => index).map((_, row) => ({
+	label: `${capitalize(tournament.value?.userMatches[row].homeTeamName ?? '')} - ${capitalize(tournament.value?.userMatches[row].awayTeamName ?? '')}`,
+	field: `${tournament.value?.userMatches[row].homeTeamName.toLowerCase().replace(' ', '-') ?? ''}-${tournament.value?.userMatches[row].awayTeamName.toLowerCase().replace(' ', '-') ?? ''}`,
+}));
+
+const downloadTournament = async () => {
 	console.log('Aktuálně nefunguje');
 	// const matches = Array.from({ length: numberOfMatches }, (_, index) => index).map((_, row) => ({
 	// 	match: `${capitalize(tournament.value?.userMatches[row].homeTeamName ?? '')} - ${capitalize(tournament.value?.userMatches[row].awayTeamName ?? '')}`,
 	// }));
 
-	// const data = [
-	// 	['Hráč', 'Střelec 1', 'Střelec 2', ...matches.map(({ match }) => match)],
-	// 	...(tournament.value?.players.map(({ username, scorerFirstName, scorerSecondName }, row) => [
-	// 		username,
-	// 		scorerFirstName.trim(),
-	// 		scorerSecondName.trim(),
-	// 		...(tournament.value?.userMatches
-	// 			?.slice(row * numberOfPlayers, row * numberOfPlayers + numberOfMatches)
-	// 			?.map((um) => `${um.homeScore}:${um.awayScore}`) ?? []),
-	// 	]) ?? []),
-	// ];
+	const columns = [
+		{ name: 'Hráč', label: 'hrac' },
+		{ name: 'Střelec 1', label: 'strelec1' },
+		{ name: 'Střelec 2', label: 'strelec2' },
+		...matches.map(({ label, field }) => ({ label, field })),
+	];
+
+	const data = [
+		...(tournament.value?.players.map(({ username, scorerFirstName, scorerSecondName }, row) => ({
+			hrac: username,
+			strelec1: scorerFirstName.trim(),
+			strelec2: scorerSecondName.trim(),
+			...(tournament.value?.userMatches?.slice(row * numberOfPlayers, row * numberOfPlayers + numberOfMatches)?.reduce((acc, um) => {
+				acc[`${um.homeTeamName.toLowerCase().replace(' ', '-')}-${um.awayTeamName.toLowerCase().replace(' ', '-')}`] =
+					`${um.homeScore}:${um.awayScore}`;
+				return acc;
+			}, {}) ?? {}),
+		})) ?? []),
+	];
+
+	console.log({
+		columns,
+		data,
+	});
+	// const data = {
+	// 	headers: ['Hráč', 'Střelec 1', 'Střelec 2', ...matches.map(({ match }) => match)],
+	// 	data:
+	// 		tournament.value?.players.map(({ username, scorerFirstName, scorerSecondName }, row) => [
+	// 			username,
+	// 			scorerFirstName.trim(),
+	// 			scorerSecondName.trim(),
+	// 			...(tournament.value?.userMatches
+	// 				?.slice(row * numberOfPlayers, row * numberOfPlayers + numberOfMatches)
+	// 				?.map((um) => `${um.homeScore}:${um.awayScore}`) ?? []),
+	// 		]) ?? [],
+	// };
+	// await createSpreadsheet(data, { type: 'excel' }).download('Tipovacka_tabulka.xlsx');
 
 	// const worksheet = utils.aoa_to_sheet(data);
 	// const workbook = utils.book_new();

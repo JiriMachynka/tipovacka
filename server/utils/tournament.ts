@@ -77,8 +77,10 @@ export const getAllTournamentData = async (userId: string, tournamentId: number)
 			name: sql<string>`${Tournaments.name}`,
 			isAuthor: sql<boolean>`CASE WHEN ${Tournaments.authorId} = ${userId} THEN true ELSE false END`,
 			numberOfPlayers: count(Players.id),
+			numberOfMatches: count(TournamentMatchTips.id),
 		})
 		.from(Tournaments)
+		.leftJoin(TournamentMatchTips, eq(Tournaments.id, TournamentMatchTips.tournamentId))
 		.leftJoin(Players, eq(Players.tournamentId, Tournaments.id))
 		.leftJoin(Users, eq(Players.userId, Users.id))
 		.where(eq(Tournaments.id, tournamentId))
