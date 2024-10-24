@@ -8,15 +8,8 @@ export default defineEventHandler(async (event) => {
   if (!tokenHash) return await sendRedirect(event, '/', 301);
 
   const client = await serverSupabaseClient(event);
-  const { data: { session }} = await client.auth.verifyOtp({
-    type: 'email',
+  await client.auth.verifyOtp({
+    type: 'recovery',
     token_hash: tokenHash,
-  });
-
-  if (!session?.access_token || !session.refresh_token) return await sendRedirect(event, '/', 301);
-
-  await client.auth.setSession({
-    access_token: session.access_token,
-    refresh_token: session.refresh_token
   });
 })
