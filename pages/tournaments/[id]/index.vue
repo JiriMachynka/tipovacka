@@ -142,15 +142,15 @@ const downloadTournament = async () => {
       >
         <div class="border-b border-primary flex flex-col lg:flex-row p-0 lg:p-3 gap-0 lg:gap-2">
           <span class="p-2 lg:p-0 border-b border-b-primary lg:border-none text-nowrap">
-            {{ tournament!.userMatches[row * numberOfPlayers].homeTeamName }}
+            {{ tournament!.userMatches[row * numberOfMatches].homeTeamName }}
           </span> 
           <span class="hidden lg:inline-block">-</span> 
           <span class="p-2 lg:p-0 text-nowrap">
-            {{ tournament!.userMatches[row * numberOfPlayers].awayTeamName }}
+            {{ tournament!.userMatches[row * numberOfMatches].awayTeamName }}
           </span>
         </div>
         <div
-          v-for="userMatch in tournament!.userMatches.slice(row * numberOfPlayers, row * numberOfPlayers + numberOfPlayers)" 
+          v-for="userMatch in tournament!.userMatches.slice(row * numberOfPlayers, row * numberOfPlayers + numberOfMatches)" 
           class="border-b border-b-primary flex justify-center text-xl gap-1 py-2"
         >
           <span>{{ userMatch.homeScore }}</span> :
