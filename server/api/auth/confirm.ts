@@ -16,4 +16,6 @@ export default defineEventHandler(async (event) => {
       redirectTo
     }
   });
+
+  return await sendRedirect(event, '/reset-password');
 })
