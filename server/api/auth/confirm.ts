@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
   const tokenHash = query.token_hash as string;
   const redirectTo = query.redirectUrl as string;
 
-  // if (!tokenHash) return await sendRedirect(event, '/', 301);
+  if (!tokenHash || !redirectTo) await sendRedirect(event, '/', 301);
 
   const client = await serverSupabaseClient(event);
   await client.auth.verifyOtp({
