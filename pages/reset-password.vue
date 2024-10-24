@@ -1,10 +1,8 @@
 <script lang="ts" setup>
-import type { User } from '@supabase/supabase-js';
 import { toTypedSchema } from '@vee-validate/zod';
 import { useForm } from 'vee-validate';
 import { z } from 'zod';
 
-const route = useRoute();
 const { toast } = useToast();
 const supabaseClient = useSupabaseClient();
 
@@ -19,8 +17,6 @@ const validationSchema = toTypedSchema(
 		}),
 );
 
-const code = route.query?.code as string;
-const user = ref<User | null>();
 const { handleSubmit, isSubmitting, resetForm } = useForm({ validationSchema });
 
 const onSubmit = handleSubmit(async (values) => {
@@ -45,22 +41,6 @@ const onSubmit = handleSubmit(async (values) => {
 	});
 
 	navigateTo('/login');
-});
-
-onMounted(() => {
-	if (!code) navigateTo('/');
-	supabaseClient.auth.exchangeCodeForSession(code).then(({ data, error }) => {
-		if (error) {
-			toast({
-				title: error.name,
-				description: error.message,
-				duration: 3000,
-			});
-			return;
-		}
-
-		if (data.session) supabaseClient.auth.setSession(data.session);
-	});
 });
 </script>
 <template>
