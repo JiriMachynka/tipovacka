@@ -15,9 +15,7 @@ const validationSchema = toTypedSchema(
 const { handleSubmit, isSubmitting, resetForm } = useForm({ validationSchema });
 
 const onSubmit = handleSubmit(async (values) => {
-	const { error } = await supabaseClient.auth.resetPasswordForEmail(values.email, {
-		redirectTo: `${window.location.origin}/reset-password`,
-	});
+	const { error } = await supabaseClient.auth.resetPasswordForEmail(values.email);
 
 	if (error) {
 		toast({
