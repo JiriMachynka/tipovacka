@@ -7,7 +7,7 @@ const route = useRoute();
 
 const tournamentId = +route.params.id;
 
-const { data: tournament } = await $client.tournament.getData.useQuery({ tournamentId });
+const { data: tournament, status } = await $client.tournament.getData.useQuery({ tournamentId });
 
 const numberOfPlayers = tournament.value?.data.numberOfPlayers ?? 0;
 const numberOfMatches = tournament.value?.data.numberOfMatches ?? 0;
@@ -85,6 +85,7 @@ const downloadTournament = async () => {
       <IconDownload class="size-6" />
     </Button>
   </div> 
+  <Loader v-if="status === 'pending'" />
   <div v-if="numberOfMatches === 0" class="flex justify-center items-center h-[250px]">
     <p class="text-3xl font-bold text-center md:text-left">Ještě nebyly vyhodnoceny žádné zápasy</p>
   </div>
