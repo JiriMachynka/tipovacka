@@ -2,14 +2,13 @@
 interface PlayerTipsDialogProps {
 	username: string;
 	playerId: number;
-	tournamentId: number;
 }
 
 const props = defineProps<PlayerTipsDialogProps>();
 
 const { $client } = useNuxtApp();
 
-const { data: playerTips } = await $client.player.getMatchTips.useLazyQuery({ tournamentId: props.tournamentId, playerId: props.playerId });
+const { data: playerTips } = await $client.player.getMatchTips.useLazyQuery({ playerId: props.playerId });
 </script>
 <template>  
   <Dialog>

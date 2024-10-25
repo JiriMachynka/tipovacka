@@ -102,7 +102,7 @@ export const getPlayerOverallTipId = async (tournamentId: number, userId: string
 	return player.overallTipId;
 };
 
-export const getPlayerMatchTips = async (tournamentId: number, playerId: number) => {
+export const getPlayerMatchTips = async (playerId: number) => {
 	const homeTeam = aliasedTable(Teams, 'homeTeam');
 	const awayTeam = aliasedTable(Teams, 'awayTeam');
 

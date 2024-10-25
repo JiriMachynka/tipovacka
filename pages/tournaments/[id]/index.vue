@@ -100,7 +100,7 @@ const downloadTournament = async () => {
         :key="username"
         class="text-xl px-3 py-2 [&:not(:last-child)]:border-b border-b-primary text-nowrap"
       >
-        <PlayerTipsDialog :username="username" :tournamentId="tournamentId" :playerId="id">
+        <PlayerTipsDialog :username="username" :playerId="id">
           {{ username }}
           <ExternalLink class="size-4" />
         </PlayerTipsDialog>
