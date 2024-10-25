@@ -128,5 +128,5 @@ export const getPlayerMatchTips = async (tournamentId: number, playerId: number)
 				isNotNull(UserMatchTips.points),
 			),
 		)
-		.orderBy(TournamentMatchTips.date);
+		.orderBy(TournamentMatchTips.id);
 };
