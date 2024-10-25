@@ -11,6 +11,9 @@ const { data: tournament } = await $client.tournament.getData.useQuery({ tournam
 
 const numberOfPlayers = tournament.value?.data.numberOfPlayers ?? 0;
 const numberOfMatches = tournament.value?.data.numberOfMatches ?? 0;
+const slicedUsermatches = Array.from({ length: numberOfMatches }, (_, row) =>
+	tournament.value?.userMatches.slice(row * numberOfMatches, row * numberOfMatches + numberOfMatches),
+);
 
 const matches = Array.from({ length: numberOfMatches }, (_, index) => index).map((_, row) => ({
 	label: `${capitalize(tournament.value?.userMatches[row].homeTeamName ?? '')} - ${capitalize(tournament.value?.userMatches[row].awayTeamName ?? '')}`,
@@ -136,21 +139,21 @@ const downloadTournament = async () => {
       </div> -->
       <div
         v-if="tournament!.userMatches.length > 0"
-        v-for="row in Array.from({ length: numberOfMatches }, (_, index) => index)"
-        :key="row"
+        v-for="col in Array.from({ length: numberOfMatches }, (_, index) => index)"
+        :key="col"
         class="[&:not(:last-child)]:border-r border-r-primary [&:not(:last-child)]:border-b border-b-primary"
       >
         <div class="border-b border-primary flex flex-col lg:flex-row p-0 lg:p-3 gap-0 lg:gap-2">
           <span class="p-2 lg:p-0 border-b border-b-primary lg:border-none text-nowrap">
-            {{ tournament!.userMatches[row * numberOfMatches].homeTeamName }}
+            {{ tournament!.userMatches[col].homeTeamName }}
           </span> 
           <span class="hidden lg:inline-block">-</span> 
           <span class="p-2 lg:p-0 text-nowrap">
-            {{ tournament!.userMatches[row * numberOfMatches].awayTeamName }}
+            {{ tournament!.userMatches[col].awayTeamName }}
           </span>
         </div>
         <div
-          v-for="userMatch in tournament!.userMatches.slice(row * numberOfPlayers, row * numberOfPlayers + numberOfMatches)" 
+          v-for="userMatch in slicedUsermatches[col]" 
           class="border-b border-b-primary flex justify-center text-xl gap-1 py-2"
         >
           <span>{{ userMatch.homeScore }}</span> :
