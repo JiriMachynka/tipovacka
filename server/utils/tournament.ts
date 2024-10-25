@@ -88,6 +88,7 @@ export const getAllTournamentData = async (userId: string, tournamentId: number)
 		})
 		.from(TournamentMatchTips)
 		.groupBy(TournamentMatchTips.tournamentId)
+		.where(and(eq(TournamentMatchTips.locked, true), eq(TournamentMatchTips.tournamentId, tournamentId)))
 		.as('match_count');
 
 	const [data] = await db
