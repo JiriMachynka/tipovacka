@@ -107,7 +107,7 @@ export const getAllTournamentData = async (userId: string, tournamentId: number)
 	const scorerFirst = aliasedTable(Scorers, 'scorer_first');
 	const scorerSecond = aliasedTable(Scorers, 'scorer_second');
 
-	const players = await db
+	const playersPromise = db
 		.select({
 			id: Players.id,
 			username: sql<string>`${Users.username}`,
@@ -124,7 +124,7 @@ export const getAllTournamentData = async (userId: string, tournamentId: number)
 	const homeTeam = aliasedTable(Teams, 'home_team');
 	const awayTeam = aliasedTable(Teams, 'away_team');
 
-	const userMatches = await db
+	const userMatchesPromise = db
 		.select({
 			id: UserMatchTips.id,
 			homeTeamName: sql<string>`${homeTeam.name}`,
@@ -139,6 +139,8 @@ export const getAllTournamentData = async (userId: string, tournamentId: number)
 		.leftJoin(awayTeam, eq(TournamentMatchTips.awayTeamId, awayTeam.id))
 		.where(and(eq(TournamentMatchTips.locked, true), eq(TournamentMatchTips.tournamentId, tournamentId), isNotNull(UserMatchTips.points)))
 		.orderBy(UserMatchTips.playerId, TournamentMatchTips.id);
+
+	const [players, userMatches] = await Promise.all([playersPromise, userMatchesPromise]);
 
 	return {
 		data,
