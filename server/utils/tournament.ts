@@ -78,6 +78,7 @@ export const getAllTournamentData = async (userId: string, tournamentId: number)
 			numberOfPlayers: count(Players.id).as('numberOfPlayers'),
 		})
 		.from(Players)
+		.where(eq(Players.tournamentId, tournamentId))
 		.groupBy(Players.tournamentId)
 		.as('players_count');
 
@@ -87,8 +88,8 @@ export const getAllTournamentData = async (userId: string, tournamentId: number)
 			numberOfMatches: count(TournamentMatchTips.id).as('numberOfMatches'),
 		})
 		.from(TournamentMatchTips)
-		.groupBy(TournamentMatchTips.tournamentId)
 		.where(and(eq(TournamentMatchTips.locked, true), eq(TournamentMatchTips.tournamentId, tournamentId)))
+		.groupBy(TournamentMatchTips.tournamentId)
 		.as('match_count');
 
 	const [data] = await db
