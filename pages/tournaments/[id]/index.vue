@@ -11,7 +11,7 @@ const { data: tournament } = await $client.tournament.getData.useQuery({ tournam
 
 const numberOfPlayers = tournament.value?.data.numberOfPlayers ?? 0;
 const numberOfMatches = tournament.value?.data.numberOfMatches ?? 0;
-const slicedUsermatches = Array.from({ length: numberOfMatches }, (_, row) =>
+const slicedUsermatches = Array.from({ length: numberOfPlayers }, (_, row) =>
 	tournament.value?.userMatches.slice(row * numberOfMatches, row * numberOfMatches + numberOfMatches),
 );
 
@@ -153,11 +153,11 @@ const downloadTournament = async () => {
           </span>
         </div>
         <div
-          v-for="userMatch in slicedUsermatches[col]" 
+          v-for="row in Array.from({ length: numberOfPlayers }, (_, index) => index)" 
           class="border-b border-b-primary flex justify-center text-xl gap-1 py-2"
         >
-          <span>{{ userMatch.homeScore }}</span> :
-          <span>{{ userMatch.awayScore }}</span>
+          <span>{{ slicedUsermatches?.at(row)?.at(col)?.homeScore }}</span> :
+          <span>{{ slicedUsermatches?.at(row)?.at(col)?.awayScore }}</span>
         </div>
       </div>
     </div>
