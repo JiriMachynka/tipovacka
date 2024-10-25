@@ -122,8 +122,6 @@ export const getPlayerMatchTips = async (tournamentId: number, playerId: number)
 		.where(
 			and(
 				eq(TournamentMatchTips.locked, true),
-				eq(TournamentMatchTips.locked, true),
-				eq(Players.tournamentId, tournamentId),
 				eq(Players.id, playerId),
 				isNotNull(UserMatchTips.points),
 			),
