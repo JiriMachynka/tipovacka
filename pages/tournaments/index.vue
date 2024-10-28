@@ -1,4 +1,19 @@
 <script lang="ts" setup>
+definePageMeta({
+	middleware: [
+		async (to) => {
+			const client = useSupabaseClient();
+			const {
+				data: { user },
+			} = await client.auth.getUser();
+
+			if (!user && to.path === '/tournaments') {
+				return navigateTo('/login');
+			}
+		},
+	],
+});
+
 const { toast } = useToast();
 const supabaseClient = useSupabaseClient();
 
