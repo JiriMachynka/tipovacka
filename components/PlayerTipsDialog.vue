@@ -15,7 +15,7 @@ const {
 } = await $client.player.getMatchTips.useQuery(
 	{ playerId: props.playerId },
 	{
-		queryKey: `${props.playerId}-tips`,
+		getCachedData: (key, nuxtApp) => nuxtApp.payload[key] || nuxtApp.static.data[key],
 		immediate: false,
 	},
 );
