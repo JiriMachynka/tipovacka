@@ -249,7 +249,7 @@ const logout = async () => {
     </h2>
     <Button 
       :class="cn('z-50 p-2 inline-flex w-fit lg:hidden', {
-        'ml-auto fixed': mobileNav,
+        'ml-auto': mobileNav,
       })"
       variant="outline"
       aria-controls="mobile-menu"
