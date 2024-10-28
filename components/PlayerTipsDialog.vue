@@ -12,7 +12,7 @@ const { data: playerTips } = await $client.player.getMatchTips.useQuery({ player
 </script>
 <template>  
   <Dialog>
-    <DialogTrigger :class="cn('inline-flex gap-2')">
+    <DialogTrigger :class="cn('inline-flex gap-2 w-full')">
       <slot />
     </DialogTrigger>
     <DialogContent>
