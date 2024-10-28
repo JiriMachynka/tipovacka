@@ -8,7 +8,11 @@ const props = defineProps<PlayerTipsDialogProps>();
 
 const { $client } = useNuxtApp();
 
-const { data: playerTips } = await $client.player.getMatchTips.useQuery(
+const {
+	data: playerTips,
+	execute,
+	status,
+} = await $client.player.getMatchTips.useQuery(
 	{ playerId: props.playerId },
 	{
 		immediate: false,
@@ -17,7 +21,7 @@ const { data: playerTips } = await $client.player.getMatchTips.useQuery(
 </script>
 <template>  
   <Dialog>
-    <DialogTrigger :class="cn('inline-flex gap-2 w-full')">
+    <DialogTrigger :class="cn('inline-flex gap-2 w-full')" @click="execute">
       <slot />
     </DialogTrigger>
     <DialogContent>
@@ -26,7 +30,9 @@ const { data: playerTips } = await $client.player.getMatchTips.useQuery(
           Tipy hráče {{ props.username }}
         </DialogTitle>
         <DialogDescription :class="cn('overflow-y-auto max-h-[400px]')">
+          <Loader v-if="status === 'pending'" />
           <div
+            v-else-if="status === 'success'"
             v-for="{ id, homeTeamName, awayTeamName, homeScore, awayScore } in playerTips"
             :key="id"
             class="grid grid-cols-[1fr_70px] items-center gap-2 group"
