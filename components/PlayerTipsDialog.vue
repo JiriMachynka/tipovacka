@@ -15,14 +15,13 @@ const {
 } = await $client.player.getMatchTips.useQuery(
 	{ playerId: props.playerId },
 	{
-		getCachedData: (key, nuxtApp) => nuxtApp.payload.data[key] || nuxtApp.static.data[key],
 		immediate: false,
 	},
 );
 </script>
 <template>  
   <Dialog>
-    <DialogTrigger :class="cn('inline-flex gap-2 w-full')" @click="execute">
+    <DialogTrigger :class="cn('inline-flex gap-2 w-full')" @click="status !== 'success' && execute">
       <slot />
     </DialogTrigger>
     <DialogContent>
