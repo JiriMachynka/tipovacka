@@ -24,7 +24,7 @@ const logout = async () => {
 <template>
   <div :class="cn('lg:relative lg:flex lg:flex-row items-center', {
       'hidden': !mobileNav,
-      'absolute left-0 top-0 pt-20 flex flex-col bg-background w-full h-dvh z-50': mobileNav,
+      'fixed left-0 top-0 pt-20 flex flex-col bg-background w-full h-dvh z-50': mobileNav,
     })"
   >
     <nav :class="cn('list-none lg:left-0 lg:top-0 flex justify-center lg:flex-row lg:gap-2 w-full my-3', {
