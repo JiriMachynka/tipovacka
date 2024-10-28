@@ -15,6 +15,7 @@ const {
 } = await $client.player.getMatchTips.useQuery(
 	{ playerId: props.playerId },
 	{
+		queryKey: `${props.playerId}-tips`,
 		immediate: false,
 	},
 );
