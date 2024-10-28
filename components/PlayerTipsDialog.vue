@@ -8,7 +8,12 @@ const props = defineProps<PlayerTipsDialogProps>();
 
 const { $client } = useNuxtApp();
 
-const { data: playerTips } = await $client.player.getMatchTips.useQuery({ playerId: props.playerId });
+const { data: playerTips } = await $client.player.getMatchTips.useQuery(
+	{ playerId: props.playerId },
+	{
+		immediate: false,
+	},
+);
 </script>
 <template>  
   <Dialog>
