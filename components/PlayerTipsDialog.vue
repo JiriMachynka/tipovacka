@@ -21,7 +21,7 @@ const {
 </script>
 <template>  
   <Dialog>
-    <DialogTrigger :class="cn('inline-flex gap-2 w-full')" @click="status !== 'success' && execute">
+    <DialogTrigger :class="cn('inline-flex gap-2 w-full')" @click="status === 'pending' ? execute() : null">
       <slot />
     </DialogTrigger>
     <DialogContent>
