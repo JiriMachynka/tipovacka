@@ -8,7 +8,10 @@ definePageMeta({
 			} = await client.auth.getUser();
 
 			if (!user && to.path === '/tournaments') {
-				return navigateTo('/login');
+				return navigateTo('/login', {
+					replace: true,
+					redirectCode: 302,
+				});
 			}
 		},
 	],
