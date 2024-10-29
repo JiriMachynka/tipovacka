@@ -148,6 +148,20 @@ const logout = async () => {
           </DropdownMenuContent>
         </DropdownMenu>
       </li>
+      <li :class="cn('lg:block', {  
+          'hidden': !mobileNav,
+        })"
+      >
+        <Button
+          variant="ghost"
+          class="w-full text-xl lg:text-lg py-3 font-bold"
+          as-child
+        >
+          <NuxtLink :to="`/tournaments/${tournamentId}/help`" @click="() => (mobileNav = false)">
+            Pomoc
+          </NuxtLink>
+        </Button>
+      </li>
       <li v-if="tournament!.data.isAuthor" :class="cn('lg:hidden', { 
           'hidden': !mobileNav,
           'block': mobileNav,

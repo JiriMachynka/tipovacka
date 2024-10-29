@@ -76,8 +76,10 @@ export default defineNuxtConfig({
     ]
   },
   runtimeConfig: {
+    resendApiKey: '',
     public: {
       databaseUrl: '',
+      myEmail: '',
     }
   },
   compatibilityDate: '2024-09-18',

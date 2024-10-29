@@ -2,6 +2,19 @@ import type { Country } from '~/types';
 import { and, asc, desc, count, eq, isNotNull, or, sql, sum, aliasedTable } from 'drizzle-orm';
 import { db, Players, Scorers, Teams, TournamentMatchTips, TournamentOverallTips, Tournaments, UserMatchTips, Users } from '../db';
 
+export const getOwnerEmail = async (tournamentId: number) => {
+	const [owner] = await db
+		.select({
+			email: Users.email,
+		})
+		.from(Users)
+		.leftJoin(Tournaments, eq(Users.id, Tournaments.authorId))
+		.where(eq(Tournaments.id, tournamentId))
+		.limit(1);
+
+	return owner;
+};
+
 export const createTournament = async (authorId: string, name: string, players: string[], teams: Country[]) => {
 	const [createdTournament] = await db
 		.insert(Tournaments)
