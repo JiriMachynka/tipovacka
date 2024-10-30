@@ -29,15 +29,17 @@ const {
         <DialogTitle class="text-2xl font-bold">
           Tipy hráče {{ props.username }}
         </DialogTitle>
-        <DialogDescription :class="cn('overflow-y-auto max-h-[400px]')">
-          <Loader v-if="status === 'pending'" />
+        <DialogDescription :class="cn('overflow-y-auto max-h-[400px]', {
+          'min-h-[150px] flex justify-center items-center': status === 'pending',
+        })">
+          <Loader v-if='status === "pending"' svgClass="w-14 h-14" />
           <div
             v-else-if="status === 'success'"
             v-for="{ id, homeTeamName, awayTeamName, homeScore, awayScore } in playerTips"
             :key="id"
             class="grid grid-cols-[1fr_70px] items-center gap-2 group"
           >
-            <span class="flex flex-col font-semibold">
+            <span class="flex flex-col gap-1 font-semibold">
               <TeamNameFlag :teamName="homeTeamName" :showImg="true" />
               <TeamNameFlag :teamName="awayTeamName" :showImg="true" />
             </span>
