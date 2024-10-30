@@ -33,7 +33,7 @@ const onSubmit = handleSubmit(async (values) => {
 	const error = await $fetch('/api/send', {
 		query: {
 			to: ownerEmail.value?.email as string,
-			cc: ownerEmail.value?.email !== $config.public.myEmail ? (ownerEmail.value?.email as string) : undefined,
+			cc: ownerEmail.value?.email !== $config.public.myEmail ? $config.public.myEmail : undefined,
 			category: categories.find((category) => category.value === values.category)?.label,
 			description: values.description,
 		},
