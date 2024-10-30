@@ -4,6 +4,8 @@ const getPageName = (pathname: string | undefined) => {
 			return 'Moje tipy';
 		case 'leaderboard':
 			return 'Žebříček';
+		case 'help':
+			return 'Pomoc';
 		case 'manage-matches':
 			return 'Správa zápasů';
 		case 'manage-teams':
