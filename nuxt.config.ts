@@ -9,6 +9,14 @@ export default defineNuxtConfig({
       'dayjs-nuxt',
     ]
   },
+  routeRules: {
+    '/tournaments/:id/leaderboard': {
+      prerender: true,
+    },
+    '/tournaments/:id/help': {
+      static: true,
+    }
+  },
   devtools: { enabled: true },
   modules: [
     "@nuxtjs/tailwindcss",

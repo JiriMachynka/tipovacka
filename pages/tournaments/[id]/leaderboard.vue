@@ -5,7 +5,6 @@ const route = useRoute();
 
 const tournamentId = +route.params.id;
 
-const user = await useSupabaseUser();
 const { data: leaderboard } = await $client.tournament.getPoints.useQuery({ tournamentId });
 </script>
 <template>
