@@ -10,12 +10,13 @@ const colorMode = useColorMode();
 
 const { $client } = useNuxtApp();
 
-const { data: isAuthor } = await $client.tournament.getData.useQuery(
+const { data } = await $client.tournament.getData.useQuery(
 	{ tournamentId },
 	{
-		transform: ({ data }) => ({ isAuthor: data.isAuthor }),
+		transform: ({ data }) => data,
 	},
 );
+const isAuthor = data.value?.isAuthor;
 const { items, adminItems } = useNavigation(tournamentId);
 
 const mobileNav = ref(false);
