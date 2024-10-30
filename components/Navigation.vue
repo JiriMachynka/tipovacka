@@ -10,7 +10,13 @@ const colorMode = useColorMode();
 
 const { $client } = useNuxtApp();
 
-const { data: tournament } = await $client.tournament.getData.useQuery({ tournamentId });
+const { data: isAuthor } = await $client.tournament.getData.useQuery(
+	{ tournamentId },
+	{
+		transform: ({ data }) => ({ isAuthor: data.isAuthor }),
+	},
+);
+const { items, adminItems } = useNavigation(tournamentId);
 
 const mobileNav = ref(false);
 
@@ -19,7 +25,6 @@ const logout = async () => {
 	await supabaseClient.auth.signOut();
 	navigateTo('/');
 };
-// TODO: Make nav button a single component
 </script>
 <template>
   <div :class="cn('lg:relative lg:flex lg:flex-row items-center', {
@@ -31,138 +36,29 @@ const logout = async () => {
         'flex-col gap-2': mobileNav, 
       })"
     >
-      <li :class="cn('lg:block', {  
-          'hidden': !mobileNav,
-        })"
+      <li
+        v-for="item in items"
+        :key="item.text"
+        :class="cn('lg:inline-flex', { 'hidden': !mobileNav })"
       >
         <Button
           variant="ghost"
           class="w-full text-xl lg:text-lg py-3 font-bold"
           as-child
         >
-          <NuxtLink to="/tournaments" @click="() => (mobileNav = false)">
-            Zpět na tipovačky
+          <NuxtLink :to="item.link" @click="() => (mobileNav = false)"> 
+            {{ item.text }}
           </NuxtLink>
         </Button>
       </li>
-      <li :class="cn('lg:block', {  
-          'hidden': !mobileNav,
-        })"
-      >
-        <Button
-          variant="ghost"
-          class="w-full text-xl lg:text-lg py-3 font-bold"
-          as-child
-        >
-          <NuxtLink :to="`/tournaments/${tournamentId}/`" @click="() => (mobileNav = false)">
-            Tabulka
-          </NuxtLink>
-        </Button>
+      <li v-if="isAuthor" class="hidden lg:inline-flex"> 
+        <AdminDropdownMenu :items="adminItems" />
       </li>
-      <li :class="cn('lg:block', {  
-          'hidden': !mobileNav,
-        })"
-      >
-        <Button
-          variant="ghost"
-          class="w-full text-xl lg:text-lg py-3 font-bold"
-          as-child
-        >
-          <NuxtLink :to="`/tournaments/${tournamentId}/my-tips`" @click="() => (mobileNav = false)">
-            Moje tipy
-          </NuxtLink>
-        </Button>
-      </li>
-      <li :class="cn('lg:block', {  
-          'hidden': !mobileNav,
-        })"
-      >
-        <Button
-          variant="ghost"
-          class="w-full text-xl lg:text-lg py-3 font-bold"
-          as-child
-        >
-          <NuxtLink :to="`/tournaments/${tournamentId}/leaderboard`" @click="() => (mobileNav = false)">
-            Žebříček
-          </NuxtLink>
-        </Button>
-      </li>
-      <li v-if="tournament!.data.isAuthor" class="hidden lg:inline-flex"> 
-        <DropdownMenu>
-          <DropdownMenuTrigger
-            :class="cn(buttonVariants({ variant: 'ghost' }),
-              'w-full text-lg py-3 inline-flex items-center gap-2 group font-bold'
-            )"
-          >
-            <span>Admin sekce</span>
-            <!-- TODO: Make icons animated -->
-            <IconChevronUp
-              :size="20"
-              class="group-data-[state=closed]:hidden group-data-[state=open]:block"
-            />
-            <IconChevronDown
-              :size="20"
-              class="group-data-[state=closed]:block group-data-[state=open]:hidden"
-            />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent class="flex flex-col max-w-52 w-full">
-            <DropdownMenuItem :class="cn(buttonVariants({ variant: 'ghost' }),
-                'text-lg font-bold px-5 py-3 hover:cursor-pointer'
-              )"
-              as-child
-            >
-              <NuxtLink :to="`/tournaments/${tournamentId}/manage-matches`">
-                Spravovat zápasy
-              </NuxtLink>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem :class="cn(buttonVariants({ variant: 'ghost' }),
-                'text-lg font-bold px-5 py-3 hover:cursor-pointer'
-              )"
-              as-child
-            >
-              <NuxtLink :to="`/tournaments/${tournamentId}/manage-teams`">
-                Spravovat týmy
-              </NuxtLink>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem :class="cn(buttonVariants({ variant: 'ghost' }),
-                'text-lg font-bold px-5 py-3 hover:cursor-pointer'
-              )"
-              as-child
-            >
-              <NuxtLink :to="`/tournaments/${tournamentId}/manage-scorers`">
-                Spravovat střelce
-              </NuxtLink>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem :class="cn(buttonVariants({ variant: 'ghost' }),
-                'text-lg font-bold px-5 py-3 hover:cursor-pointer'
-              )"
-              as-child
-            >
-              <NuxtLink :to="`/tournaments/${tournamentId}/manage-players`">
-                Spravovat hráče
-              </NuxtLink>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </li>
-      <li :class="cn('lg:block', {  
-          'hidden': !mobileNav,
-        })"
-      >
-        <Button
-          variant="ghost"
-          class="w-full text-xl lg:text-lg py-3 font-bold"
-          as-child
-        >
-          <NuxtLink :to="`/tournaments/${tournamentId}/help`" @click="() => (mobileNav = false)">
-            Pomoc
-          </NuxtLink>
-        </Button>
-      </li>
-      <li v-if="tournament!.data.isAuthor" :class="cn('lg:hidden', { 
+      <li
+        v-for="item in adminItems"
+        :key="item.text"
+        v-if="isAuthor"
+        :class="cn('lg:hidden', {
           'hidden': !mobileNav,
           'block': mobileNav,
         })"
@@ -172,76 +68,22 @@ const logout = async () => {
           class="w-full text-xl py-3 font-bold"
           as-child
         >
-          <NuxtLink :to="`/tournaments/${tournamentId}/manage-matches`" @click="() => (mobileNav = false)">
-            Spravovat zápasy
+          <NuxtLink :to="item.link" @click="() => (mobileNav = false)">
+            {{ item.text }}
           </NuxtLink>
         </Button>
       </li>
-      <li v-if="tournament!.data.isAuthor" :class="cn('lg:hidden', { 
-          'hidden': !mobileNav,
-          'block': mobileNav,
+      <li :class="cn({ 
+          'lg:block': !mobileNav, 
+          'lg:hidden block': mobileNav 
         })"
       >
         <Button
           variant="ghost"
-          class="w-full text-xl py-3 font-bold"
-          as-child
-        >
-          <NuxtLink :to="`/tournaments/${tournamentId}/manage-teams`" @click="() => (mobileNav = false)">
-            Spravovat týmy
-          </NuxtLink>
-        </Button>
-      </li>
-      <li v-if="tournament!.data.isAuthor" :class="cn('lg:hidden', { 
-          'hidden': !mobileNav,
-          'block': mobileNav,
-        })"
-      >
-        <Button
-          variant="ghost"
-          class="w-full text-xl py-3 font-bold"
-          as-child
-        >
-          <NuxtLink :to="`/tournaments/${tournamentId}/manage-scorers`" @click="() => (mobileNav = false)">
-            Spravovat střelce
-          </NuxtLink>
-        </Button>
-      </li>
-      <li v-if="tournament!.data.isAuthor" :class="cn('lg:hidden', { 
-          'hidden': !mobileNav,
-          'block': mobileNav,
-        })"
-      >
-        <Button
-          variant="ghost"
-          class="w-full text-xl py-3 font-bold"
-          as-child
-        >
-          <NuxtLink :to="`/tournaments/${tournamentId}/manage-players`" @click="() => (mobileNav = false)">
-            Spravovat hráče
-          </NuxtLink>
-        </Button>
-      </li>
-      <li :class="cn('lg:block', {
-          'hidden': !mobileNav,
-        })"
-      >
-        <Button
-          variant="ghost"
-          class="w-full text-xl lg:text-lg py-3 font-bold"
-          @click="logout"
-        >
-          Odhlásit se
-        </Button>
-      </li>
-      <li :class="cn('lg:hidden', {
-          'block': !mobileNav,
-          'hidden': mobileNav,
-        })"
-      >
-        <Button
-          variant="ghost"
-          class="w-full text-xl py-3 hover:cursor-pointer"
+          :class="cn('w-full py-3 font-bold text-xl', {
+            'lg:text-lg': !mobileNav,
+            'hover:cursor-pointer': mobileNav,
+          })"
           @click="logout"
         >
           Odhlásit se

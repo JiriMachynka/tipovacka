@@ -119,12 +119,6 @@ export const getPlayerMatchTips = async (playerId: number) => {
 		.leftJoin(homeTeam, eq(TournamentMatchTips.homeTeamId, homeTeam.id))
 		.leftJoin(awayTeam, eq(TournamentMatchTips.awayTeamId, awayTeam.id))
 		.leftJoin(Players, eq(UserMatchTips.playerId, Players.id))
-		.where(
-			and(
-				eq(TournamentMatchTips.locked, true),
-				eq(Players.id, playerId),
-				isNotNull(UserMatchTips.points),
-			),
-		)
+		.where(and(eq(TournamentMatchTips.locked, true), eq(Players.id, playerId), isNotNull(UserMatchTips.points)))
 		.orderBy(TournamentMatchTips.id);
 };
