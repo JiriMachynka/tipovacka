@@ -16,7 +16,7 @@ const tournamentId = +route.params.id;
 
 const { data: ownerEmail } = await $client.tournament.getOwnerEmail.useQuery({ tournamentId });
 
-const { handleSubmit, isSubmitting } = useForm({
+const { handleSubmit, isSubmitting, resetForm } = useForm({
 	validationSchema: schema,
 	initialValues: {
 		category: 'login',
@@ -52,6 +52,7 @@ const onSubmit = handleSubmit(async (values) => {
 		description: 'Pokud budete mít jiné problémy, určitě nás opět kontaktujte.',
 		duration: 3000,
 	});
+	resetForm();
 });
 </script>
 <template>
