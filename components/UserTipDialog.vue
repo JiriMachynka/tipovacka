@@ -46,12 +46,12 @@ const onSubmit = handleSubmit(async (values) => {
 			homeScore: values.homeScore,
 			awayScore: values.awayScore,
 		});
-		emit('refresh');
-
 		toast({
 			title: 'Úspěšně upraven',
 			description: 'Výsledný stav byl úspěšně upraven',
 		});
+
+		emit('refresh');
 	} catch (e) {
 		toast({
 			title: 'Chyba',
