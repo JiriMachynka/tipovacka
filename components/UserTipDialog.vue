@@ -11,7 +11,7 @@ interface UserTipDialogProps {
 	awayScore: number;
 }
 
-const emit = defineEmits(['updateMatch']);
+const emit = defineEmits(['refresh']);
 
 const props = defineProps<UserTipDialogProps>();
 
@@ -40,7 +40,7 @@ const { handleSubmit, errors, resetForm } = useForm({
 
 const onSubmit = handleSubmit(async (values) => {
 	try {
-		const updatedMatch = await updateTip({
+		await updateTip({
 			tournamentId,
 			matchId: props.matchId,
 			homeScore: values.homeScore,
@@ -50,7 +50,7 @@ const onSubmit = handleSubmit(async (values) => {
 			title: 'Úspěšně upraven',
 			description: 'Výsledný stav byl úspěšně upraven',
 		});
-		emit('updateMatch', updatedMatch?.matchId, updatedMatch?.homeScore, updatedMatch?.awayScore);
+		emit('refresh');
 	} catch (e) {
 		toast({
 			title: 'Chyba',

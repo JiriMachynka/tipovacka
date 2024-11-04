@@ -54,7 +54,7 @@ export const tournamentRouter = router({
 		)
 		.mutation(async ({ ctx, input }) => {
 			const { tournamentId, matchId, homeScore, awayScore } = input;
-			return await updateUserMatchTip(tournamentId, ctx.userId, matchId, homeScore, awayScore);
+			await updateUserMatchTip(tournamentId, ctx.userId, matchId, homeScore, awayScore);
 		}),
 	updateOverallTip: privateProcedure
 		.input(
