@@ -5,10 +5,16 @@ const tournamentId = +route.params.id;
 
 const { $client, $dayjs } = useNuxtApp();
 
-const { data: userMatches, refresh } = await $client.tournament.getUserMatches.useQuery({ tournamentId });
+const { data: userMatches } = await $client.tournament.getUserMatches.useQuery({ tournamentId });
 
 const filterMatches = ref(false);
-const matches = computed(() => userMatches.value?.filter((m) => !m.played) || [userMatches]);
+const matches = computed(() => userMatches.value?.filter((m) => !m.played) || []);
+
+const updateMatch = (matchId: number, homeScore: number, awayScore: number) => {
+	const match = matches.value.find((m) => m.id === matchId);
+
+	return { ...match, homeScore, awayScore };
+};
 </script>
 <template>
   <div v-if="userMatches?.length" class="flex items-center gap-5 my-5"> 
@@ -57,7 +63,7 @@ const matches = computed(() => userMatches.value?.filter((m) => !m.played) || [u
             :homeScore="match.homeScore"
             :awayTeamName="match.awayTeamName"
             :awayScore="match.awayScore"
-            @refresh="refresh"
+            @updateMatch="() => updateMatch" 
           />
         </TableCell>
       </TableRow>

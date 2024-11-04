@@ -133,11 +133,18 @@ export const getUserMatches = async (tournamentId: number, userId: string) => {
 export const updateUserMatchTip = async (tournamentId: number, userId: string, matchId: number, homeScore: number, awayScore: number) => {
 	const playerId = await getPlayerId(tournamentId, userId);
 
-	await db
+	const [matchTip] = await db
 		.update(UserMatchTips)
 		.set({
 			homeScore,
 			awayScore,
 		})
-		.where(and(eq(UserMatchTips.id, matchId), eq(UserMatchTips.playerId, playerId)));
+		.where(and(eq(UserMatchTips.id, matchId), eq(UserMatchTips.playerId, playerId)))
+		.returning({
+			matchId: UserMatchTips.id,
+			homeScore: UserMatchTips.homeScore,
+			awayScore: UserMatchTips.awayScore,
+		});
+
+	return matchTip;
 };
