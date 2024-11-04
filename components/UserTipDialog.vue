@@ -50,14 +50,14 @@ const onSubmit = handleSubmit(async (values) => {
 			title: 'Úspěšně upraven',
 			description: 'Výsledný stav byl úspěšně upraven',
 		});
-
-		emit('refresh');
 	} catch (e) {
 		toast({
 			title: 'Chyba',
 			description: 'Nepodařilo se uložit',
 			variant: 'destructive',
 		});
+	} finally {
+		emit('refresh');
 	}
 });
 </script>
