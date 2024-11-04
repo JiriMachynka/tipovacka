@@ -39,18 +39,26 @@ const { handleSubmit, errors, resetForm } = useForm({
 });
 
 const onSubmit = handleSubmit(async (values) => {
-	await updateTip({
-		tournamentId,
-		matchId: props.matchId,
-		homeScore: values.homeScore,
-		awayScore: values.awayScore,
-	});
-	emit('refresh');
+	try {
+		await updateTip({
+			tournamentId,
+			matchId: props.matchId,
+			homeScore: values.homeScore,
+			awayScore: values.awayScore,
+		});
+		emit('refresh');
 
-	toast({
-		title: 'Úspěšně upraven',
-		description: 'Výsledný stav byl úspěšně upraven',
-	});
+		toast({
+			title: 'Úspěšně upraven',
+			description: 'Výsledný stav byl úspěšně upraven',
+		});
+	} catch (e) {
+		toast({
+			title: 'Chyba',
+			description: 'Nepodařilo se uložit',
+			variant: 'destructive',
+		});
+	}
 });
 </script>
 <template>
