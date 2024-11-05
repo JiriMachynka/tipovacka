@@ -50,7 +50,7 @@ const onSubmit = handleSubmit(async (values) => {
 			title: 'Úspěšně upraven',
 			description: 'Výsledný stav byl úspěšně upraven',
 		});
-		emit('changeMatchScore', updatedMatch?.id, updatedMatch?.homeScore, updatedMatch?.awayScore);
+		emit('changeMatchScore', updatedMatch?.homeScore, updatedMatch?.awayScore);
 	} catch (e) {
 		toast({
 			title: 'Chyba',

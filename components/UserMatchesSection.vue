@@ -69,7 +69,7 @@ const changeMatchScore = (matchId: number, homeScore: number, awayScore: number)
             :homeScore="match.homeScore"
             :awayTeamName="match.awayTeamName"
             :awayScore="match.awayScore"
-            @changeMatchScore="() => changeMatchScore"
+            @changeMatchScore="(homeScore, awayScore) => changeMatchScore(match.id, homeScore, awayScore)"
           />
         </TableCell>
       </TableRow>
