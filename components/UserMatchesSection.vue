@@ -14,12 +14,13 @@ const matches = computed({
 });
 
 const changeMatchScore = (matchId: number, homeScore: number, awayScore: number) => {
-	return userMatches.value?.map((um) => {
-		if (um.id === matchId) {
-			return { ...um, homeScore, awayScore };
-		}
-		return um;
-	});
+	userMatches.value =
+		userMatches.value?.map((um) => {
+			if (um.id === matchId) {
+				return { ...um, homeScore, awayScore };
+			}
+			return um;
+		}) || [];
 };
 </script>
 <template>
