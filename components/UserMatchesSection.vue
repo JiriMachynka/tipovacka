@@ -8,7 +8,16 @@ const { $client, $dayjs } = useNuxtApp();
 const { data: userMatches, refresh } = await $client.tournament.getUserMatches.useQuery({ tournamentId });
 
 const filterMatches = ref(false);
-const matches = computed(() => userMatches.value?.filter((m) => !m.played) || [userMatches]);
+const matches = computed(() => userMatches.value?.filter((m) => !m.played) || []);
+
+const changeMatchScore = (matchId: number, homeScore: number, awayScore: number) => {
+	return userMatches.value?.map((um) => {
+		if (um.id === matchId) {
+			return { ...um, homeScore, awayScore };
+		}
+		return um;
+	});
+};
 </script>
 <template>
   <div v-if="userMatches?.length" class="flex items-center gap-5 my-5"> 
@@ -57,7 +66,7 @@ const matches = computed(() => userMatches.value?.filter((m) => !m.played) || [u
             :homeScore="match.homeScore"
             :awayTeamName="match.awayTeamName"
             :awayScore="match.awayScore"
-            @refresh="refresh"
+            @changeMatchScore="() => changeMatchScore"
           />
         </TableCell>
       </TableRow>
