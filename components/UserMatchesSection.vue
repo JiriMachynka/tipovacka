@@ -5,7 +5,7 @@ const tournamentId = +route.params.id;
 
 const { $client, $dayjs } = useNuxtApp();
 
-const { data: userMatches, refresh } = await $client.tournament.getUserMatches.useQuery({ tournamentId });
+const { data: userMatches } = await $client.tournament.getUserMatches.useQuery({ tournamentId });
 
 const filterMatches = ref(false);
 const matches = computed(() => userMatches.value?.filter((m) => !m.played) || []);
