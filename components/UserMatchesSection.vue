@@ -8,10 +8,7 @@ const { $client, $dayjs } = useNuxtApp();
 const { data: userMatches, refresh } = await $client.tournament.getUserMatches.useQuery({ tournamentId });
 
 const filterMatches = ref(false);
-const matches = computed({
-	get: () => userMatches.value?.filter((m) => !m.played) || [],
-	set: (newUm) => newUm,
-});
+const matches = computed(() => userMatches.value?.filter((m) => !m.played) || []);
 
 const changeMatchScore = (matchId: number, homeScore: number, awayScore: number) => {
 	userMatches.value =
