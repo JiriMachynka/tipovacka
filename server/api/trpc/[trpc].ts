@@ -6,13 +6,4 @@ import { appRouter } from '~/server/trpc/routers';
 export default createNuxtApiHandler({
 	router: appRouter,
 	createContext,
-	responseMeta() {
-		const ONE_MINUTE = 60;
-
-		return {
-			headers: {
-				'cache-control': `s-maxage=1, stale-while-revalidate=${ONE_MINUTE}`,
-			},
-		};
-	},
 });
