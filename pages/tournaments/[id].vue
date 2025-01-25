@@ -10,7 +10,7 @@ const { data: tournament } = await $client.tournament.getData.useQuery({ tournam
 if (!tournament.value) {
 	throw createError({
 		statusCode: 404,
-		statusMessage: 'Tipovačka nebyla nalezena',
+		message: 'Tipovačka nebyla nalezena',
 	});
 }
 

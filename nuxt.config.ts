@@ -10,8 +10,11 @@ export default defineNuxtConfig({
     ]
   },
   routeRules: {
-    '/tournaments/:id/leaderboard': {
-      prerender: true,
+    '/login': {
+      static: true,
+    },
+    '/register': {
+      static: true,
     },
     '/tournaments/:id/help': {
       static: true,
