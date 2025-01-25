@@ -1,13 +1,10 @@
 <script lang="ts" setup>
 definePageMeta({
 	middleware: [
-		async (to) => {
-			const client = useSupabaseClient();
-			const {
-				data: { user },
-			} = await client.auth.getUser();
+		(to) => {
+			const session = useSupabaseSession();
 
-			if (!user && to.path === '/tournaments') {
+			if (!session.value && to.path === '/tournaments') {
 				return navigateTo('/login', {
 					replace: true,
 					redirectCode: 302,

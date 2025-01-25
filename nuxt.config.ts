@@ -66,11 +66,7 @@ export default defineNuxtConfig({
     },
   },
   supabase: {
-    redirect: true,
-    redirectOptions: {
-      login: '/login',
-      callback: '/tournaments',
-    },
+    redirect: false,
     clientOptions: {
       auth: {
         storageKey: 'sb-access-token',
