@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { Team, Group } from '~/types';
+import type { Team, Group } from '@/types';
 import { toTypedSchema } from '@vee-validate/zod';
 import { useForm } from 'vee-validate';
 import { z } from 'zod';

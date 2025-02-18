@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { Country } from '~/types';
+import type { Country } from '@/types';
 import { Sortable } from 'sortablejs-vue3';
 import { toTypedSchema } from '@vee-validate/zod';
 import { useForm } from 'vee-validate';

@@ -1,4 +1,4 @@
-import type { Country } from '~/types';
+import type { Country } from '@/types';
 import { and, asc, desc, count, eq, isNotNull, or, sql, sum, aliasedTable } from 'drizzle-orm';
 import { db, Players, Scorers, Teams, TournamentMatchTips, TournamentOverallTips, Tournaments, UserMatchTips, Users } from '../db';
 
@@ -187,7 +187,7 @@ export const getTournamentPoints = async (tournamentId: number, userId: string) 
 	const scorersGoalsSq = db
 		.select({
 			playerId: Players.id,
-			goalsSum: sql<number>`SUM(scorer_first.goals + scorer_second.goals)`.as('goals_sum'),
+			goalsSum: sql<number>`SUM(${scorerFirst.goals}+${scorerSecond.goals})`.as('goals_sum'),
 		})
 		.from(Players)
 		.leftJoin(scorerFirst, eq(Players.scorerFirstId, scorerFirst.id))
