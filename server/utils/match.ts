@@ -66,6 +66,8 @@ export const updateMatch = async (matchId: number, locked: boolean) => {
 				points: 0,
 			})
 			.where(eq(UserMatchTips.tournamentMatchTipId, matchId));
+
+		return;
 	}
 
 	await db.update(TournamentMatchTips).set({ locked }).where(eq(TournamentMatchTips.id, matchId));

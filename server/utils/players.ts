@@ -38,12 +38,14 @@ export const addPlayer = async (tournamentId: number, username: string) => {
 		.from(TournamentMatchTips)
 		.where(eq(TournamentMatchTips.tournamentId, tournamentId));
 
-	matchTips.map(async (matchTip) => {
-		await db.insert(UserMatchTips).values({
+	const matchTipsPromise = matchTips.map((matchTip) => {
+		db.insert(UserMatchTips).values({
 			playerId: player.id,
 			tournamentMatchTipId: matchTip.id,
 		});
 	});
+
+	await Promise.all(matchTipsPromise);
 };
 
 export const deletePlayer = async (playerId: number) => {
