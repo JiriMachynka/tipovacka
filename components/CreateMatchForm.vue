@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { Team, Group } from '~/types';
+import type { Team, Group } from '@/types';
 import { toTypedSchema } from '@vee-validate/zod';
 import { useForm, configure } from 'vee-validate';
 import { z } from 'zod';
@@ -55,7 +55,7 @@ const onSubmit = handleSubmit(async (values) => {
 	} catch (e) {
 		toast({
 			title: 'Chyba',
-			description: 'Nepodařilo se vytvořit záps',
+			description: 'Nepodařilo se vytvořit zápas',
 		});
 	}
 });
