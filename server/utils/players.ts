@@ -2,7 +2,7 @@ import { aliasedTable, and, eq, isNotNull, ne, sql } from 'drizzle-orm';
 import { db, Players, Tournaments, TournamentMatchTips, TournamentOverallTips, UserMatchTips, Users, Teams } from '../db';
 
 export const getTournamentPlayers = async (tournamentId: number, authorId: string) => {
-	const players = await db
+	return await db
 		.select({
 			id: Players.id,
 			username: sql<string>`${Users.username}`,
@@ -11,8 +11,6 @@ export const getTournamentPlayers = async (tournamentId: number, authorId: strin
 		.from(Players)
 		.leftJoin(Users, eq(Players.userId, Users.id))
 		.where(and(eq(Players.tournamentId, tournamentId), ne(Users.id, authorId)));
-
-	return players;
 };
 
 export const addPlayer = async (tournamentId: number, username: string) => {
