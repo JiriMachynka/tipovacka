@@ -72,6 +72,8 @@ const downloadTournament = async () => {
 	// const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
 	// saveAs(blob, 'Tipovacka_tabulka.xlsx');
 };
+
+const PlayerTipsDialog = defineAsyncComponent(() => import('@/components/PlayerTipsDialog.vue'));
 </script>
 <template>
   <div :class="cn('inline-flex justify-center items-center', tournament?.data.isAuthor && 'gap-6')"> 

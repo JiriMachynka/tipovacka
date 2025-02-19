@@ -11,10 +11,10 @@ export default defineNuxtConfig({
   },
   routeRules: {
     '/login': {
-      static: true,
+      isr: true,
     },
     '/register': {
-      static: true,
+      isr: true,
     },
     '/tournaments/:id/help': {
       static: true,
@@ -62,6 +62,7 @@ export default defineNuxtConfig({
     componentDir: './components/ui'
   },
   nitro: {
+    preset: 'vercel',
     esbuild: {
       options: {
         target: 'esnext',

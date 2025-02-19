@@ -17,6 +17,10 @@ const filteredMatches = computed(() => {
 });
 
 const groups = computed(() => [...groupsData.value, { name: 'Playoff' }]);
+const EditMatchDialog = defineAsyncComponent(() => import('@/components/EditMatchDialog.vue'));
+const FinishMatchDialog = defineAsyncComponent(() => import('@/components/FinishMatchDialog.vue'));
+const DeleteMatchDialog = defineAsyncComponent(() => import('@/components/DeleteMatchDialog.vue'));
+const UpdateLockStatus = defineAsyncComponent(() => import('@/components/UpdateLockStatus.vue'));
 </script>
 <template>
   <CreateMatchForm

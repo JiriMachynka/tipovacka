@@ -2,7 +2,7 @@
   "name": "tipovacka",
   "private": true,
   "scripts": {
-    "build": "nuxt build",
+    "build": "nuxt build --mode=server",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
@@ -14,7 +14,8 @@
     "lint": "biome lint components layouts pages server utils",
     "lint:apply": "biome lint components layouts pages server utils --write",
     "format": "biome format components layouts pages server utils --write",
-    "clean": "rm -rf node_modules"
+    "clean": "rm -rf node_modules",
+    "analyze": "nuxt build --analyze"
   },
   "type": "module",
   "devDependencies": {
