@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { ExternalLink } from 'lucide-vue-next';
+import { utils, write } from 'xlsx';
 
 const { $client } = useNuxtApp();
 
@@ -15,62 +16,37 @@ const slicedUsermatches = Array.from({ length: numberOfPlayers }, (_, row) =>
 	tournament.value?.userMatches.slice(row * numberOfMatches, row * numberOfMatches + numberOfMatches),
 );
 
-const matches = Array.from({ length: numberOfMatches }, (_, index) => index).map((_, row) => ({
-	label: `${capitalize(tournament.value?.userMatches[row].homeTeamName ?? '')} - ${capitalize(tournament.value?.userMatches[row].awayTeamName ?? '')}`,
-	field: `${tournament.value?.userMatches[row].homeTeamName.toLowerCase().replace(' ', '-') ?? ''}-${tournament.value?.userMatches[row].awayTeamName.toLowerCase().replace(' ', '-') ?? ''}`,
-}));
-
 const downloadTournament = async () => {
-	console.log('Aktuálně nefunguje');
-	// const matches = Array.from({ length: numberOfMatches }, (_, index) => index).map((_, row) => ({
-	// 	match: `${capitalize(tournament.value?.userMatches[row].homeTeamName ?? '')} - ${capitalize(tournament.value?.userMatches[row].awayTeamName ?? '')}`,
-	// }));
+	const matchLabels = Array.from({ length: numberOfMatches }, (_, index) => index).map(
+		(_, row) =>
+			`${capitalize(tournament.value?.userMatches[row].homeTeamName ?? '')} - ${capitalize(tournament.value?.userMatches[row].awayTeamName ?? '')}`,
+	);
 
-	const columns = [
-		{ name: 'Hráč', label: 'hrac' },
-		{ name: 'Střelec 1', label: 'strelec1' },
-		{ name: 'Střelec 2', label: 'strelec2' },
-		...matches.map(({ label, field }) => ({ label, field })),
-	];
+	const data = {
+		headings: ['Hráč', 'Střelec 1', 'Střelec 2', ...matchLabels.map((label) => label)],
+		data:
+			tournament.value?.players.map(({ username, scorerFirstName, scorerSecondName }, row) => [
+				username,
+				scorerFirstName.trim(),
+				scorerSecondName.trim(),
+				...(tournament.value?.userMatches
+					?.slice(row * numberOfPlayers, row * numberOfPlayers + numberOfMatches)
+					?.map((um) => `${um.homeScore}:${um.awayScore}`) ?? []),
+			]) ?? [],
+	};
 
-	const data = [
-		...(tournament.value?.players.map(({ username, scorerFirstName, scorerSecondName }, row) => ({
-			hrac: username,
-			strelec1: scorerFirstName.trim(),
-			strelec2: scorerSecondName.trim(),
-			...(tournament.value?.userMatches?.slice(row * numberOfPlayers, row * numberOfPlayers + numberOfMatches)?.reduce((acc, um) => {
-				acc[`${um.homeTeamName.toLowerCase().replace(' ', '-')}-${um.awayTeamName.toLowerCase().replace(' ', '-')}`] =
-					`${um.homeScore}:${um.awayScore}`;
-				return acc;
-			}, {}) ?? {}),
-		})) ?? []),
-	];
+	const worksheet = utils.aoa_to_sheet([data.headings, ...data.data]);
+	const workbook = utils.book_new();
+	utils.book_append_sheet(workbook, worksheet, 'Sheet1');
 
-	console.log({
-		columns,
-		data,
-	});
-	// const data = {
-	// 	headers: ['Hráč', 'Střelec 1', 'Střelec 2', ...matches.map(({ match }) => match)],
-	// 	data:
-	// 		tournament.value?.players.map(({ username, scorerFirstName, scorerSecondName }, row) => [
-	// 			username,
-	// 			scorerFirstName.trim(),
-	// 			scorerSecondName.trim(),
-	// 			...(tournament.value?.userMatches
-	// 				?.slice(row * numberOfPlayers, row * numberOfPlayers + numberOfMatches)
-	// 				?.map((um) => `${um.homeScore}:${um.awayScore}`) ?? []),
-	// 		]) ?? [],
-	// };
-	// await createSpreadsheet(data, { type: 'excel' }).download('Tipovacka_tabulka.xlsx');
-
-	// const worksheet = utils.aoa_to_sheet(data);
-	// const workbook = utils.book_new();
-	// utils.book_append_sheet(workbook, worksheet, 'Sheet1');
-	// write(workbook, { bookType: 'xlsx', type: 'array' });
-	// const excelBuffer = write(workbook, { bookType: 'xlsx', type: 'array' });
-	// const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
-	// saveAs(blob, 'Tipovacka_tabulka.xlsx');
+	const excelBuffer = write(workbook, { bookType: 'xlsx', type: 'array' });
+	const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+	const url = URL.createObjectURL(blob);
+	const a = document.createElement('a');
+	a.href = url;
+	a.download = 'moje_tipovacka.xlsx';
+	a.click();
+	URL.revokeObjectURL(url);
 };
 
 const PlayerTipsDialog = defineAsyncComponent(() => import('@/components/PlayerTipsDialog.vue'));
