@@ -31,9 +31,11 @@ export const createMatch = async (tournamentId: number, date: Date, group: strin
 };
 
 export const deleteMatch = async (matchId: number) => {
-	await db.delete(UserMatchTips).where(eq(UserMatchTips.tournamentMatchTipId, matchId));
+	const tournamentMatchTipsPromise = db.delete(TournamentMatchTips).where(eq(TournamentMatchTips.id, matchId));
 
-	await db.delete(TournamentMatchTips).where(eq(TournamentMatchTips.id, matchId));
+	const userMatchTipsPromise = db.delete(UserMatchTips).where(eq(UserMatchTips.tournamentMatchTipId, matchId));
+
+	await Promise.all([tournamentMatchTipsPromise, userMatchTipsPromise]);
 };
 
 export const editMatch = async (matchId: number, date: Date, group: string, homeTeamId: number, awayTeamId: number) => {
