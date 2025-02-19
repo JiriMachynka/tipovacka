@@ -50,7 +50,7 @@ export const editMatch = async (matchId: number, date: Date, group: string, home
 
 export const updateMatch = async (matchId: number, locked: boolean) => {
 	if (!locked) {
-		await db
+		const tournamentMatchTipsPromise = db
 			.update(TournamentMatchTips)
 			.set({
 				locked,
@@ -60,14 +60,14 @@ export const updateMatch = async (matchId: number, locked: boolean) => {
 			})
 			.where(eq(TournamentMatchTips.id, matchId));
 
-		await db
+		const userMatchTipsPromise = db
 			.update(UserMatchTips)
 			.set({
 				points: 0,
 			})
 			.where(eq(UserMatchTips.tournamentMatchTipId, matchId));
 
-		return;
+		return Promise.all([tournamentMatchTipsPromise, userMatchTipsPromise]);
 	}
 
 	await db.update(TournamentMatchTips).set({ locked }).where(eq(TournamentMatchTips.id, matchId));
