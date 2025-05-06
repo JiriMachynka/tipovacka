@@ -40,8 +40,8 @@ const {
             class="grid grid-cols-[1fr_70px] items-center gap-2 group"
           >
             <span class="flex flex-col gap-1 font-semibold">
-              <TeamNameFlag :teamName="homeTeamName" :showImg="true" />
-              <TeamNameFlag :teamName="awayTeamName" :showImg="true" />
+              <TeamNameFlag :teamName="homeTeamName" />
+              <TeamNameFlag :teamName="awayTeamName" />
             </span>
             <span class="text-xl">
               {{ homeScore }} : {{ awayScore }}

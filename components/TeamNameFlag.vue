@@ -5,7 +5,8 @@ interface TeamNameFlagProps {
 }
 
 const props = defineProps<TeamNameFlagProps>();
-const countries = ref(useTeams());
+// const countries = ref(useTeams());
+const countries = ref(useCountries());
 </script>
 <template>
   <span class="inline-flex items-center gap-4">

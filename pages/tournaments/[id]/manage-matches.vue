@@ -61,10 +61,10 @@ const UpdateLockStatus = defineAsyncComponent(() => import('@/components/UpdateL
         </TableCell>
         <TableCell>{{ match.group }}</TableCell>
         <TableCell :class="cn('space-x-4 text-nowrap')">
-          <TeamNameFlag :teamName="match.homeTeamName" :showImg="true" />
+          <TeamNameFlag :teamName="match.homeTeamName" />
         </TableCell>
         <TableCell :class="cn('space-x-4 text-nowrap')">
-          <TeamNameFlag :teamName="match.awayTeamName" :showImg="true" />
+          <TeamNameFlag :teamName="match.awayTeamName" />
         </TableCell>
         <TableCell>{{ match.homeScore }}:{{ match.awayScore }}</TableCell>
         <TableCell class="space-x-2">

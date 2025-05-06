@@ -47,11 +47,11 @@ const changeMatchScore = (matchId: number, homeScore: number, awayScore: number)
         <TableCell>{{ $dayjs(match.date).fromNow() }}</TableCell>
         <TableCell>{{ match.group }}</TableCell>
         <TableCell :class="cn('space-x-4 text-nowrap')">
-          <TeamNameFlag :teamName="match.homeTeamName" :showImg="true" />
+          <TeamNameFlag :teamName="match.homeTeamName" />
         </TableCell>
         <TableCell>{{ match.homeScore }}:{{ match.awayScore }}</TableCell> 
         <TableCell :class="cn('space-x-4 text-nowrap')">
-          <TeamNameFlag :teamName="match.awayTeamName" :showImg="true" />
+          <TeamNameFlag :teamName="match.awayTeamName" />
         </TableCell>
         <TableCell>
           <span v-if="match.locked && !match.played" class="text-lg font-bold">

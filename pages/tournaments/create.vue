@@ -41,8 +41,8 @@ const onSubmit = handleSubmit(async (values) => {
 	navigateTo(`/tournaments/${tournamentId}`);
 });
 
-// const countries = ref<Omit<Country, 'group'>[]>(useCountries());
-const countries = ref<Omit<Country, 'group'>[]>(useTeams());
+const countries = ref<Omit<Country, 'group'>[]>(useCountries());
+// const countries = ref<Omit<Country, 'group'>[]>(useTeams());
 const currentCountry = ref('');
 const teams = ref<Country[]>([]);
 const numberOfGroups = ref(1);
@@ -142,12 +142,8 @@ const removeCountry = (countryCode: string) => {
                   :value="JSON.stringify(Object.assign({}, country, { group: 0 }))"
                 >
                   <span class="inline-flex items-center gap-4">
-                    <img :src="`/teams/${country.code}.png`" class="h-6 w-6" />
-                    {{ country.name }}
-                  </span>
-                  <!-- <span class="inline-flex items-center gap-4">
                     <TeamNameFlag :teamName="country.name" />
-                  </span> -->
+                  </span>
                 </SelectItem>
               </SelectGroup>
             </SelectContent>
