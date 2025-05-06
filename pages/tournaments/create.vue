@@ -193,8 +193,8 @@ const removeCountry = (countryCode: string) => {
                 <div class="flex justify-between items-center gap-6">
                   <div class="flex items-center gap-4">
                     <IconGripVertical class="-mr-2 size-5" />
-                    <!-- <span :class="`text-lg fi fi-${element.code}`" /> -->
-                    <img :src="`/teams/${element.code}.png`" class="h-6 w-6" />
+                    <span :class="`text-lg fi fi-${element.code}`" />
+                    <!-- <img :src="`/teams/${element.code}.png`" class="h-6 w-6" /> -->
                     <span class="text-base">{{ element.name }}</span>
                   </div>
                   <div class="grid grid-cols-[38px_38px_38px] gap-2">
