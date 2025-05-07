@@ -8,10 +8,7 @@ const tournamentId = +route.params.id;
 const { data: tournament } = await $client.tournament.getData.useQuery({ tournamentId });
 
 if (!tournament.value) {
-	throw createError({
-		statusCode: 404,
-		message: 'Tipovačka nebyla nalezena',
-	});
+	navigateTo('/');
 }
 
 useHead({

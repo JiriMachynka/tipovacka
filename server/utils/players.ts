@@ -17,27 +17,30 @@ export const addPlayer = async (tournamentId: number, username: string) => {
 	const [tournamentOverallTip] = await db.insert(TournamentOverallTips).values({ tournamentId }).returning({ id: TournamentOverallTips.id });
 
 	const user = await db.query.Users.findFirst({
-		where: eq(Users.username, username),
+		where: (users, { eq }) => eq(users.username, username),
 		columns: { id: true },
 	});
+
+	if (!user) return 'Uživatel neexistuje.';
 
 	const [player] = await db
 		.insert(Players)
 		.values({
-			userId: user?.id as string,
+			userId: user.id,
 			tournamentId,
 			tournamentOverallTipId: tournamentOverallTip.id,
 		})
 		.returning({ id: Players.id });
 
 	// Creating matchtips for user
-	const matchTips = await db
-		.select({ id: TournamentMatchTips.id })
-		.from(TournamentMatchTips)
-		.where(eq(TournamentMatchTips.tournamentId, tournamentId));
+	const matchTips = await db.query.TournamentMatchTips.findMany({
+		where: (TournamentMatchTips, { eq }) => eq(TournamentMatchTips.tournamentId, tournamentId),
+		orderBy: (TournamentMatchTips, { asc }) => asc(TournamentMatchTips.id),
+		columns: { id: true },
+	});
 
 	const matchTipsPromise = matchTips.map((matchTip) => {
-		db.insert(UserMatchTips).values({
+		return db.insert(UserMatchTips).values({
 			playerId: player.id,
 			tournamentMatchTipId: matchTip.id,
 		});

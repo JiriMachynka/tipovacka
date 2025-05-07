@@ -23,22 +23,23 @@ const filteredUsers = computed(() => allUsers.value?.filter((u) => !modelValue.v
 const tagsInputRef = ref(null);
 onClickOutside(tagsInputRef, () => (open.value = false));
 
-const handleAddPlayers = () => {
-	modelValue.value.map(async (username) => {
-		await addPlayer({
-			tournamentId: props.tournamentId,
-			username,
-		});
-	});
+const handleAddPlayers = async () => {
+	await Promise.all(
+		modelValue.value.map((username) => {
+			addPlayer({
+				tournamentId: props.tournamentId,
+				username,
+			});
+		}),
+	);
+	refreshUsers();
+	emit('refresh');
 
 	toast({
 		title: 'Přidání hráčů',
 		description: 'Hráči byli úspěšně přidáni',
-		duration: 1200,
+		duration: 700,
 	});
-
-	refreshUsers();
-	setTimeout(() => emit('refresh'), 300);
 
 	modelValue.value = [];
 };

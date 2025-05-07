@@ -8,7 +8,7 @@
  * @see https://trpc.io/docs/v10/procedures
  */
 import { TRPCError, initTRPC } from '@trpc/server';
-import type { Context } from '~/server/trpc/context';
+import type { Context } from './context';
 
 const t = initTRPC.context<Context>().create();
 
