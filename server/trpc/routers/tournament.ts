@@ -59,7 +59,7 @@ export const tournamentRouter = router({
 	updateOverallTip: privateProcedure
 		.input(
 			z.object({
-				tournamentId: z.number().nullable(),
+				tournamentId: z.number(),
 				winnerId: z.number().nullable(),
 				finalistId: z.number().nullable(),
 				semifinalistFirstId: z.number().nullable(),

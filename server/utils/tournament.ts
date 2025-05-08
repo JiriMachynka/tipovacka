@@ -308,10 +308,10 @@ export const getTournamentOverallTeams = async (tournamentId: number) => {
 export const updateOverallTip = async (
 	tournamentId: number,
 	userId: string,
-	winnerId: number,
-	finalistId: number,
-	semifinalistFirstId: number,
-	semifinalistSecondId: number,
+	winnerId: number | null,
+	finalistId: number | null,
+	semifinalistFirstId: number | null,
+	semifinalistSecondId: number | null,
 ) => {
 	const overallTipId = await getPlayerOverallTipId(tournamentId, userId);
 
