@@ -59,11 +59,11 @@ export const tournamentRouter = router({
 	updateOverallTip: privateProcedure
 		.input(
 			z.object({
-				tournamentId: z.number(),
-				winnerId: z.number(),
-				finalistId: z.number(),
-				semifinalistFirstId: z.number(),
-				semifinalistSecondId: z.number(),
+				tournamentId: z.number().nullable(),
+				winnerId: z.number().nullable(),
+				finalistId: z.number().nullable(),
+				semifinalistFirstId: z.number().nullable(),
+				semifinalistSecondId: z.number().nullable(),
 			}),
 		)
 		.mutation(async ({ ctx, input }) => {
