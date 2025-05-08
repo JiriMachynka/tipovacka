@@ -1,4 +1,4 @@
-import { aliasedTable, and, eq, isNotNull, ne, sql } from 'drizzle-orm';
+import { aliasedTable, and, desc, eq, isNotNull, ne, sql } from 'drizzle-orm';
 import { db, Players, Tournaments, TournamentMatchTips, TournamentOverallTips, UserMatchTips, Users, Teams } from '../db';
 
 export const getTournamentPlayers = async (tournamentId: number, authorId: string) => {
@@ -123,5 +123,5 @@ export const getPlayerMatchTips = async (playerId: number) => {
 		.leftJoin(awayTeam, eq(TournamentMatchTips.awayTeamId, awayTeam.id))
 		.leftJoin(Players, eq(UserMatchTips.playerId, Players.id))
 		.where(and(eq(TournamentMatchTips.locked, true), eq(Players.id, playerId), isNotNull(UserMatchTips.points)))
-		.orderBy(TournamentMatchTips.id);
+		.orderBy(desc(TournamentMatchTips.id));
 };
