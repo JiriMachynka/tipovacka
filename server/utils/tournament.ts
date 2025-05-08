@@ -74,7 +74,8 @@ export const getTournaments = async (userId: string) => {
 		})
 		.from(Tournaments)
 		.leftJoin(Players, eq(Tournaments.id, Players.tournamentId))
-		.where(or(eq(Tournaments.authorId, userId), eq(Players.userId, userId)));
+		.where(or(eq(Tournaments.authorId, userId), eq(Players.userId, userId)))
+		.orderBy(desc(Tournaments.id));
 
 	return allTournaments || [];
 };
