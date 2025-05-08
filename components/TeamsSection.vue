@@ -19,27 +19,29 @@ const { mutate: updateOverallTip } = $client.tournament.updateOverallTip.useMuta
 const { handleSubmit } = useForm({
 	validationSchema: toTypedSchema(
 		z.object({
-			winnerId: z.string({ required_error: 'Vyberte tým' }),
-			finalistId: z.string({ required_error: 'Vyberte tým' }),
-			semifinalistFirstId: z.string({ required_error: 'Vyberte tým' }),
-			semifinalistSecondId: z.string({ required_error: 'Vyberte tým' }),
+			winnerId: z.string({ required_error: 'Vyberte tým' }).nullable(),
+			finalistId: z.string({ required_error: 'Vyberte tým' }).nullable(),
+			semifinalistFirstId: z.string({ required_error: 'Vyberte tým' }).nullable(),
+			semifinalistSecondId: z.string({ required_error: 'Vyberte tým' }).nullable(),
 		}),
 	),
 	initialValues: {
-		winnerId: overallTips.value?.winnerId?.toString() || '',
-		finalistId: overallTips.value?.finalistId?.toString() || '',
-		semifinalistFirstId: overallTips.value?.semifinalistFirstId?.toString() || '',
-		semifinalistSecondId: overallTips.value?.semifinalistSecondId?.toString() || '',
+		winnerId: overallTips.value?.winnerId?.toString() || null,
+		finalistId: overallTips.value?.finalistId?.toString() || null,
+		semifinalistFirstId: overallTips.value?.semifinalistFirstId?.toString() || null,
+		semifinalistSecondId: overallTips.value?.semifinalistSecondId?.toString() || null,
 	},
 });
 
 const onSubmit = handleSubmit(async (values) => {
+	const { winnerId, finalistId, semifinalistFirstId, semifinalistSecondId } = values;
+
 	await updateOverallTip({
 		tournamentId,
-		winnerId: +values.winnerId,
-		finalistId: +values.finalistId,
-		semifinalistFirstId: +values.semifinalistFirstId,
-		semifinalistSecondId: +values.semifinalistSecondId,
+		winnerId: Number(winnerId) || null,
+		finalistId: Number(finalistId) || null,
+		semifinalistFirstId: Number(semifinalistFirstId) || null,
+		semifinalistSecondId: Number(semifinalistSecondId) || null,
 	});
 	toast({
 		title: 'Týmy byly uloženy',
