@@ -1,10 +1,10 @@
 {
-  "id": "c2f3a56b-9d6c-4529-83cb-fcdbb01d5fed",
+  "id": "304eefbe-6df7-4bcc-a859-78ebc965b36d",
   "prevId": "00000000-0000-0000-0000-000000000000",
-  "version": "5",
-  "dialect": "pg",
+  "version": "7",
+  "dialect": "postgresql",
   "tables": {
-    "players": {
+    "public.players": {
       "name": "players",
       "schema": "",
       "columns": {
@@ -57,8 +57,8 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
         },
         "players_tournament_id_tournaments_id_fk": {
           "name": "players_tournament_id_tournaments_id_fk",
@@ -70,7 +70,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         },
         "players_tournament_overall_tip_id_tournament_overall_tips_id_fk": {
@@ -83,7 +83,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         },
         "players_scorer_first_id_scorers_id_fk": {
@@ -114,9 +114,10 @@
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {},
+      "checkConstraints": {}
     },
-    "scorers": {
+    "public.scorers": {
       "name": "scorers",
       "schema": "",
       "columns": {
@@ -176,9 +177,10 @@
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {},
+      "checkConstraints": {}
     },
-    "teams": {
+    "public.teams": {
       "name": "teams",
       "schema": "",
       "columns": {
@@ -224,9 +226,10 @@
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {},
+      "checkConstraints": {}
     },
-    "tournament_match_tips": {
+    "public.tournament_match_tips": {
       "name": "tournament_match_tips",
       "schema": "",
       "columns": {
@@ -338,9 +341,10 @@
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {},
+      "checkConstraints": {}
     },
-    "tournament_overall_tips": {
+    "public.tournament_overall_tips": {
       "name": "tournament_overall_tips",
       "schema": "",
       "columns": {
@@ -394,7 +398,7 @@
             "id"
           ],
           "onDelete": "cascade",
-          "onUpdate": "cascade"
+          "onUpdate": "no action"
         },
         "tournament_overall_tips_winner_id_teams_id_fk": {
           "name": "tournament_overall_tips_winner_id_teams_id_fk",
@@ -407,7 +411,7 @@
             "id"
           ],
           "onDelete": "set null",
-          "onUpdate": "cascade"
+          "onUpdate": "no action"
         },
         "tournament_overall_tips_finalist_id_teams_id_fk": {
           "name": "tournament_overall_tips_finalist_id_teams_id_fk",
@@ -420,7 +424,7 @@
             "id"
           ],
           "onDelete": "set null",
-          "onUpdate": "cascade"
+          "onUpdate": "no action"
         },
         "tournament_overall_tips_semifinalist_first_id_teams_id_fk": {
           "name": "tournament_overall_tips_semifinalist_first_id_teams_id_fk",
@@ -433,7 +437,7 @@
             "id"
           ],
           "onDelete": "set null",
-          "onUpdate": "cascade"
+          "onUpdate": "no action"
         },
         "tournament_overall_tips_semifinalist_second_id_teams_id_fk": {
           "name": "tournament_overall_tips_semifinalist_second_id_teams_id_fk",
@@ -446,13 +450,14 @@
             "id"
           ],
           "onDelete": "set null",
-          "onUpdate": "cascade"
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {},
+      "checkConstraints": {}
     },
-    "tournaments": {
+    "public.tournaments": {
       "name": "tournaments",
       "schema": "",
       "columns": {
@@ -480,6 +485,30 @@
           "primaryKey": false,
           "notNull": true,
           "default": false
+        },
+        "winner_id": {
+          "name": "winner_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "finalist_id": {
+          "name": "finalist_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "semifinalist_first_id": {
+          "name": "semifinalist_first_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "semifinalist_second_id": {
+          "name": "semifinalist_second_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {},
@@ -496,12 +525,65 @@
           ],
           "onDelete": "cascade",
           "onUpdate": "cascade"
+        },
+        "tournaments_winner_id_teams_id_fk": {
+          "name": "tournaments_winner_id_teams_id_fk",
+          "tableFrom": "tournaments",
+          "tableTo": "teams",
+          "columnsFrom": [
+            "winner_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "cascade"
+        },
+        "tournaments_finalist_id_teams_id_fk": {
+          "name": "tournaments_finalist_id_teams_id_fk",
+          "tableFrom": "tournaments",
+          "tableTo": "teams",
+          "columnsFrom": [
+            "finalist_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "cascade"
+        },
+        "tournaments_semifinalist_first_id_teams_id_fk": {
+          "name": "tournaments_semifinalist_first_id_teams_id_fk",
+          "tableFrom": "tournaments",
+          "tableTo": "teams",
+          "columnsFrom": [
+            "semifinalist_first_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "cascade"
+        },
+        "tournaments_semifinalist_second_id_teams_id_fk": {
+          "name": "tournaments_semifinalist_second_id_teams_id_fk",
+          "tableFrom": "tournaments",
+          "tableTo": "teams",
+          "columnsFrom": [
+            "semifinalist_second_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "cascade"
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {},
+      "checkConstraints": {}
     },
-    "user_match_tips": {
+    "public.user_match_tips": {
       "name": "user_match_tips",
       "schema": "",
       "columns": {
@@ -574,9 +656,10 @@
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {},
+      "checkConstraints": {}
     },
-    "users": {
+    "public.users": {
       "name": "users",
       "schema": "",
       "columns": {
@@ -617,11 +700,14 @@
             "username"
           ]
         }
-      }
+      },
+      "checkConstraints": {}
     }
   },
   "enums": {},
   "schemas": {},
+  "sequences": {},
+  "views": {},
   "_meta": {
     "columns": {},
     "schemas": {},

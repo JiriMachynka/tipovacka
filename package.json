@@ -2,7 +2,7 @@
 	"name": "tipovacka",
 	"private": true,
 	"scripts": {
-		"build": "nuxt build",
+		"build": "nuxt build && bun run db:migrate",
 		"dev": "nuxt dev",
 		"generate": "nuxt generate",
 		"preview": "nuxt preview",

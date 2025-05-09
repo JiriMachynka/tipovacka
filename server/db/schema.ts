@@ -21,23 +21,23 @@ export const Tournaments = pgTable('tournaments', {
 });
 
 export const tournamentRelations = relations(Tournaments, ({ one }) => ({
-	tournaments: one(Users, {
+	author: one(Users, {
 		fields: [Tournaments.authorId],
 		references: [Users.id],
 	}),
-	winnerId: one(Teams, {
+	winner: one(Teams, {
 		fields: [Tournaments.winnerId],
 		references: [Teams.id],
 	}),
-	finalistId: one(Teams, {
+	finalist: one(Teams, {
 		fields: [Tournaments.finalistId],
 		references: [Teams.id],
 	}),
-	semifinalistFirstId: one(Teams, {
+	semifinalistFirst: one(Teams, {
 		fields: [Tournaments.semifinalistFirstId],
 		references: [Teams.id],
 	}),
-	semifinalistSecondId: one(Teams, {
+	semifinalistSecond: one(Teams, {
 		fields: [Tournaments.semifinalistSecondId],
 		references: [Teams.id],
 	}),
@@ -59,19 +59,19 @@ export const Players = pgTable('players', {
 });
 
 export const playerRelations = relations(Players, ({ one }) => ({
-	tournaments: one(Tournaments, {
+	tournament: one(Tournaments, {
 		fields: [Players.tournamentId],
 		references: [Tournaments.id],
 	}),
-	tournamentOverallTips: one(TournamentOverallTips, {
+	tournamentOverallTip: one(TournamentOverallTips, {
 		fields: [Players.tournamentOverallTipId],
 		references: [TournamentOverallTips.id],
 	}),
-	scorersFirst: one(Scorers, {
+	scorerFirst: one(Scorers, {
 		fields: [Players.scorerFirstId],
 		references: [Scorers.id],
 	}),
-	scorersSecond: one(Scorers, {
+	scorerSecond: one(Scorers, {
 		fields: [Players.scorerSecondId],
 		references: [Scorers.id],
 	}),
@@ -97,11 +97,11 @@ export const TournamentOverallTips = pgTable('tournament_overall_tips', {
 	id: serial('id').primaryKey(),
 	tournamentId: integer('tournament_id')
 		.notNull()
-		.references(() => Tournaments.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
-	winnerId: integer('winner_id').references(() => Teams.id, { onDelete: 'set null', onUpdate: 'cascade' }),
-	finalistId: integer('finalist_id').references(() => Teams.id, { onDelete: 'set null', onUpdate: 'cascade' }),
-	semifinalistFirstId: integer('semifinalist_first_id').references(() => Teams.id, { onDelete: 'set null', onUpdate: 'cascade' }),
-	semifinalistSecondId: integer('semifinalist_second_id').references(() => Teams.id, { onDelete: 'set null', onUpdate: 'cascade' }),
+		.references(() => Tournaments.id, { onDelete: 'cascade' }),
+	winnerId: integer('winner_id').references(() => Teams.id, { onDelete: 'set null' }),
+	finalistId: integer('finalist_id').references(() => Teams.id, { onDelete: 'set null' }),
+	semifinalistFirstId: integer('semifinalist_first_id').references(() => Teams.id, { onDelete: 'set null' }),
+	semifinalistSecondId: integer('semifinalist_second_id').references(() => Teams.id, { onDelete: 'set null' }),
 });
 
 export const tournamentOverallTipsRelations = relations(TournamentOverallTips, ({ one }) => ({

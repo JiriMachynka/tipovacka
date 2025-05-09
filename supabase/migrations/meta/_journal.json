@@ -1,40 +1,12 @@
 {
-  "version": "5",
-  "dialect": "pg",
+  "version": "7",
+  "dialect": "postgresql",
   "entries": [
     {
       "idx": 0,
-      "version": "5",
-      "when": 1714983437825,
-      "tag": "0000_icy_wolf_cub",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1715170011571,
-      "tag": "0001_lonely_silver_sable",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "5",
-      "when": 1716570226407,
-      "tag": "0002_superb_black_crow",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "5",
-      "when": 1717540118854,
-      "tag": "0003_wet_hercules",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "5",
-      "when": 1717540189886,
-      "tag": "0004_green_speedball",
+      "version": "7",
+      "when": 1746786275962,
+      "tag": "0000_warm_bloodaxe",
       "breakpoints": true
     }
   ]
