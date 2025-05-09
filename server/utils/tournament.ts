@@ -15,6 +15,22 @@ export const getOwnerEmail = async (tournamentId: number) => {
 	return owner;
 };
 
+export const getPlayerData = async (userId: string, tournamentId: number) => {
+	const [player] = await db
+		.select({
+			id: Players.id,
+			username: Users.username,
+			email: Users.email,
+		})
+		.from(Users)
+		.leftJoin(Players, eq(Users.id, Players.userId))
+		.leftJoin(Tournaments, eq(Players.tournamentId, Tournaments.id))
+		.where(and(eq(Tournaments.id, tournamentId), eq(Users.id, userId)))
+		.limit(1);
+
+	return player;
+};
+
 export const createTournament = async (authorId: string, name: string, players: string[], teams: Country[]) => {
 	const [createdTournament] = await db
 		.insert(Tournaments)

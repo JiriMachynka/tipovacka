@@ -3,6 +3,9 @@ import { privateProcedure, router } from '../trpc';
 
 export const tournamentRouter = router({
 	getOwnerEmail: privateProcedure.input(z.object({ tournamentId: z.number() })).query(async ({ input }) => await getOwnerEmail(input.tournamentId)),
+	getPlayerData: privateProcedure
+		.input(z.object({ tournamentId: z.number() }))
+		.query(async ({ ctx, input }) => await getPlayerData(ctx.userId, input.tournamentId)),
 	getAll: privateProcedure.query(async ({ ctx }) => await getTournaments(ctx.userId)),
 	create: privateProcedure
 		.input(

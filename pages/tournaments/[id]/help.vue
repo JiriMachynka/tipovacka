@@ -15,6 +15,7 @@ const route = useRoute();
 const tournamentId = +route.params.id;
 
 const { data: ownerEmail } = await $client.tournament.getOwnerEmail.useQuery({ tournamentId });
+const { data: playerData } = await $client.tournament.getPlayerData.useQuery({ tournamentId });
 
 const { handleSubmit, isSubmitting, resetForm } = useForm({
 	validationSchema: schema,
@@ -34,8 +35,12 @@ const onSubmit = handleSubmit(async (values) => {
 		query: {
 			to: ownerEmail.value?.email as string,
 			cc: ownerEmail.value?.email !== $config.public.myEmail ? $config.public.myEmail : undefined,
+			myEmail: $config.public.myEmail,
 			category: categories.find((category) => category.value === values.category)?.label,
 			description: values.description,
+			email: playerData.value?.email,
+			username: playerData.value?.username,
+			playerId: playerData.value?.id,
 		},
 	});
 
