@@ -7,31 +7,30 @@ export default defineEventHandler(async (event) => {
 
 	const resend = new Resend(resendApiKey);
 
-	const authorEmailPromise = resend.emails.send({
-		from: 'Admin Tipovačka <admin@moje-tipovacka.cz>',
-		to: to as string,
-		cc: cc as string | undefined,
-		subject: 'Potřebuju pomoct',
-		html: `
-        <p>Typ: ${category}</p>
-        <p>Popis: ${description}</p>
-      `,
-	});
-
-	const founderEmailPromise = resend.emails.send({
-		from: 'Admin Tipovačka <admin@moje-tipovacka.cz>',
-		to: myEmail as string,
-		subject: 'Potřebuju pomoct',
-		html: `
-				<p>Hráč: ${username}</p>
-				<p>Email: ${email}</p>
-				<p>Player ID: ${playerId}</p>
-        <p>Typ: ${category}</p>
-        <p>Popis: ${description}</p>
-      `,
-	});
-
-	const [{ error }] = await Promise.all([authorEmailPromise, founderEmailPromise]);
+	const { error } = await resend.batch.send([
+		{
+			from: 'Admin Tipovačka <admin@moje-tipovacka.cz>',
+			to: to as string,
+			cc: cc as string | undefined,
+			subject: 'Potřebuju pomoct',
+			html: `
+					<p>Typ: ${category}</p>
+					<p>Popis: ${description}</p>
+				`,
+		},
+		{
+			from: 'Admin Tipovačka <admin@moje-tipovacka.cz>',
+			to: myEmail as string,
+			subject: 'Potřebuju pomoct',
+			html: `
+					<p>Hráč: ${username}</p>
+					<p>Email: ${email}</p>
+					<p>Player ID: ${playerId}</p>
+					<p>Typ: ${category}</p>
+					<p>Popis: ${description}</p>
+				`,
+		}
+	]);
 
 	if (error) {
 		return error;
