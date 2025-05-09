@@ -90,7 +90,7 @@ const overallTipsTeams = [
 <template>
   <form
     v-if="!overallTips?.lockScorers"
-    class="max-w-3xl w-full mx-auto grid min-[500px]:grid-cols-2 lg:grid-cols-4 gap-2"
+    class="w-full mx-auto grid min-[500px]:grid-cols-2 lg:grid-cols-4 gap-2"
     @submit="onSubmit"
   >
     <FormField
@@ -134,7 +134,7 @@ const overallTipsTeams = [
       Uložit týmy
     </Button>
   </form>
-  <div v-else class="max-w-3xl w-full mx-auto grid min-[500px]:grid-cols-2 lg:grid-cols-4 gap-2">
+  <div v-else class="w-full mx-auto grid min-[500px]:grid-cols-2 lg:grid-cols-4 gap-2">
     <div
       v-for="{ title, name } in overallTipsTeams"
       :key="name"

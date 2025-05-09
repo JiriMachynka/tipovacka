@@ -69,7 +69,7 @@ const selectedSecondScorer = computed(() => {
 </script>
 <template>
   <form 
-    class="w-full max-w-3xl mx-auto space-y-4"
+    class="w-full mx-auto space-y-4"
     @submit="onSubmit"
   >
     <div :class="cn('grid grid-cols-[1fr_1fr_70px] gap-2', {
